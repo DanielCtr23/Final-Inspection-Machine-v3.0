@@ -1,0 +1,27 @@
+﻿<Window x:Class="Final_Inspection_Machine_v3._0.Dashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+        Title="Dashboard" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="SideBar" Grid.Row="1" Grid.Column="0" Background="#FF3A3939">
+            <Button x:Name="InicioBtn" Style="{StaticResource FlatButtonStyle}" Content="INICIO" ClickMode="Press" Cursor="Hand" Tag="CalculatorSolid" Click="InicioBtn_Click" />
+            <Button x:Name="DetalleBtn" Style="{StaticResource FlatButtonStyle}" Content="DETALLE" ClickMode="Press" Cursor="Hand" Tag="CalculatorSolid" Click="DetalleBtn_Click" />
+            <Button x:Name="ContadoresBtn" Style="{StaticResource FlatButtonStyle}" Content="CONTADORES" ClickMode="Press" Cursor="Hand" Tag="CalculatorSolid" />
+            <Button x:Name="InformesBtn" Style="{StaticResource FlatButtonStyle}" Content="INFORMES" ClickMode="Press" Cursor="Hand" Tag="CalculatorSolid" />
+        </StackPanel>
+        <Frame x:Name="Frame" Grid.Column="1" Content="" Grid.Row="1" NavigationUIVisibility="Hidden"/>
+    </Grid>
+</Window>

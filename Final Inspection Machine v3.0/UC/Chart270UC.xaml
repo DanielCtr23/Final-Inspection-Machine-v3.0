@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Final_Inspection_Machine_v3._0.UC.Chart270UC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.UC"
+             mc:Ignorable="d" 
+                         Width="Auto" Height="Auto">
+    <Viewbox>
+
+        <Grid>
+            <Canvas Name="canvas" Width="230" Height="240">
+                <!-- Background Arc -->
+                <Path Name="backgroundArc" StrokeThickness="20" Fill="Transparent" />
+                <!-- Foreground Arc -->
+                <Path Name="foregroundArc" Stroke="Green" StrokeThickness="20" Fill="Transparent" />
+            </Canvas>
+            <!-- Texts -->
+            <TextBlock Name="text1" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,80,0,0" />
+            <TextBlock Name="text2" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0" />
+        </Grid>
+    </Viewbox>
+</UserControl>
