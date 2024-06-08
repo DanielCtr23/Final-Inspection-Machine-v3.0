@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdvancedHMIControls, Version=3.9.9.24, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\hima.lib.advancedhmi.3.9.9\lib\AdvancedHMIControls.dll</HintPath>
+    </Reference>
+    <Reference Include="AdvancedHMIDrivers, Version=3.9.9.24, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\hima.lib.advancedhmi.3.9.9\lib\AdvancedHMIDrivers.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro.IconPacks, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.4.11.0\lib\net47\MahApps.Metro.IconPacks.dll</HintPath>
     </Reference>
@@ -134,8 +140,25 @@
     <Reference Include="MahApps.Metro.IconPacks.Zondicons, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.4.11.0\lib\net47\MahApps.Metro.IconPacks.Zondicons.dll</HintPath>
     </Reference>
+    <Reference Include="MfgControl.AdvancedHMI.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\hima.lib.advancedhmi.3.9.9\lib\MfgControl.AdvancedHMI.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="MfgControl.AdvancedHMI.Drivers, Version=3.99.19.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\hima.lib.advancedhmi.3.9.9\lib\MfgControl.AdvancedHMI.Drivers.dll</HintPath>
+    </Reference>
+    <Reference Include="OpcComRcw, Version=2.0.105.1, Culture=neutral, PublicKeyToken=9a40e993cbface53, processorArchitecture=MSIL">
+      <HintPath>..\packages\hima.lib.advancedhmi.3.9.9\lib\OpcComRcw.dll</HintPath>
+    </Reference>
+    <Reference Include="OpcNetApi, Version=2.1.105.1, Culture=neutral, PublicKeyToken=9a40e993cbface53, processorArchitecture=MSIL">
+      <HintPath>..\packages\hima.lib.advancedhmi.3.9.9\lib\OpcNetApi.dll</HintPath>
+    </Reference>
+    <Reference Include="OpcNetApi.Com, Version=2.1.105.1, Culture=neutral, PublicKeyToken=9a40e993cbface53, processorArchitecture=MSIL">
+      <HintPath>..\packages\hima.lib.advancedhmi.3.9.9\lib\OpcNetApi.Com.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -148,12 +171,22 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\SeleccionCorrugado.xaml.cs">
+      <DependentUpon>SeleccionCorrugado.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SeleccionRigido.xaml.cs">
+      <DependentUpon>SeleccionRigido.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Seleccion.xaml.cs">
+      <DependentUpon>Seleccion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UC\Chart270UC.xaml.cs">
       <DependentUpon>Chart270UC.xaml</DependentUpon>
     </Compile>
@@ -177,6 +210,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\Inicio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SeleccionCorrugado.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SeleccionRigido.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Seleccion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

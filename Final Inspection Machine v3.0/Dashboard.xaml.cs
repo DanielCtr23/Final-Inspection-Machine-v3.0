@@ -51,5 +51,10 @@ namespace Final_Inspection_Machine_v3._0
         {
             SeleccionBtn(DetalleBtn);
         }
+
+        private void Frame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+
+        }
     }
 }

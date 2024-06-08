@@ -22,6 +22,7 @@
             <Button x:Name="ContadoresBtn" Style="{StaticResource FlatButtonStyle}" Content="CONTADORES" ClickMode="Press" Cursor="Hand" Tag="CalculatorSolid" />
             <Button x:Name="InformesBtn" Style="{StaticResource FlatButtonStyle}" Content="INFORMES" ClickMode="Press" Cursor="Hand" Tag="CalculatorSolid" />
         </StackPanel>
-        <Frame x:Name="Frame" Grid.Column="1" Content="Frame" Grid.Row="1"/>
+        <Frame x:Name="Frame" Grid.Column="1" Content="Frame" Grid.Row="1" Navigated="Frame_Navigated"/>
+        
     </Grid>
 </Window>
