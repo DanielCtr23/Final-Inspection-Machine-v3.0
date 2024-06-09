@@ -1,0 +1,37 @@
+﻿<Page x:Class="Final_Inspection_Machine_v3._0.Pages.SeleccionCorrugado"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="180" d:DesignWidth="800"
+      Title="SeleccionCorrugado" SizeChanged="Page_SizeChanged" VerticalAlignment="Top">
+    <Grid VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition x:Name="Column1"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition MaxHeight="50"/>
+            <RowDefinition x:Name="Row1"/>
+            <RowDefinition Height="*" MaxHeight="20"/>
+        </Grid.RowDefinitions>
+        <Viewbox Grid.ColumnSpan="8" Margin="10,10,10,0">
+            <TextBlock Text="POSICIÓN DE CORRUGADO" Foreground="White"  VerticalAlignment="Top"/>
+        </Viewbox>
+        <WindowsFormsHost x:Name="CorrugadoBHost" Grid.Column="1" Grid.Row="1" Margin="5,0,5,5"/>
+        <WindowsFormsHost x:Name="CorrugadoCHost" Grid.Column="2" Grid.Row="1" Margin="5,0,5,5"/>
+        <WindowsFormsHost x:Name="CorrugadoDHost" Grid.Column="3" Grid.Row="1" Margin="5,0,5,5"/>
+        <WindowsFormsHost x:Name="CorrugadoEHost" Grid.Column="4" Grid.Row="1" Margin="5,0,5,5"/>
+        <WindowsFormsHost x:Name="CorrugadoFHost" Grid.Column="5" Grid.Row="1" Margin="5,0,5,5"/>
+        <WindowsFormsHost x:Name="CorrugadoGHost" Grid.Column="6" Grid.Row="1" Margin="5,0,5,5"/>
+    </Grid>
+</Page>

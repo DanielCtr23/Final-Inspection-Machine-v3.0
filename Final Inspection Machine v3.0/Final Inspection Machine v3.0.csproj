@@ -201,11 +201,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DashboardTab.xaml.cs">
-      <DependentUpon>DashboardTab.xaml</DependentUpon>
+    <Compile Include="Inspeccion-CL.xaml.cs">
+      <DependentUpon>Inspeccion-CL.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC\BasicIndicator.xaml.cs">
-      <DependentUpon>BasicIndicator.xaml</DependentUpon>
+    <Compile Include="Pages\BarraBaja.xaml.cs">
+      <DependentUpon>BarraBaja.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DobleEstacion.xaml.cs">
+      <DependentUpon>DobleEstacion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Estacion1.xaml.cs">
+      <DependentUpon>Estacion1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SeleccionCorrugado.xaml.cs">
+      <DependentUpon>SeleccionCorrugado.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SeleccionRigido.xaml.cs">
+      <DependentUpon>SeleccionRigido.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Principal.xaml.cs">
+      <DependentUpon>Principal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Seleccion.xaml.cs">
+      <DependentUpon>Seleccion.xaml</DependentUpon>
     </Compile>
     <Compile Include="UC\Chart270UC.xaml.cs">
       <DependentUpon>Chart270UC.xaml</DependentUpon>
@@ -215,6 +233,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DashboardTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Inspeccion-CL.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -233,11 +255,35 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\BarraBaja.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\DobleEstacion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Estacion1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Inicio.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC\BasicIndicator.xaml">
+    <Page Include="Pages\SeleccionCorrugado.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SeleccionRigido.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Principal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Seleccion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -275,6 +321,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="RheemBCK.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Background.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

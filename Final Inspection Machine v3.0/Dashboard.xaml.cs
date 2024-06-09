@@ -34,6 +34,7 @@ namespace Final_Inspection_Machine_v3._0
 
         private void InicioBtn_Click(object sender, RoutedEventArgs e)
         {
+            Frame.NavigationService.Navigate(new Inicio());
             SeleccionBtn(InicioBtn);
         }
 
@@ -50,6 +51,11 @@ namespace Final_Inspection_Machine_v3._0
         private void DetalleBtn_Click(object sender, RoutedEventArgs e)
         {
             SeleccionBtn(DetalleBtn);
+        }
+
+        private void Frame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+
         }
     }
 }
