@@ -45,14 +45,14 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Button x:Name="RegresarBtn" Style="{StaticResource FlatButtonStyle}" Margin="20,15,20,15" Grid.RowSpan="2">
+        <Button x:Name="RegresarBtn" Style="{StaticResource FlatButtonStyle}" Margin="20,15,20,15" Grid.RowSpan="2" Click="RegresarBtn_Click">
             <StackPanel>
                 <iconpacks:PackIconFontAwesome Kind="ArrowLeftSolid" HorizontalAlignment="Stretch"/>
                 <TextBlock Text="REGRESAR" HorizontalAlignment="Stretch"/>
             </StackPanel>
         </Button>
 
-        <Button Style="{StaticResource FlatButtonStyle}" Margin="20,15,20,15" Grid.RowSpan="2" Grid.Column="1">
+        <Button Style="{StaticResource FlatButtonStyle}" Margin="20,15,20,15" Grid.RowSpan="2" Grid.Column="1" Click="Button_Click">
             <StackPanel>
                 <WindowsFormsHost x:Name="ModelosHost"/>
             </StackPanel>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Final_Inspection_Machine_v3._0.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Windows.Forms.Integration;
 
 namespace Final_Inspection_Machine_v3._0
 {
@@ -27,7 +29,6 @@ namespace Final_Inspection_Machine_v3._0
             Segundero.Tick += new EventHandler(Segundero_Tick);
             Segundero.Interval = TimeSpan.FromSeconds(1);
             Segundero.Start(); 
-            WindowState = WindowState.Maximized;
         }
 
         private void Segundero_Tick(object sender, EventArgs e)
@@ -38,15 +39,25 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            
+            var page = ProcesoFrame.Content as DobleEstacion;
+            page.Ajustar();
         }
 
         private void InspeccionWndw_Loaded(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState.Maximized;
-            ResizeMode = ResizeMode.CanResize;
             
+        }
 
+        private void InspeccionWndw_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
+
+        private void InspeccionWndw_StateChanged(object sender, EventArgs e)
+        {
+            var page = ProcesoFrame.Content as DobleEstacion;
+            page.Ajustar();
         }
     }
 }

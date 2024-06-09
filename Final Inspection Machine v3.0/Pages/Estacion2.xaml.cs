@@ -17,9 +17,9 @@ using System.Windows.Shapes;
 namespace Final_Inspection_Machine_v3._0.Pages
 {
     /// <summary>
-    /// Interaction logic for Estacion1.xaml
+    /// Lógica de interacción para Estacion2.xaml
     /// </summary>
-    public partial class Estacion1 : Page
+    public partial class Estacion2 : Page
     {
         BasicIndicator OrificeBI = new BasicIndicator();
         BasicIndicator PilotBracketBI = new BasicIndicator();
@@ -29,7 +29,8 @@ namespace Final_Inspection_Machine_v3._0.Pages
         BasicIndicator NutBI = new BasicIndicator();
         BasicIndicator TaponBI = new BasicIndicator();
         BasicIndicator EtiquetaBI = new BasicIndicator();
-        public Estacion1()
+
+        public Estacion2()
         {
             InitializeComponent();
             OrificeHost.Child = OrificeBI;
@@ -47,7 +48,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
 
         private void MostrarResorte(bool Activar)
         {
-            if(Activar)
+            if (Activar)
             {
                 ResorteHost.Visibility = Visibility.Visible;
                 ResorteTB.Visibility = Visibility.Visible;
@@ -78,7 +79,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            
+
             double WP = e.NewSize.Width;
             double HP = e.NewSize.Height;
             double Factor = 13;
@@ -108,7 +109,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
 
         public void Ajustar()
         {
-            int H = (int)OrificeTB.ActualHeight-4;
+            int H = (int)OrificeTB.ActualHeight - 4;
             OrificeBI.Width = H;
             ResorteBI.Width = H;
             PilotBracketBI.Width = H;

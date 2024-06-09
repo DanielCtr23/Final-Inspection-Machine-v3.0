@@ -213,6 +213,9 @@
     <Compile Include="Pages\Estacion1.xaml.cs">
       <DependentUpon>Estacion1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Estacion2.xaml.cs">
+      <DependentUpon>Estacion2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SeleccionCorrugado.xaml.cs">
       <DependentUpon>SeleccionCorrugado.xaml</DependentUpon>
     </Compile>
@@ -264,6 +267,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Estacion1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Estacion2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,51 +1,1 @@
-﻿<Page x:Name="Estacion1Page"
-      x:Class="Final_Inspection_Machine_v3._0.Pages.Estacion1"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="400"
-      Title="Estacion1" SizeChanged="Page_SizeChanged" Loaded="Estacion1Page_Loaded">
-
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="5*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1.2*"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Viewbox Grid.ColumnSpan="2">
-            <TextBlock Text="ESTACIÓN 1" Foreground="White" Margin="5,1,10,1"/>
-        </Viewbox>
-
-        <TextBlock x:Name="OrificeTB" Text="ORIFICE" Foreground="White" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="5,2,2,2"/>
-        <TextBlock x:Name="PilotBracketTB" Text="PILOT BRACKET" Foreground="White" Grid.Column="1" Grid.Row="2" FontSize="24" VerticalAlignment="Center" Margin="5,2,2,2"/>
-        <TextBlock x:Name="ResorteTB" Text="RESORTE" Foreground="White" Grid.Column="1" Grid.Row="3" FontSize="24" VerticalAlignment="Center" Margin="5,2,2,2"/>
-        <TextBlock Text="LARGO CORRUGADO" Foreground="White" Grid.Column="1" Grid.Row="4" FontSize="24" VerticalAlignment="Center" Margin="5,2,2,2"/>
-        <TextBlock Text="SENTIDO CORRUGADO" Foreground="White" Grid.Column="1" Grid.Row="5" FontSize="24" VerticalAlignment="Center" Margin="5,2,2,2"/>
-        <TextBlock Text="NUT" Foreground="White" Grid.Column="1" Grid.Row="6" FontSize="24" VerticalAlignment="Center" Margin="5,2,2,2"/>
-        <TextBlock Text="TAPÓN" Foreground="White" Grid.Column="1" Grid.Row="7" FontSize="24" VerticalAlignment="Center" Margin="5,2,2,2"/>
-        <TextBlock Text="ETIQUETA" Foreground="White" Grid.Column="1" Grid.Row="8" FontSize="24" VerticalAlignment="Center" Margin="5,2,2,2"/>
-
-        <WindowsFormsHost x:Name="OrificeHost" Grid.Column="0" Grid.Row="1" Margin="2,2,0,2"/>
-        <WindowsFormsHost x:Name="PilotBracketHost" Grid.Column="0" Grid.Row="2" Margin="2,2,0,2"/>
-        <WindowsFormsHost x:Name="ResorteHost" Grid.Column="0" Grid.Row="3" Margin="2,2,0,2"/>
-        <WindowsFormsHost x:Name="LargoCorrugadoHost" Grid.Column="0" Grid.Row="4" Margin="2,2,0,2"/>
-        <WindowsFormsHost x:Name="SentidoCorrugadoHost" Grid.Column="0" Grid.Row="5" Margin="2,2,0,2"/>
-        <WindowsFormsHost x:Name="NutCorrugadoHost" Grid.Column="0" Grid.Row="6" Margin="2,2,0,2"/>
-        <WindowsFormsHost x:Name="TaponCorrugadoHost" Grid.Column="0" Grid.Row="7" Margin="2,2,0,2"/>
-        <WindowsFormsHost x:Name="EtiquetaCorrugadoHost" Grid.Column="0" Grid.Row="8" Margin="2,2,0,2"/>
-
-    </Grid>
-</Page>
+﻿<Page x:Name="Estacion1Page"      x:Class="Final_Inspection_Machine_v3._0.Pages.Estacion1"      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"       xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.Pages"      mc:Ignorable="d"       d:DesignHeight="450" d:DesignWidth="400"      Title="Estacion1" SizeChanged="Page_SizeChanged" Loaded="Estacion1Page_Loaded">    <Grid>        <Grid.ColumnDefinitions>            <ColumnDefinition Width="*"/>        </Grid.ColumnDefinitions>        <Grid.RowDefinitions>            <RowDefinition Height="1.2*"/>            <RowDefinition Height="8*"/>        </Grid.RowDefinitions>        <Viewbox Grid.Row="0">            <TextBlock Text="ESTACIÓN 1" Foreground="White" FontWeight="SemiBold" Margin="5,0,30,0"/>        </Viewbox>        <Grid Name="gridControls" Grid.Row="1" Margin="15,0,0,0">            <!-- Definir 8 filas, una para cada control -->            <Grid.RowDefinitions>                <RowDefinition Height="*"/>                <RowDefinition Height="*"/>                <RowDefinition Height="*"/>                <RowDefinition Height="*"/>                <RowDefinition Height="*"/>                <RowDefinition Height="*"/>                <RowDefinition Height="*"/>                <RowDefinition Height="*"/>            </Grid.RowDefinitions>            <!-- Definir las columnas -->            <Grid.ColumnDefinitions>                                <ColumnDefinition Width="Auto"/>            </Grid.ColumnDefinitions>            <!-- Definir los pares de controles y textblocks -->            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Margin="2,2,0,2">                <WindowsFormsHost x:Name="OrificeHost" VerticalAlignment="Center" HorizontalAlignment="Center"/>                <TextBlock x:Name="OrificeTB" Text="ORIFICE" Foreground="White" VerticalAlignment="Center" Margin="5,2,2,2" SizeChanged="OrificeTB_SizeChanged"/>            </StackPanel>            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Margin="2,2,0,2">                <WindowsFormsHost x:Name="PilotBracketHost" VerticalAlignment="Center" HorizontalAlignment="Center"/>                <TextBlock x:Name="PilotBracketTB" Text="PILOT BRACKET" Foreground="White" VerticalAlignment="Center" Margin="5,2,2,2"/>            </StackPanel>            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Margin="2,2,0,2">                <WindowsFormsHost x:Name="ResorteHost" VerticalAlignment="Center" HorizontalAlignment="Center"/>                <TextBlock x:Name="ResorteTB" Text="RESORTE" Foreground="White" VerticalAlignment="Center" Margin="5,2,2,2"/>            </StackPanel>            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Margin="2,2,0,2">                <WindowsFormsHost x:Name="LargoCorrugadoHost" VerticalAlignment="Center" HorizontalAlignment="Center"/>                <TextBlock x:Name="LargoTB" Text="LARGO CORRUGADO" Foreground="White" VerticalAlignment="Center" Margin="5,2,2,2"/>            </StackPanel>            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Margin="2,2,0,2">                <WindowsFormsHost x:Name="SentidoCorrugadoHost" VerticalAlignment="Center" HorizontalAlignment="Center"/>                <TextBlock x:Name="SentidoTB" Text="SENTIDO CORRUGADO" Foreground="White" VerticalAlignment="Center" Margin="5,2,2,2"/>            </StackPanel>            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="0" Margin="2,2,0,2">                <WindowsFormsHost x:Name="NutCorrugadoHost" VerticalAlignment="Center" HorizontalAlignment="Center"/>                <TextBlock x:Name="NutTB" Text="NUT" Foreground="White" VerticalAlignment="Center" Margin="5,2,2,2"/>            </StackPanel>            <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="0" Margin="2,2,0,2">                <WindowsFormsHost x:Name="TaponCorrugadoHost" VerticalAlignment="Center" HorizontalAlignment="Center"/>                <TextBlock x:Name="TaponTB" Text="TAPÓN" Foreground="White" VerticalAlignment="Center" Margin="5,2,2,2"/>            </StackPanel>            <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="0" Margin="2,2,0,2">                <WindowsFormsHost x:Name="EtiquetaCorrugadoHost" VerticalAlignment="Center" HorizontalAlignment="Center"/>                <TextBlock x:Name="EtiquetaTB" Text="ETIQUETA" Foreground="White" VerticalAlignment="Center" Margin="5,2,2,2"/>            </StackPanel>        </Grid>    </Grid></Page>

@@ -22,11 +22,30 @@ namespace Final_Inspection_Machine_v3._0.Pages
     public partial class BarraBaja : Page
     {
         BasicLabel ModelosLabel = new BasicLabel();
+        Seleccion Seleccion = new Seleccion();
         public BarraBaja()
         {
             InitializeComponent();
             ModelosLabel.Text = "AS48378B";
             ModelosHost.Child = ModelosLabel;
+        }
+
+        private void RegresarBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Window parentWindow = Window.GetWindow(this);
+            parentWindow.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Seleccion.ShowDialog();
+            }
+            catch (Exception)
+            {
+                Seleccion.Focus();
+            }
         }
     }
 }

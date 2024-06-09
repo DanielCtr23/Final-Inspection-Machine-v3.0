@@ -24,6 +24,7 @@
 
         <Frame x:Name="BarraBajaFrame" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="2" Source="/Pages/BarraBaja.xaml"/>
         <Frame x:Name="Estacion1" Grid.Row="1" Grid.Column="0" Source="/Pages/Estacion1.xaml"/>
+        <Frame x:Name="Estacion2" Grid.Row="1" Grid.Column="1" Source="/Pages/Estacion2.xaml"/>
         
     </Grid>
 </Page>

@@ -29,8 +29,32 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            this.Hide();
             inspeccion_CL.Show();
+            inspeccion_CL.Closing += Inspeccion_CL_Closed;
+
         }
 
+        private void Inspeccion_CL_Closed(object sender, System.EventArgs e)
+        {
+            try
+            {
+                this.Visibility = Visibility.Visible;
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            App.Current.Shutdown();
+        }
+
+        private void CerrarBtn_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.Shutdown();
+        }
     }
 }

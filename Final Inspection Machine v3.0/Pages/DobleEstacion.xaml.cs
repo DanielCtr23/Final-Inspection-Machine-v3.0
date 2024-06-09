@@ -25,5 +25,13 @@ namespace Final_Inspection_Machine_v3._0.Pages
         {
             InitializeComponent();
         }
+
+        public void Ajustar()
+        {
+            var Page1 = Estacion1.Content as Estacion1;
+            var Page2 = Estacion2.Content as Estacion2;
+            Page1.Ajustar();
+            Page2.Ajustar();
+        }
     }
 }

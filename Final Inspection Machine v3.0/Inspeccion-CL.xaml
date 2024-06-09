@@ -6,9 +6,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0"
         mc:Ignorable="d"
-        Title="Inspeccion_CL" Height="450" Width="800" ResizeMode="CanMinimize" WindowState="Maximized" SizeChanged="Window_SizeChanged" Loaded="InspeccionWndw_Loaded" >
+        Title="Inspeccion_CL" Height="450" Width="800" ResizeMode="CanMinimize" WindowState="Maximized" SizeChanged="Window_SizeChanged" WindowStartupLocation="CenterScreen" Loaded="InspeccionWndw_Loaded" Closing="InspeccionWndw_Closing" StateChanged="InspeccionWndw_StateChanged" WindowStyle="None" >
     <Window.Background>
-        <ImageBrush ImageSource="/image (1).png"/>
+        <ImageBrush ImageSource="/image (1).png" Stretch="Fill" TileMode="Tile"/>
     </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -35,7 +35,6 @@
         <Viewbox Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1">
             <TextBlock x:Name="HoraTB" Foreground="White" Margin="70,0,0,0"/>
         </Viewbox>
-
-        <Frame Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Source="/Pages/DobleEstacion.xaml"/>
+        <Frame x:Name="ProcesoFrame" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Source="/Pages/DobleEstacion.xaml"/>
     </Grid>
 </Window>
