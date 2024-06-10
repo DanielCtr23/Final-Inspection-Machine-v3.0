@@ -26,9 +26,9 @@
         <Viewbox Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="0" Margin="7">
             <TextBlock Text="SELECCIÓN DE MODELO" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center" FontWeight="Bold" Foreground="White"/>
         </Viewbox>
-        <Frame Grid.Column="1" Grid.Row="2" Source="/Pages/SeleccionRigido.xaml" NavigationUIVisibility="Hidden" Background="#373737" Margin="1,1,1,1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
-        <ComboBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="60,20,0,15"/>
-        <Button Grid.Column="3" Grid.Row="3" Margin="100,20,100,20"/>
+        <Frame Grid.Column="1" Grid.Row="2" x:Name="RigidoFrame" NavigationUIVisibility="Hidden" Background="#373737" Margin="1,1,1,1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+        <ComboBox x:Name="ListaCBx" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="60,20,0,15" SelectionChanged="ListaCBx_SelectionChanged"/>
+        <Button Grid.Column="3" Grid.Row="3" Margin="100,20,100,20" Click="Button_Click"/>
 
     </Grid>
 </Window>

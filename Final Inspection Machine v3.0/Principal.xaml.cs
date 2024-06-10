@@ -20,11 +20,11 @@ namespace Final_Inspection_Machine_v3._0
     /// </summary>
     public partial class Principal : Window
     {
-        Inspeccion_CL inspeccion_CL = new Inspeccion_CL();
+        Inspeccion_CL inspeccion_CL;
         public Principal()
         {
             InitializeComponent();
-            
+            inspeccion_CL = new Inspeccion_CL();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

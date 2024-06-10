@@ -1,4 +1,5 @@
 ﻿using AdvancedHMIControls;
+using AdvancedHMIDrivers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Final_Inspection_Machine_v3._0.Pages
 {
@@ -21,20 +23,105 @@ namespace Final_Inspection_Machine_v3._0.Pages
     /// </summary>
     public partial class SeleccionRigido : Page
     {
+        DispatcherTimer TmrSegundero = new DispatcherTimer();
+        EthernetIPforCLXCom Com;
         BasicIndicator RigidoBI = new BasicIndicator();
         BasicIndicator RigidoCI = new BasicIndicator();
         BasicIndicator RigidoDI = new BasicIndicator();
         BasicIndicator RigidoEI = new BasicIndicator();
         BasicIndicator RigidoFI = new BasicIndicator();
         BasicIndicator RigidoGI = new BasicIndicator();
-        public SeleccionRigido()
+        Seleccion s;
+        public SeleccionRigido(EthernetIPforCLXCom ClCom, Seleccion s)
         {
+            Com = ClCom;
             InitializeComponent();
             InicializarIndicadores();
+            TmrSegundero.Tick += TmrSegundero_Tick;
+            TmrSegundero.Interval = TimeSpan.FromSeconds(10);
+            TmrSegundero.Start();
+            this.s = s;
+        }
+
+        private void TmrSegundero_Tick(object sender, EventArgs e)
+        {
+            //Revisar todo
+            if(RigidoBI.SelectColor2 && RigidoBI.SelectColor3)
+            {
+                RigidoBI.Color2 = System.Drawing.Color.Green;
+                s.listo[0] = true;
+            }
+            else
+            {
+                RigidoBI.Color2 = System.Drawing.Color.Yellow;
+                s.listo[0] = false;
+            }
+
+            if (RigidoCI.SelectColor2 && RigidoCI.SelectColor3)
+            {
+                RigidoCI.Color2 = System.Drawing.Color.Green;
+                s.listo[0] = true;
+            }
+            else
+            {
+                RigidoCI.Color2 = System.Drawing.Color.Yellow;
+                s.listo[0] = false;
+            }
+
+            if (RigidoDI.SelectColor2 && RigidoDI.SelectColor3)
+            {
+                RigidoDI.Color2 = System.Drawing.Color.Green;
+                s.listo[0] = true;
+            }
+            else
+            {
+                RigidoDI.Color2 = System.Drawing.Color.Yellow;
+                s.listo[0] = false;
+            }
+
+            if (RigidoEI.SelectColor2 && RigidoEI.SelectColor3)
+            {
+                RigidoEI.Color2 = System.Drawing.Color.Green;
+                s.listo[0] = true;
+            }
+            else
+            {
+                RigidoEI.Color2 = System.Drawing.Color.Yellow;
+                s.listo[0] = false;
+            }
+
+            if (RigidoFI.SelectColor2 && RigidoFI.SelectColor3)
+            {
+                RigidoFI.Color2 = System.Drawing.Color.Green;
+                s.listo[0] = true;
+            }
+            else
+            {
+                RigidoFI.Color2 = System.Drawing.Color.Yellow;
+                s.listo[0] = false;
+            }
+
+            if (RigidoGI.SelectColor2 && RigidoGI.SelectColor3)
+            {
+                RigidoGI.Color2 = System.Drawing.Color.Green;
+                s.listo[0] = true;
+            }
+            else
+            {
+                RigidoGI.Color2 = System.Drawing.Color.Yellow;
+                s.listo[0] = false;
+            }
+
         }
 
         private void InicializarIndicadores()
         {
+            RigidoBI.ComComponent = Com;
+            RigidoCI.ComComponent = Com;
+            RigidoDI.ComComponent = Com;
+            RigidoEI.ComComponent = Com;
+            RigidoFI.ComComponent = Com;
+            RigidoGI.ComComponent = Com;
 
             RigidoBI.Text = "B";
             RigidoCI.Text = "C";
@@ -43,26 +130,26 @@ namespace Final_Inspection_Machine_v3._0.Pages
             RigidoFI.Text = "F";
             RigidoGI.Text = "G";
 
-            //try
-            //{
-            //    RigidoBI.PLCAddressSelectColor2 = "Posicion_Rigido_B";
-            //    RigidoCI.PLCAddressSelectColor2 = "Posicion_Rigido_C";
-            //    RigidoDI.PLCAddressSelectColor2 = "Posicion_Rigido_D";
-            //    RigidoEI.PLCAddressSelectColor2 = "Posicion_Rigido_E";
-            //    RigidoFI.PLCAddressSelectColor2 = "Posicion_Rigido_F";
-            //    RigidoGI.PLCAddressSelectColor2 = "Posicion_Rigido_G";
+            try
+            {
+                RigidoBI.PLCAddressSelectColor2 = "POSICION_RIGIDO_B";
+                RigidoCI.PLCAddressSelectColor2 = "POSICION_RIGIDO_C";
+                RigidoDI.PLCAddressSelectColor2 = "POSICION_RIGIDO_D";
+                RigidoEI.PLCAddressSelectColor2 = "POSICION_RIGIDO_E";
+                RigidoFI.PLCAddressSelectColor2 = "POSICION_RIGIDO_F";
+                RigidoGI.PLCAddressSelectColor2 = "POSICION_RIGIDO_G";
 
-            //    RigidoBI.PLCAddressSelectColor3 = "PosicionV_Rigido_B";
-            //    RigidoCI.PLCAddressSelectColor3 = "PosicionV_Rigido_C";
-            //    RigidoDI.PLCAddressSelectColor3 = "PosicionV_Rigido_D";
-            //    RigidoEI.PLCAddressSelectColor3 = "PosicionV_Rigido_E";
-            //    RigidoFI.PLCAddressSelectColor3 = "PosicionV_Rigido_F";
-            //    RigidoGI.PLCAddressSelectColor3 = "PosicionV_Rigido_G";
-            //}
-            //catch (Exception)
-            //{
-            //    MessageBox.Show("No se puede conectar con alguno de los Tags, Favor de verificar");
-            //}
+                RigidoBI.PLCAddressSelectColor3 = "INPUTS_BITS_2.5";
+                RigidoCI.PLCAddressSelectColor3 = "INPUT_BITS.8";
+                RigidoDI.PLCAddressSelectColor3 = "INPUT_BITS.7";
+                RigidoEI.PLCAddressSelectColor3 = "INPUT_BITS.6";
+                RigidoFI.PLCAddressSelectColor3 = "INPUT_BITS.5";
+                RigidoGI.PLCAddressSelectColor3 = "INPUT_BITS.4";
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("No se puede conectar con alguno de los Tags, Favor de verificar");
+            }
             RigidoBHost.Child = RigidoBI;
             RigidoCHost.Child = RigidoCI;
             RigidoDHost.Child = RigidoDI;
@@ -77,6 +164,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
             RigidoFHost.Background = Brushes.Transparent;
             RigidoGHost.Background = Brushes.Transparent;
         }
+
 
         private void Page_LayoutUpdated(object sender, EventArgs e)
         {

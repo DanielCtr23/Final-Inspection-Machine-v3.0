@@ -7,8 +7,9 @@
       xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="180" d:DesignWidth="800"
-      Title="SeleccionCorrugado" SizeChanged="Page_SizeChanged" VerticalAlignment="Top">
-    <Grid VerticalAlignment="Top">
+      Title="SeleccionCorrugado" VerticalAlignment="Top" SizeChanged="Page_SizeChanged" Margin="1,1,1,1" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.IsSharedSizeScope="True" ClipToBounds="True">
+
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition x:Name="Column1"/>
@@ -32,6 +33,5 @@
         <WindowsFormsHost x:Name="CorrugadoDHost" Grid.Column="3" Grid.Row="1" Margin="5,0,5,5"/>
         <WindowsFormsHost x:Name="CorrugadoEHost" Grid.Column="4" Grid.Row="1" Margin="5,0,5,5"/>
         <WindowsFormsHost x:Name="CorrugadoFHost" Grid.Column="5" Grid.Row="1" Margin="5,0,5,5"/>
-        <WindowsFormsHost x:Name="CorrugadoGHost" Grid.Column="6" Grid.Row="1" Margin="5,0,5,5"/>
     </Grid>
 </Page>

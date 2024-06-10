@@ -22,13 +22,15 @@ namespace Final_Inspection_Machine_v3._0
     /// </summary>
     public partial class Inspeccion_CL : Window
     {
-        DispatcherTimer Segundero = new DispatcherTimer();
+        DispatcherTimer Segundero;
+        DobleEstacion DobleEstacion;
         public Inspeccion_CL()
         {
             InitializeComponent();
+            Segundero = new DispatcherTimer();
             Segundero.Tick += new EventHandler(Segundero_Tick);
             Segundero.Interval = TimeSpan.FromSeconds(1);
-            Segundero.Start(); 
+            Segundero.Start();
         }
 
         private void Segundero_Tick(object sender, EventArgs e)
@@ -39,13 +41,12 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            var page = ProcesoFrame.Content as DobleEstacion;
-            page.Ajustar();
+            //var page = ProcesoFrame.Content as DobleEstacion;
+            //page.Ajustar();
         }
 
         private void InspeccionWndw_Loaded(object sender, RoutedEventArgs e)
         {
-            
         }
 
         private void InspeccionWndw_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -56,8 +57,9 @@ namespace Final_Inspection_Machine_v3._0
 
         private void InspeccionWndw_StateChanged(object sender, EventArgs e)
         {
-            var page = ProcesoFrame.Content as DobleEstacion;
-            page.Ajustar();
+            //var page = ProcesoFrame.Content as DobleEstacion;
+            //page.Ajustar();
         }
+
     }
 }

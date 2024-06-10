@@ -8,7 +8,7 @@
       mc:Ignorable="d" d:DesignWidth="800"
       Title="SeleccionRigido" Height="180" LayoutUpdated="Page_LayoutUpdated" SizeChanged="Page_SizeChanged" Margin="1,1,1,1" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.IsSharedSizeScope="True" ClipToBounds="True">
 
-    <Grid>
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition />
@@ -25,7 +25,7 @@
             <RowDefinition Height="*" MaxHeight="20"/>
         </Grid.RowDefinitions>
         <Viewbox Grid.ColumnSpan="8" Margin="10,10,10,0" >
-            <TextBlock Text="POSICIÓN DE RÍGIDO" Foreground="White"/>
+            <TextBlock Text="POSICIÓN DE RÍGIDO" Foreground="White" VerticalAlignment="Top"/>
         </Viewbox>
         <WindowsFormsHost x:Name="RigidoGHost" Grid.Column="1" Grid.Row="1" Margin="5,0,5,5"/>
         <WindowsFormsHost x:Name="RigidoFHost" Grid.Column="2" Grid.Row="1" Margin="5,0,5,5"/>

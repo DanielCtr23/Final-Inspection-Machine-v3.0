@@ -1,5 +1,6 @@
-﻿<Window x:Name="InspeccionWndw"
+﻿<Window 
         x:Class="Final_Inspection_Machine_v3._0.Inspeccion_CL"
+        x:Name="InspeccionWndw"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"

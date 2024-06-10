@@ -1,4 +1,6 @@
 ﻿using AdvancedHMIControls;
+using AdvancedHMIDrivers;
+using MfgControl.AdvancedHMI.Drivers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +24,14 @@ namespace Final_Inspection_Machine_v3._0.Pages
     public partial class BarraBaja : Page
     {
         BasicLabel ModelosLabel = new BasicLabel();
-        Seleccion Seleccion = new Seleccion();
-        public BarraBaja()
+        Seleccion Seleccion;
+        EthernetIPforCLXCom Com;
+        public BarraBaja(EthernetIPforCLXCom ClCom)
         {
             InitializeComponent();
-            ModelosLabel.Text = "AS48378B";
-            ModelosHost.Child = ModelosLabel;
+            Com = ClCom;
+            //ModelosLabel.Text = "AS48378B";
+            //ModelosHost.Child = ModelosLabel;
         }
 
         private void RegresarBtn_Click(object sender, RoutedEventArgs e)
@@ -38,14 +42,29 @@ namespace Final_Inspection_Machine_v3._0.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void BasicIndicator_Click(object sender, EventArgs e)
+        {
             try
             {
+                Seleccion = new Seleccion(Com);
+                Seleccion.AceptarModelo += (senders, args) =>
+                {
+                    DobleEstacion DobleEstacion = this.Parent as DobleEstacion;
+                    DobleEstacion.ActualizarModelo();
+                };
                 Seleccion.ShowDialog();
             }
             catch (Exception)
             {
                 Seleccion.Focus();
             }
+        }
+
+        private void ModelosHost_ChildChanged(object sender, System.Windows.Forms.Integration.ChildChangedEventArgs e)
+        {
+
         }
     }
 }
