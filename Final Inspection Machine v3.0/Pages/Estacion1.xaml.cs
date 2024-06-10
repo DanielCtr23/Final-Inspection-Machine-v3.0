@@ -71,7 +71,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
             DobleEstacion = this.Parent as DobleEstacion;
             //PBActivo = DobleEstacion.pilotbracket;
             MostrarResorte(false);
-            //ActualizarModelo();
+            ActualizarModelo();
             Ajustar();
             PilotBracketBI.ComComponent = Com;
             PilotBracketBI.PLCAddressSelectColor2 = "PB_CORRECTO";
