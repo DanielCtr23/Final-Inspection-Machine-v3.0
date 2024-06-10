@@ -321,6 +321,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Contador.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Contador.settings</DependentUpon>
+    </Compile>
     <Compile Include="DB.cs" />
     <Compile Include="Etiquetadora.cs" />
     <Compile Include="Inspeccion-CL.xaml.cs">
@@ -449,6 +454,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Contador.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Contador.Designer.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

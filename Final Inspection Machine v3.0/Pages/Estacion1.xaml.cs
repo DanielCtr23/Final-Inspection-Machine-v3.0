@@ -31,12 +31,14 @@ namespace Final_Inspection_Machine_v3._0.Pages
         static ManualResetEvent ME1 = new ManualResetEvent(false);
         static ManualResetEvent ME11 = new ManualResetEvent(false);
 
+        int E1Contador;
+
         DobleEstacion DobleEstacion;
 
         bool PBActivo;
 
         Thread Proceso;
-
+        
         //Traer esto de Fuera
         bool sinsentido, nutrojo, pilotbracket;
         string modelo;
@@ -68,13 +70,11 @@ namespace Final_Inspection_Machine_v3._0.Pages
             InitializeComponent();
             this.Com = Com;
             Hostear();
-            DobleEstacion = this.Parent as DobleEstacion;
-            //PBActivo = DobleEstacion.pilotbracket;
             MostrarResorte(false);
             ActualizarModelo();
             Ajustar();
             PilotBracketBI.ComComponent = Com;
-            PilotBracketBI.PLCAddressSelectColor2 = "PB_CORRECTO";
+            PilotBracketBI.PLCAddressSelectColor2 = "PB_E1_OK";
         }
 
         private void MostrarResorte(bool Activar)
@@ -178,17 +178,17 @@ namespace Final_Inspection_Machine_v3._0.Pages
 
         public void ActualizarModelo()
         {
-        //    if (bool.Parse(Com.Read("PB_Activo")))
-        //    {
-        //        pilotbracket = true;
-        //    }
-        //    else
-        //    {
-        //        pilotbracket = false;
-        //    }
+            if (bool.Parse(Com.Read("PILOT_BRACKET")))
+            {
+                pilotbracket = true;
+            }
+            else
+            {
+                pilotbracket = false;
+            }
             MostrarPilotBracket(pilotbracket);
 
-            if(bool.Parse(Com.Read("NUT_ROJO")))
+            if(bool.Parse(Com.Read("PROGRAM:FIM.NUT_ROJO")))
             {
                 nutrojo = true;
             }
@@ -197,7 +197,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
                 nutrojo= false;
             }
 
-            if (bool.Parse(Com.Read("SINSENTIDO")))
+            if (bool.Parse(Com.Read("PROGRAM:FIM.SINSENTIDO")))
             {
                 sinsentido = true;
             }
@@ -214,7 +214,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
             Serial1 = "1";
             //LblME1.Text = "Iniciando Prueba";
             //Orifice
-            //TaskO11();
+            TaskO11();
 
             //LblME1.Text = "Realizando Prueba";
             //Largo Corrugado
@@ -326,12 +326,12 @@ namespace Final_Inspection_Machine_v3._0.Pages
             {
                 //LblME1.Text = "Pieza NOK";
                 E1T = true;
-                //COMMicro800.Write("E1_TERMINADO", 1);
-                //Estacion1.Abort();
+                Com.Write("E1_TERMINADO", 1);
+                Proceso.Abort();
             }
             else
             {
-                //COMMicro800.Write("E1_3PASS", 1);
+                Com.Write("E1_3PASS", 1);
                 //LblME1.Text = "Esperando Tapón";
                 ME1.WaitOne();
             }
@@ -346,14 +346,14 @@ namespace Final_Inspection_Machine_v3._0.Pages
             {
                 TaponBI.SelectColor2 = true;
                 TaponBI.Text = ResultadosC1[3].Calificacion.ToString();
-                //COMMicro800.Write("E1_TAPON_COLOCADO", 1);
+                Com.Write("E1_TAPON_COLOCADO", 1);
                 //Serial1 = GenerarSerial(modelo, 3, E1Contador);
                 //label15.Text = Serial1.Remove(0, modelo.Length);
                 //LblME1.Text = "Imprimiendo Etiqueta";
                 etiquetadora.GenerarEtiqueta(Serial1);
-                //E1Contador++;
-                //Contador.Default.ContadorE1 = E1Contador;
-                //Contador.Default.Save();
+                E1Contador++;
+                Contador.Default.ContadorE1 = E1Contador;
+                Contador.Default.Save();
             }
             else
             {
@@ -370,8 +370,8 @@ namespace Final_Inspection_Machine_v3._0.Pages
             {
                 //LblME1.Text = "Pieza NOK";
                 E1T = true;
-                //COMMicro800.Write("E1_TERMINADO", 1);
-                //Estacion1.Abort();
+                Com.Write("E1_TERMINADO", 1);
+                Proceso.Abort();
             }
             else
             {
@@ -389,7 +389,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
                 E1Pass = true;
                 E1T = true;
                 //LblME1.Text = "Pieza OK";
-                //COMMicro800.Write("E1_TERMINADO", 1);
+                Com.Write("E1_TERMINADO", 1);
             }
             else
             {
@@ -404,15 +404,31 @@ namespace Final_Inspection_Machine_v3._0.Pages
             {
                 //LblME1.Text = "Pieza NOK";
                 E1T = true;
-                //COMMicro800.Write("E1_TERMINADO", 1);
-                //Estacion1.Abort();
+                Com.Write("E1_TERMINADO", 1);
+                Proceso.Abort();
             }
             else
             {
                 E1T = true;
-                //Estacion1.Abort();
+                Proceso.Abort();
             }
 
+        }
+
+        public async void TaskO11()
+        {
+            Estructuras.Orifice orifice = await O1.PruebaOrifice();
+
+            OrificeBI.Text = orifice.Calificacion.ToString();
+            if (orifice.OKNG)
+            {
+                OrificeBI.SelectColor2 = true;
+            }
+            else
+            {
+                OrificeBI.SelectColor3 = true;
+                E1Fail = true;
+            }
         }
 
         private void PilotBracketHandler(bool determinar)
