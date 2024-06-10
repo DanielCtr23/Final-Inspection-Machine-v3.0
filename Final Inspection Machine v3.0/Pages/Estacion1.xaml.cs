@@ -73,7 +73,8 @@ namespace Final_Inspection_Machine_v3._0.Pages
             MostrarResorte(false);
             //ActualizarModelo();
             Ajustar();
-            PilotBracketBI.PLCAddressSelectColor2 = "PB_Correcto";
+            PilotBracketBI.ComComponent = Com;
+            PilotBracketBI.PLCAddressSelectColor2 = "PB_CORRECTO";
         }
 
         private void MostrarResorte(bool Activar)

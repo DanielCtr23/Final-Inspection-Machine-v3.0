@@ -54,7 +54,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
 
         private void Suscripcion()
         {
-            ComCL.Subscribe("CICLO_EN_CURSO", 1, 0, Ciclo_En_Curso_DataChanged );
+            ComCL.Subscribe("CICLO_EN_CURSO", 1, 500, Ciclo_En_Curso_DataChanged );
             Ciclo_En_Curso.ComComponent = ComCL;
             Ciclo_En_Curso.PLCAddressValue = new MfgControl.AdvancedHMI.Drivers.PLCAddressItem("CICLO_EN_CURSO");
             Ciclo_En_Curso.DataChanged += Ciclo_En_Curso_DataChanged;
@@ -113,14 +113,12 @@ namespace Final_Inspection_Machine_v3._0.Pages
 
         private void Ciclo_En_Curso_DataChanged(object sender, MfgControl.AdvancedHMI.Drivers.Common.PlcComEventArgs e)
         {
-            MessageBox.Show(e.Values[1].ToString());
-            if (bool.Parse(e.Values[1].ToString()));
+            if (bool.Parse(e.Values[0].ToString()))
             {
                 modelo = ComCL.Read("MODELO_SELECCIONADO");
-                sinsentido = bool.Parse(ComCL.Read("SINSENTIDO"));
-                nutrojo = bool.Parse(ComCL.Read("NUT_ROJO"));
-                pilotbracket = bool.Parse(ComCL.Read("PILOT_BRACKET"));
-                MessageBox.Show("hgu");
+                sinsentido = bool.Parse(ComCL.Read("PROGRAM:FIM.SINSENTIDO"));
+                nutrojo = bool.Parse(ComCL.Read("PROGRAM:FIM.NUT_ROJO"));
+                //pilotbracket = bool.Parse(ComCL.Read("PILOT_BRACKET"));
             }
         }
 
