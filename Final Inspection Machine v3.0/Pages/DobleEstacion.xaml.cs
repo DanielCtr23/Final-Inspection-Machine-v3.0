@@ -54,6 +54,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
 
         private void Suscripcion()
         {
+            ComCL.Subscribe("CICLO_EN_CURSO", 1, 0, Ciclo_En_Curso_DataChanged );
             Ciclo_En_Curso.ComComponent = ComCL;
             Ciclo_En_Curso.PLCAddressValue = new MfgControl.AdvancedHMI.Drivers.PLCAddressItem("CICLO_EN_CURSO");
             Ciclo_En_Curso.DataChanged += Ciclo_En_Curso_DataChanged;
