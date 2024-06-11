@@ -30,13 +30,17 @@ namespace Final_Inspection_Machine_v3._0.Pages
         BasicIndicator CorrugadoDI = new BasicIndicator();
         BasicIndicator CorrugadoEI = new BasicIndicator();
         BasicIndicator CorrugadoFI = new BasicIndicator();
-        public SeleccionCorrugado()
+        Seleccion s;
+
+        public SeleccionCorrugado(EthernetIPforCLXCom ClCom, Seleccion s)
         {
+            Com = ClCom;
             InitializeComponent();
             InicializarIndicadores();
             TmrSegundero.Tick += TmrSegundero_Tick;
             TmrSegundero.Interval = TimeSpan.FromSeconds(10);
             TmrSegundero.Start();
+            this.s = s;
         }
 
 
@@ -46,66 +50,56 @@ namespace Final_Inspection_Machine_v3._0.Pages
             if (CorrugadoBI.SelectColor2 && CorrugadoBI.SelectColor3)
             {
                 CorrugadoBI.Color2 = System.Drawing.Color.Green;
-                var s = Parent as Seleccion;
-                s.listo[0] = true;
+                s.listo[1] = true;
             }
             else
             {
                 CorrugadoBI.Color2 = System.Drawing.Color.Yellow;
-                var s = Parent as Seleccion;
-                s.listo[0] = false;
+                s.listo[1] = false;
             }
 
             if (CorrugadoCI.SelectColor2 && CorrugadoCI.SelectColor3)
             {
                 CorrugadoCI.Color2 = System.Drawing.Color.Green;
-                var s = Parent as Seleccion;
-                s.listo[0] = true;
+                s.listo[1] = true;
             }
             else
             {
                 CorrugadoCI.Color2 = System.Drawing.Color.Yellow;
-                var s = Parent as Seleccion;
-                s.listo[0] = false;
+                s.listo[1] = false;
             }
 
             if (CorrugadoDI.SelectColor2 && CorrugadoDI.SelectColor3)
             {
                 CorrugadoDI.Color2 = System.Drawing.Color.Green;
-                var s = Parent as Seleccion;
-                s.listo[0] = true;
+                s.listo[1] = true;
             }
             else
             {
                 CorrugadoDI.Color2 = System.Drawing.Color.Yellow;
-                var s = Parent as Seleccion;
-                s.listo[0] = false;
+                s.listo[1] = false;
             }
 
             if (CorrugadoEI.SelectColor2 && CorrugadoEI.SelectColor3)
             {
                 CorrugadoEI.Color2 = System.Drawing.Color.Green;
-                var s = Parent as Seleccion;
-                s.listo[0] = true;
+                s.listo[1] = true;
             }
             else
             {
                 CorrugadoEI.Color2 = System.Drawing.Color.Yellow;
-                var s = Parent as Seleccion;
-                s.listo[0] = false;
+                s.listo[1] = false;
             }
 
             if (CorrugadoFI.SelectColor2 && CorrugadoFI.SelectColor3)
             {
                 CorrugadoFI.Color2 = System.Drawing.Color.Green;
-                var s = Parent as Seleccion;
-                s.listo[0] = true;
+                s.listo[1] = true;
             }
             else
             {
                 CorrugadoFI.Color2 = System.Drawing.Color.Yellow;
-                var s = Parent as Seleccion;
-                s.listo[0] = false;
+                s.listo[1] = false;
             }
 
 
@@ -114,6 +108,11 @@ namespace Final_Inspection_Machine_v3._0.Pages
 
         private void InicializarIndicadores()
         {
+            CorrugadoBI.ComComponent = Com;
+            CorrugadoCI.ComComponent = Com;
+            CorrugadoDI.ComComponent = Com;
+            CorrugadoEI.ComComponent = Com;
+            CorrugadoFI.ComComponent = Com;
 
             CorrugadoBI.Text = "B";
             CorrugadoCI.Text = "C";

@@ -118,19 +118,19 @@ namespace Final_Inspection_Machine_v3._0.Pages
                 modelo = ComCL.Read("MODELO_SELECCIONADO");
                 sinsentido = bool.Parse(ComCL.Read("PROGRAM:FIM.SINSENTIDO"));
                 nutrojo = bool.Parse(ComCL.Read("PROGRAM:FIM.NUT_ROJO"));
-                //pilotbracket = bool.Parse(ComCL.Read("PILOT_BRACKET"));
+                pilotbracket = bool.Parse(ComCL.Read("PILOT_BRACKET"));
             }
         }
 
         public void Ajustar()
         {
-            //E1.Ajustar();
+            E1.Ajustar();
             //E2.Ajustar();
         }
 
         public void ActualizarModelo()
         {
-            //E1.ActualizarModelo();
+            E1.ActualizarModelo();
         }
 
 

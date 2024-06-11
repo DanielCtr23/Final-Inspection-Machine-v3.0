@@ -25,6 +25,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             InitializeComponent();
             inspeccion_CL = new Inspeccion_CL();
+            //new Inspeccion_CompactLogix().Show();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

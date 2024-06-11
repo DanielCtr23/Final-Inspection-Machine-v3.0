@@ -44,12 +44,11 @@ namespace Final_Inspection_Machine_v3._0.Pages
         string modelo;
 
 
-        string Serial1, Serial2;
+        string Serial1;
 
-        bool listo;
-        bool E1Pass = false, E2Pass = false;
-        bool E1Fail = false, E2Fail = false;
-        bool E1T, E2T;
+        bool E1Pass = false;
+        bool E1Fail = false;
+        bool E1T;
 
         Etiquetadora etiquetadora;
 
@@ -207,6 +206,30 @@ namespace Final_Inspection_Machine_v3._0.Pages
             }
         }
 
+        public string GenerarSerial(string Modelo, int Estacion, int Contador)
+        {
+            string serial = modelo + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd")
+                + DateTime.Now.ToString("HH") + Estacion.ToString() + Contador.ToString("D3");
+            return serial;
+        }
+
+        public void ResetPrograma()
+        {
+            Thread.Sleep(10);
+            C1.CambioPrograma(0);
+            Com.Write("E1_TERMINADO", 1);
+            Com.Write("E1_3PASS", 0);
+            Com.Write("E1_TAPON_COLOCADO", 0);
+            Com.Write("FAIL", 0);
+            Thread.Sleep(350);
+            Com.Write("E1_TERMINADO", 0);
+        }
+
+        public void Terminar()
+        {
+            ResetPrograma();
+        }
+
         //Hilos?
         public async void TaskE1()
         {
@@ -347,7 +370,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
                 TaponBI.SelectColor2 = true;
                 TaponBI.Text = ResultadosC1[3].Calificacion.ToString();
                 Com.Write("E1_TAPON_COLOCADO", 1);
-                //Serial1 = GenerarSerial(modelo, 3, E1Contador);
+                Serial1 = GenerarSerial(modelo, 3, E1Contador);
                 //label15.Text = Serial1.Remove(0, modelo.Length);
                 //LblME1.Text = "Imprimiendo Etiqueta";
                 etiquetadora.GenerarEtiqueta(Serial1);
@@ -472,7 +495,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
 
         public void DetenerCiclo()
         {
-
+            Proceso.Abort();
         }
     }
 }

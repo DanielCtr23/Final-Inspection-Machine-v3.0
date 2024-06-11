@@ -332,6 +332,9 @@
     <Compile Include="Inspeccion-CL.xaml.cs">
       <DependentUpon>Inspeccion-CL.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Inspeccion-CompactLogix.xaml.cs">
+      <DependentUpon>Inspeccion-CompactLogix.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\BarraAlta.xaml.cs">
       <DependentUpon>BarraAlta.xaml</DependentUpon>
     </Compile>
@@ -371,6 +374,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Inspeccion-CL.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Inspeccion-CompactLogix.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

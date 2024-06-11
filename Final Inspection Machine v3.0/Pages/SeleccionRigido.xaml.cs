@@ -32,6 +32,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
         BasicIndicator RigidoFI = new BasicIndicator();
         BasicIndicator RigidoGI = new BasicIndicator();
         Seleccion s;
+
         public SeleccionRigido(EthernetIPforCLXCom ClCom, Seleccion s)
         {
             Com = ClCom;
