@@ -74,7 +74,7 @@ namespace Final_Inspection_Machine_v3._0
                 pilotbracket = false ;
             }
 
-            if (bool.Parse(Com.Read("NUT_ROJO")))
+            if (bool.Parse(Com.Read("PROGRAM:FIM.NUT_ROJO")))
             {
                 nutrojo = true;
             }
