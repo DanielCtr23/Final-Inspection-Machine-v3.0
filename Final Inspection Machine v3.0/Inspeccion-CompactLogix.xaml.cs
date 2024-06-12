@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -33,6 +34,7 @@ namespace Final_Inspection_Machine_v3._0
 
         public Inspeccion_CompactLogix()
         {
+            RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
             InitializeComponent();
             InicializarPLC();
             //InicializarCamaras();
