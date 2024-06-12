@@ -7,7 +7,7 @@
         xmlns:ah="clr-namespace:AdvancedHMIControls;assembly=AdvancedHMIControls"
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="Inspeccion_CompactLogix" Height="900" Width="1400" WindowState="Maximized" WindowStartupLocation="CenterScreen" SizeChanged="Window_SizeChanged">
+        Title="Inspeccion_CompactLogix" Height="900" Width="1400" WindowState="Maximized" WindowStartupLocation="CenterScreen" SizeChanged="Window_SizeChanged" ResizeMode="NoResize" WindowStyle="None">
     <Window.Background>
         <ImageBrush ImageSource="/image (1).png" Stretch="Fill" TileMode="Tile"/>
     </Window.Background>
