@@ -76,7 +76,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
 
         private void E_Stop_DataChanged(object sender, MfgControl.AdvancedHMI.Drivers.Common.PlcComEventArgs e)
         {
-            E1.DetenerCiclo();
+           // E1.DetenerCiclo();
         }
 
         private void Insp_Etiqueta_DataChanged(object sender, MfgControl.AdvancedHMI.Drivers.Common.PlcComEventArgs e)
@@ -85,7 +85,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
             {
                 if (ComCL.Read("E1_INSP_ETIQUETA") == "True")
                 {
-                    E1.InspeccionarEtiqueta();
+                    //E1.InspeccionarEtiqueta();
                 }
 
                 if (ComCL.Read("E2_INSP_ETIQUETA") == "True")
@@ -101,7 +101,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
             {
                 if (ComCL.Read("E1_INSP_TAPON") == "True")
                 {
-                    E1.InspeccionarTapon();
+                    //E1.InspeccionarTapon();
                 }
 
                 if (ComCL.Read("E2_INSP_TAPON") == "True")

@@ -1,6 +1,6 @@
 ﻿using AdvancedHMIControls;
 using AdvancedHMIDrivers;
-using IV3_Keyence;
+//using IV3_Keyence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
     public partial class Estacion1 : Page
     {
         EthernetIPforCLXCom Com;
-        IV3 O1, O2, C1;
+        //IV3 O1, O2, C1;
         IPAddress IPO1, IPO2, IPC1;
         static ManualResetEvent ME1 = new ManualResetEvent(false);
         static ManualResetEvent ME11 = new ManualResetEvent(false);
@@ -54,7 +54,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
 
         DB dB;
 
-        Estructuras.ResultadosCorrugado[] ResultadosC1 = new Estructuras.ResultadosCorrugado[5];
+        //Estructuras.ResultadosCorrugado[] ResultadosC1 = new Estructuras.ResultadosCorrugado[5];
 
         BasicIndicator OrificeBI = new BasicIndicator();
         BasicIndicator PilotBracketBI = new BasicIndicator();
@@ -216,7 +216,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
         public void ResetPrograma()
         {
             Thread.Sleep(10);
-            C1.CambioPrograma(0);
+            //C1.CambioPrograma(0);
             Com.Write("E1_TERMINADO", 1);
             Com.Write("E1_3PASS", 0);
             Com.Write("E1_TAPON_COLOCADO", 0);
@@ -225,277 +225,277 @@ namespace Final_Inspection_Machine_v3._0.Pages
             Com.Write("E1_TERMINADO", 0);
         }
 
-        public void Terminar()
-        {
-            ResetPrograma();
-        }
+        //public void Terminar()
+        //{
+        //    ResetPrograma();
+        //}
 
-        //Hilos?
-        public async void TaskE1()
-        {
-            MessageBox.Show("hgu");
-            Serial1 = "1";
-            //LblME1.Text = "Iniciando Prueba";
-            //Orifice
-            TaskO11();
+        ////Hilos?
+        //public async void TaskE1()
+        //{
+        //    MessageBox.Show("hgu");
+        //    Serial1 = "1";
+        //    //LblME1.Text = "Iniciando Prueba";
+        //    //Orifice
+        //    TaskO11();
 
-            //LblME1.Text = "Realizando Prueba";
-            //Largo Corrugado
+        //    //LblME1.Text = "Realizando Prueba";
+        //    //Largo Corrugado
 
-            PilotBracketHandler(false);
+        //    PilotBracketHandler(false);
 
-            ResultadosC1[0] = await C1.PruebaAsync(ResultadosC1[0]);
+        //    //ResultadosC1[0] = await C1.PruebaAsync(ResultadosC1[0]);
 
-            if (ResultadosC1[0].OKNG)
-            {
-                LargoCorrugadoBI.SelectColor2 = true;
-                LargoCorrugadoBI.Text = ResultadosC1[0].Calificacion.ToString();
-            }
-            else
-            {
-                LargoCorrugadoBI.SelectColor3 = true;
-                LargoCorrugadoBI.Text = ResultadosC1[0].Calificacion.ToString();
-                E1Fail = true;
+        //    if (true/*ResultadosC1[0].OKNG*/)
+        //    {
+        //        LargoCorrugadoBI.SelectColor2 = true;
+        //        //LargoCorrugadoBI.Text = ResultadosC1[0].Calificacion.ToString();
+        //    }
+        //    else
+        //    {
+        //        LargoCorrugadoBI.SelectColor3 = true;
+        //        //LargoCorrugadoBI.Text = //ResultadosC1[0].Calificacion.ToString();
+        //        E1Fail = true;
 
-            }
-            //Thread.Sleep(20);
-            await C1.CambioProgramaAsync(1);
+        //    }
+        //    //Thread.Sleep(20);
+        //    //await C1.CambioProgramaAsync(1);
 
-            //Sentido de Corrugado
-            ResultadosC1[1] = await C1.PruebaAsync(ResultadosC1[1]);
-            if (ResultadosC1[1].OKNG)
-            {
-                if (ResultadosC1[1].Res == "00")
-                {
-                    SentidoCorrugadoBI.Text = "D";
-                }
-                else if (ResultadosC1[1].Res == "01")
-                {
-                    SentidoCorrugadoBI.Text = "I";
-                }
-                //MessageBox.Show(ResultadosC1[1].Res);
-                if (sinsentido)
-                {
-                    SentidoCorrugadoBI.SelectColor2 = true;
-                }
-                else if (!sinsentido && ResultadosC1[1].Res == "00")
-                {
-                    SentidoCorrugadoBI.SelectColor2 = true;
-                }
-                else if (!sinsentido && ResultadosC1[1].Res == "01")
-                {
-                    SentidoCorrugadoBI.SelectColor3 = true;
-                    E1Fail = true;
-                }
-                else
-                {
-                    SentidoCorrugadoBI.SelectColor3 = true;
-                    E1Fail = true;
-                }
-            }
-            else
-            {
-                SentidoCorrugadoBI.SelectColor3 = true;
-                SentidoCorrugadoBI.Text = ResultadosC1[1].Res;
-                E1Fail = true;
-            }
-            //Thread.Sleep(20);
-            await C1.CambioProgramaAsync(2);
+        //    //Sentido de Corrugado
+        //    //ResultadosC1[1] = await C1.PruebaAsync(ResultadosC1[1]);
+        //    if (ResultadosC1[1].OKNG)
+        //    {
+        //        if (ResultadosC1[1].Res == "00")
+        //        {
+        //            SentidoCorrugadoBI.Text = "D";
+        //        }
+        //        else if (ResultadosC1[1].Res == "01")
+        //        {
+        //            SentidoCorrugadoBI.Text = "I";
+        //        }
+        //        //MessageBox.Show(ResultadosC1[1].Res);
+        //        if (sinsentido)
+        //        {
+        //            SentidoCorrugadoBI.SelectColor2 = true;
+        //        }
+        //        else if (!sinsentido && ResultadosC1[1].Res == "00")
+        //        {
+        //            SentidoCorrugadoBI.SelectColor2 = true;
+        //        }
+        //        else if (!sinsentido && ResultadosC1[1].Res == "01")
+        //        {
+        //            SentidoCorrugadoBI.SelectColor3 = true;
+        //            E1Fail = true;
+        //        }
+        //        else
+        //        {
+        //            SentidoCorrugadoBI.SelectColor3 = true;
+        //            E1Fail = true;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        SentidoCorrugadoBI.SelectColor3 = true;
+        //        SentidoCorrugadoBI.Text = ResultadosC1[1].Res;
+        //        E1Fail = true;
+        //    }
+        //    //Thread.Sleep(20);
+        //    await C1.CambioProgramaAsync(2);
 
-            //Nut
-            ResultadosC1[2] = await C1.PruebaAsync(ResultadosC1[2]);
-            if (ResultadosC1[2].OKNG)
-            {
-                if (ResultadosC1[2].Res == "00")
-                {
-                    NutBI.Text = "A";
-                }
-                else if (ResultadosC1[2].Res == "01")
-                {
-                    NutBI.Text = "R";
-                }
+        //    //Nut
+        //    ResultadosC1[2] = await C1.PruebaAsync(ResultadosC1[2]);
+        //    if (ResultadosC1[2].OKNG)
+        //    {
+        //        if (ResultadosC1[2].Res == "00")
+        //        {
+        //            NutBI.Text = "A";
+        //        }
+        //        else if (ResultadosC1[2].Res == "01")
+        //        {
+        //            NutBI.Text = "R";
+        //        }
 
-                if (!nutrojo && ResultadosC1[2].Res == "00")
-                {
-                    NutBI.SelectColor2 = true;
+        //        if (!nutrojo && ResultadosC1[2].Res == "00")
+        //        {
+        //            NutBI.SelectColor2 = true;
 
-                }
-                else if (nutrojo && ResultadosC1[2].Res == "01")
-                {
-                    NutBI.SelectColor2 = true;
-                }
-                else
-                {
-                    NutBI.SelectColor3 = true;
-                    E1Fail = true;
-                }
-            }
-            else
-            {
-                NutBI.SelectColor3 = true;
-                NutBI.Text = ResultadosC1[2].Res;
-                E1Fail = true;
-            }
-            //Thread.Sleep(20);
-            await C1.CambioProgramaAsync(3);
+        //        }
+        //        else if (nutrojo && ResultadosC1[2].Res == "01")
+        //        {
+        //            NutBI.SelectColor2 = true;
+        //        }
+        //        else
+        //        {
+        //            NutBI.SelectColor3 = true;
+        //            E1Fail = true;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        NutBI.SelectColor3 = true;
+        //        NutBI.Text = ResultadosC1[2].Res;
+        //        E1Fail = true;
+        //    }
+        //    //Thread.Sleep(20);
+        //    await C1.CambioProgramaAsync(3);
 
-            if (true)
-            {
+        //    if (true)
+        //    {
 
-            }
-            PilotBracketHandler(false);
+        //    }
+        //    PilotBracketHandler(false);
 
-            if (E1Fail)
-            {
-                //LblME1.Text = "Pieza NOK";
-                E1T = true;
-                Com.Write("E1_TERMINADO", 1);
-                Proceso.Abort();
-            }
-            else
-            {
-                Com.Write("E1_3PASS", 1);
-                //LblME1.Text = "Esperando Tapón";
-                ME1.WaitOne();
-            }
-
-
+        //    if (E1Fail)
+        //    {
+        //        //LblME1.Text = "Pieza NOK";
+        //        E1T = true;
+        //        Com.Write("E1_TERMINADO", 1);
+        //        Proceso.Abort();
+        //    }
+        //    else
+        //    {
+        //        Com.Write("E1_3PASS", 1);
+        //        //LblME1.Text = "Esperando Tapón";
+        //        ME1.WaitOne();
+        //    }
 
 
-            PilotBracketHandler(true);
-            //Tapon
-            ResultadosC1[3] = await C1.PruebaAsync(ResultadosC1[3]);
-            if (ResultadosC1[3].OKNG)
-            {
-                TaponBI.SelectColor2 = true;
-                TaponBI.Text = ResultadosC1[3].Calificacion.ToString();
-                Com.Write("E1_TAPON_COLOCADO", 1);
-                Serial1 = GenerarSerial(modelo, 3, E1Contador);
-                //label15.Text = Serial1.Remove(0, modelo.Length);
-                //LblME1.Text = "Imprimiendo Etiqueta";
-                etiquetadora.GenerarEtiqueta(Serial1);
-                E1Contador++;
-                Contador.Default.ContadorE1 = E1Contador;
-                Contador.Default.Save();
-            }
-            else
-            {
-                TaponBI.SelectColor3 = true;
-                TaponBI.Text = ResultadosC1[3].Calificacion.ToString();
-                E1Fail = true;
-
-            }
-            //Thread.Sleep(20);
-            await C1.CambioProgramaAsync(4);
 
 
-            if (E1Fail)
-            {
-                //LblME1.Text = "Pieza NOK";
-                E1T = true;
-                Com.Write("E1_TERMINADO", 1);
-                Proceso.Abort();
-            }
-            else
-            {
-                //MessageBox.Show(E1T.ToString());
-                //LblME1.Text = "Esperando Colocación de etiqueta";
-                ME11.WaitOne();
-            }
+        //    PilotBracketHandler(true);
+        //    //Tapon
+        //    ResultadosC1[3] = await C1.PruebaAsync(ResultadosC1[3]);
+        //    if (ResultadosC1[3].OKNG)
+        //    {
+        //        TaponBI.SelectColor2 = true;
+        //        TaponBI.Text = ResultadosC1[3].Calificacion.ToString();
+        //        Com.Write("E1_TAPON_COLOCADO", 1);
+        //        Serial1 = GenerarSerial(modelo, 3, E1Contador);
+        //        //label15.Text = Serial1.Remove(0, modelo.Length);
+        //        //LblME1.Text = "Imprimiendo Etiqueta";
+        //        etiquetadora.GenerarEtiqueta(Serial1);
+        //        E1Contador++;
+        //        Contador.Default.ContadorE1 = E1Contador;
+        //        Contador.Default.Save();
+        //    }
+        //    else
+        //    {
+        //        TaponBI.SelectColor3 = true;
+        //        TaponBI.Text = ResultadosC1[3].Calificacion.ToString();
+        //        E1Fail = true;
+
+        //    }
+        //    //Thread.Sleep(20);
+        //    await C1.CambioProgramaAsync(4);
 
 
-            ResultadosC1[4] = await C1.PruebaAsync(ResultadosC1[4]);
-            if (ResultadosC1[4].OKNG)
-            {
-                EtiquetaBI.SelectColor2 = true;
-                EtiquetaBI.Text = ResultadosC1[4].Calificacion.ToString();
-                E1Pass = true;
-                E1T = true;
-                //LblME1.Text = "Pieza OK";
-                Com.Write("E1_TERMINADO", 1);
-            }
-            else
-            {
-                EtiquetaBI.SelectColor3 = true;
-                EtiquetaBI.Text = ResultadosC1[4].Calificacion.ToString();
-                E1Fail = true;
+        //    if (E1Fail)
+        //    {
+        //        //LblME1.Text = "Pieza NOK";
+        //        E1T = true;
+        //        Com.Write("E1_TERMINADO", 1);
+        //        Proceso.Abort();
+        //    }
+        //    else
+        //    {
+        //        //MessageBox.Show(E1T.ToString());
+        //        //LblME1.Text = "Esperando Colocación de etiqueta";
+        //        ME11.WaitOne();
+        //    }
 
-            }
-            //Thread.Sleep (20);
-            await C1.CambioProgramaAsync(0);
-            if (E1Fail)
-            {
-                //LblME1.Text = "Pieza NOK";
-                E1T = true;
-                Com.Write("E1_TERMINADO", 1);
-                Proceso.Abort();
-            }
-            else
-            {
-                E1T = true;
-                Proceso.Abort();
-            }
 
-        }
+        //    ResultadosC1[4] = await C1.PruebaAsync(ResultadosC1[4]);
+        //    if (ResultadosC1[4].OKNG)
+        //    {
+        //        EtiquetaBI.SelectColor2 = true;
+        //        EtiquetaBI.Text = ResultadosC1[4].Calificacion.ToString();
+        //        E1Pass = true;
+        //        E1T = true;
+        //        //LblME1.Text = "Pieza OK";
+        //        Com.Write("E1_TERMINADO", 1);
+        //    }
+        //    else
+        //    {
+        //        EtiquetaBI.SelectColor3 = true;
+        //        EtiquetaBI.Text = ResultadosC1[4].Calificacion.ToString();
+        //        E1Fail = true;
 
-        public async void TaskO11()
-        {
-            Estructuras.Orifice orifice = await O1.PruebaOrifice();
+        //    }
+        //    //Thread.Sleep (20);
+        //    await C1.CambioProgramaAsync(0);
+        //    if (E1Fail)
+        //    {
+        //        //LblME1.Text = "Pieza NOK";
+        //        E1T = true;
+        //        Com.Write("E1_TERMINADO", 1);
+        //        Proceso.Abort();
+        //    }
+        //    else
+        //    {
+        //        E1T = true;
+        //        Proceso.Abort();
+        //    }
 
-            OrificeBI.Text = orifice.Calificacion.ToString();
-            if (orifice.OKNG)
-            {
-                OrificeBI.SelectColor2 = true;
-            }
-            else
-            {
-                OrificeBI.SelectColor3 = true;
-                E1Fail = true;
-            }
-        }
+        //}
 
-        private void PilotBracketHandler(bool determinar)
-        {
-            if (PilotBracketBI.SelectColor2 == true && !determinar)
-            {
-                PilotBracketBI.Color2 = System.Drawing.Color.GreenYellow;
-            }
-            else if (PilotBracketBI.SelectColor2 == false && !determinar)
-            {
-                PilotBracketBI.SelectColor3 = true;
-                E1Fail = true;
-            }
-            else if (PilotBracketBI.SelectColor2 == true && determinar)
-            {
-                PilotBracketBI.Color2 = System.Drawing.Color.Green;
-                PilotBracketBI.Text = "OK";
-            }
-            else
-            {
-                PilotBracketBI.SelectColor3 = true;
-                E1Fail = true;
-            }
-        }
+        //public async void TaskO11()
+        //{
+        //    Estructuras.Orifice orifice = await O1.PruebaOrifice();
 
-        public void IniciarCiclo()
-        {
-            Proceso = new Thread(TaskE1);
-            Proceso.Start();
-        }
+        //    OrificeBI.Text = orifice.Calificacion.ToString();
+        //    if (orifice.OKNG)
+        //    {
+        //        OrificeBI.SelectColor2 = true;
+        //    }
+        //    else
+        //    {
+        //        OrificeBI.SelectColor3 = true;
+        //        E1Fail = true;
+        //    }
+        //}
 
-        public void InspeccionarTapon()
-        {
-            ME1.Set();
-        }
+        //private void PilotBracketHandler(bool determinar)
+        //{
+        //    if (PilotBracketBI.SelectColor2 == true && !determinar)
+        //    {
+        //        PilotBracketBI.Color2 = System.Drawing.Color.GreenYellow;
+        //    }
+        //    else if (PilotBracketBI.SelectColor2 == false && !determinar)
+        //    {
+        //        PilotBracketBI.SelectColor3 = true;
+        //        E1Fail = true;
+        //    }
+        //    else if (PilotBracketBI.SelectColor2 == true && determinar)
+        //    {
+        //        PilotBracketBI.Color2 = System.Drawing.Color.Green;
+        //        PilotBracketBI.Text = "OK";
+        //    }
+        //    else
+        //    {
+        //        PilotBracketBI.SelectColor3 = true;
+        //        E1Fail = true;
+        //    }
+        //}
 
-        public void InspeccionarEtiqueta()
-        {
-            ME11.Set();
-        }
+        //public void IniciarCiclo()
+        //{
+        //    Proceso = new Thread(TaskE1);
+        //    Proceso.Start();
+        //}
 
-        public void DetenerCiclo()
-        {
-            Proceso.Abort();
-        }
+        //public void InspeccionarTapon()
+        //{
+        //    ME1.Set();
+        //}
+
+        //public void InspeccionarEtiqueta()
+        //{
+        //    ME11.Set();
+        //}
+
+        //public void DetenerCiclo()
+        //{
+        //    Proceso.Abort();
+        //}
     }
 }

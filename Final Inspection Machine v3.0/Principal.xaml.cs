@@ -24,15 +24,15 @@ namespace Final_Inspection_Machine_v3._0
         public Principal()
         {
             InitializeComponent();
-            inspeccion_CL = new Inspeccion_CL();
-            //new Inspeccion_CompactLogix().Show();
+            //inspeccion_CL = new Inspeccion_CL();
+            new Inspeccion_CompactLogix().Show();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
-            inspeccion_CL.Show();
-            inspeccion_CL.Closing += Inspeccion_CL_Closed;
+            //inspeccion_CL.Show();
+            //inspeccion_CL.Closing += Inspeccion_CL_Closed;
 
         }
 

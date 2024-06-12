@@ -5,11 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0"
         xmlns:ah="clr-namespace:AdvancedHMIControls;assembly=AdvancedHMIControls"
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="Inspeccion_CompactLogix" Height="900" Width="1400" WindowStyle="None">
+        Title="Inspeccion_CompactLogix" Height="900" Width="1400" WindowState="Maximized" WindowStartupLocation="CenterScreen" SizeChanged="Window_SizeChanged">
     <Window.Background>
         <ImageBrush ImageSource="/image (1).png" Stretch="Fill" TileMode="Tile"/>
     </Window.Background>
+    <Window.Resources>
+        <Style x:Key="FlatButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#383838" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#454545" />
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#454549" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.Background>
             <ImageBrush/>
@@ -27,9 +54,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height=".7*"/>
             <RowDefinition Height=".7*"/>
+            <RowDefinition Height=".7*"/>
+            <RowDefinition Height="5.7*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
         <Viewbox Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="20,5,10,25">
             <Image Source="/Logo.png" />
@@ -47,26 +74,19 @@
         <Grid x:Name="BarraAltaGrid" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition/>
             </Grid.RowDefinitions>
-            <WindowsFormsHost Grid.ColumnSpan="2" Background="Transparent">
+            <WindowsFormsHost Background="Transparent">
                 <ah:MessageDisplayByValue x:Name="ProcesoMensaje"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.ColumnSpan="1" Grid.Row="1" Background="Transparent">
-                <ah:MessageDisplayByValue x:Name="Estacion1Mensaje"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.ColumnSpan="1" Grid.Row="1" Grid.Column="1" Background="Transparent">
-                <ah:MessageDisplayByValue x:Name="Estacion2Mensaje"/>
             </WindowsFormsHost>
         </Grid>
 
         <Grid x:Name="ProcesoGrid" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="6">
             <Grid.RowDefinitions>
                 <RowDefinition/>
+                <RowDefinition Height=".6*"/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -83,12 +103,103 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Viewbox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left">
-                <TextBlock Text="ESTACIÓN 1" Margin="20,0,0,0"/>
+                <TextBlock Text="ESTACIÓN 1" Margin="20,0,0,0" FontStretch="UltraExpanded" FontWeight="DemiBold">
+                    <TextBlock.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF7B7B7B" Offset="1"/>
+                            <GradientStop Color="White" Offset="0"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Foreground>
+                </TextBlock>
             </Viewbox>
-            
-            <
-            
-            
+            <WindowsFormsHost Grid.ColumnSpan="2" Grid.Row="1" Background="Transparent">
+                <ah:MessageDisplayByValue x:Name="Estacion1Mensaje"/>
+            </WindowsFormsHost>
+
+            <WindowsFormsHost Grid.Column="0" Grid.Row="2" Background="Transparent">
+                <ah:BasicIndicator x:Name="OrificeBI1"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="0" Grid.Row="3" Background="Transparent">
+                <ah:BasicIndicator x:Name="PilotBracketBI1"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="0" Grid.Row="4" Background="Transparent">
+                <ah:BasicIndicator x:Name="ResorteBI1"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="0" Grid.Row="5" Background="Transparent">
+                <ah:BasicIndicator x:Name="LargoBI1"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="0" Grid.Row="6" Background="Transparent">
+                <ah:BasicIndicator x:Name="SentidoBI1"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="0" Grid.Row="7" Background="Transparent">
+                <ah:BasicIndicator x:Name="NutBI1"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="0" Grid.Row="8" Background="Transparent">
+                <ah:BasicIndicator x:Name="TaponBI1"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="0" Grid.Row="9" Background="Transparent">
+                <ah:BasicIndicator x:Name="EtiquetaBI1"/>
+            </WindowsFormsHost>
+
+            <TextBlock x:Name="OrificeTxB1" Text="ORIFICE" Grid.Column="1" Grid.Row="2" FontSize="38" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock x:Name="PilotBracketTxB1" Text="PILOT BRACKET" Grid.Column="1" Grid.Row="3" FontSize="38" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock x:Name="ResorteTxB1" Text="RESORTE" Grid.Column="1" Grid.Row="4" FontSize="38" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock x:Name="LargoTxB1" Text="LARGO CORRUGADO" Grid.Column="1" Grid.Row="5" FontSize="38" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock x:Name="SentidoTxB1" Text="SENTIDO CORRUGADO" Grid.Column="1" Grid.Row="6" FontSize="38" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock x:Name="NutTxB1" Text="NUT" Grid.Column="1" Grid.Row="7" FontSize="38" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock x:Name="TaponTxB1" Text="TAPÓN" Grid.Column="1" Grid.Row="8" FontSize="38" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock x:Name="EtiquetaTxB1" Text="ETIQUETA" Grid.Column="1" Grid.Row="9" FontSize="38" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+
+            <Viewbox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+                <TextBlock Text="ESTACIÓN 2" Margin="0,0,20,0" FontStretch="UltraExpanded" FontWeight="DemiBold">
+                    <TextBlock.Foreground>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF7B7B7B" Offset="1"/>
+                            <GradientStop Color="White" Offset="0"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Foreground>
+                </TextBlock>
+            </Viewbox>
+
+            <WindowsFormsHost Grid.ColumnSpan="2" Grid.Column="2" Grid.Row="1" Background="Transparent">
+                <ah:MessageDisplayByValue x:Name="Estacion2Mensaje"/>
+            </WindowsFormsHost>
+
+            <WindowsFormsHost Grid.Column="3" Grid.Row="2" Background="Transparent">
+                <ah:BasicIndicator x:Name="OrificeBI2"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="3" Grid.Row="3" Background="Transparent">
+                <ah:BasicIndicator x:Name="PilotBracketBI2"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="3" Grid.Row="4" Background="Transparent">
+                <ah:BasicIndicator x:Name="ResorteBI2"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="3" Grid.Row="5" Background="Transparent">
+                <ah:BasicIndicator x:Name="LargoBI2"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="3" Grid.Row="6" Background="Transparent">
+                <ah:BasicIndicator x:Name="SentidoBI2"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="3" Grid.Row="7" Background="Transparent">
+                <ah:BasicIndicator x:Name="NutBI2"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="3" Grid.Row="8" Background="Transparent">
+                <ah:BasicIndicator x:Name="TaponBI2"/>
+            </WindowsFormsHost>
+            <WindowsFormsHost Grid.Column="3" Grid.Row="9" Background="Transparent">
+                <ah:BasicIndicator x:Name="EtiquetaBI2"/>
+            </WindowsFormsHost>
+
+            <TextBlock x:Name="OrificeTxB2" Text="ORIFICE" Grid.Column="2" Grid.Row="2" FontSize="38" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock x:Name="PilotBracketTxB2" Text="PILOT BRACKET" Grid.Column="2" Grid.Row="3" FontSize="38" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock Text="RESORTE" Grid.Column="2" Grid.Row="4" FontSize="38" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock Text="LARGO CORRUGADO" Grid.Column="2" Grid.Row="5" FontSize="38" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock Text="SENTIDO CORRUGADO" Grid.Column="2" Grid.Row="6" FontSize="38" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock Text="NUT" Grid.Column="2" Grid.Row="7" FontSize="38" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock Text="TAPÓN" Grid.Column="2" Grid.Row="8" FontSize="38" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock x:Name="EtiquetaTxB2" Text="ETIQUETA" Grid.Column="2" Grid.Row="9" FontSize="38" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White"/>
+
+
         </Grid>
 
         <Grid x:Name="BarraBajaGrid" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="6">
@@ -102,6 +213,28 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+
+            <Button x:Name="RegresarBtn" Style="{StaticResource FlatButtonStyle}" Grid.RowSpan="2" Margin="15,15,15,15">
+                <StackPanel Orientation="Horizontal" >
+                    <icon:PackIconFontAwesome Kind="HomeSolid" HorizontalAlignment="Left" VerticalAlignment="Center" Height="48" Width="48"/>
+                    <TextBlock Text="Regresar" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </Button>
+
+            <WindowsFormsHost Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="15,15,15,15">
+                <ah:BasicIndicator x:Name="ModeloBI" Shape="Rectangle" />
+            </WindowsFormsHost>
+
+            <TextBlock Text="PIEZAS BUENAS: 000" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="White"/>
+            <TextBlock Text="PIEZAS MALAS: 000" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="White"/>
+
+            <Button x:Name="ResetBtn" Style="{StaticResource FlatButtonStyle}" Grid.RowSpan="2" Grid.Column="3" Margin="15,15,15,15">
+                <StackPanel Orientation="Horizontal" >
+                    <icon:PackIconBoxIcons Kind="RegularRefresh" HorizontalAlignment="Left" VerticalAlignment="Center" Height="48" Width="48" Foreground="White"/>
+                    <TextBlock Text="Reset" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="White"/>
+                </StackPanel>
+            </Button>
+
         </Grid>
 
     </Grid>
