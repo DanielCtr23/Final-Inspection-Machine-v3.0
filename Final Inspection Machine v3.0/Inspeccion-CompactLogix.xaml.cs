@@ -35,7 +35,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             InitializeComponent();
             InicializarPLC();
-            InicializarCamaras();
+            //InicializarCamaras();
             ResultadosE1 = new Estructuras.ResultadosCorrugado[8];
             ResultadosE2 = new Estructuras.ResultadosCorrugado[8];
         }

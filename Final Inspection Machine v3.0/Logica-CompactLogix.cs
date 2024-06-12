@@ -74,7 +74,7 @@ namespace Final_Inspection_Machine_v3._0
                 pilotbracket = false ;
             }
 
-            if (bool.Parse(Com.Read("NUT_ROJO")))
+            if (bool.Parse(Com.Read("PROGRAM:FIM.NUT_ROJO")))
             {
                 nutrojo = true;
             }
@@ -83,7 +83,7 @@ namespace Final_Inspection_Machine_v3._0
                 nutrojo = false;
             }
             
-            if (bool.Parse(Com.Read("SINSENTIDO")))
+            if (bool.Parse(Com.Read("PROGRAM:FIM.SINSENTIDO")))
             {
                 sinsentido = true;
             }
