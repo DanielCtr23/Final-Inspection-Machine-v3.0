@@ -31,6 +31,11 @@ namespace Final_Inspection_Machine_v3._0
                 PollRateOverride = 500
             };
 
+            CicloEnCurso = new DataSubscriber();
+            InspTapon = new DataSubscriber();
+            InspEtiqueta = new DataSubscriber();
+            Estop = new DataSubscriber();
+
             CicloEnCurso.ComComponent = Com;
             CicloEnCurso.PLCAddressValue = new PLCAddressItem("CICLO_EN_CURSO");
             CicloEnCurso.DataChanged += CicloEnCurso_DataChanged;
