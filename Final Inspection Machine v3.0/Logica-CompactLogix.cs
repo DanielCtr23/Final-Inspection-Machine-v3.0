@@ -57,6 +57,7 @@ namespace Final_Inspection_Machine_v3._0
             ModeloBI.PLCAddressSelectColor2 = "MODELO_ACEPTADO";
             ModeloBI.Click += ModeloBI_Click;
             ModeloBI.TextChanged += ModeloBI_TextChanged;
+            
 
 
         }
@@ -177,9 +178,157 @@ namespace Final_Inspection_Machine_v3._0
         {
             TaskO1();
 
-            EsperarTaponE2.WaitOne();
+            PilotBracketBI1.Color2 = System.Drawing.Color.Yellow;
 
-            EsperarEtiquetaE2.WaitOne();
+            //Largo de Corrugado
+            #region
+            ResultadosE1[0] = await Corrugado1.PruebaAsync(ResultadosE1[0]);
+            if (ResultadosE1[0].OKNG && (ResultadosE1[0].Programa==0))
+            {
+                LargoBI1.SelectColor2 = true;
+                
+            }
+            else
+            {
+                LargoBI1.SelectColor3 = true;
+                Fail[0] = true;
+            }
+            #endregion
+
+            await Corrugado1.CambioProgramaAsync(1);
+
+            //Sentido de Corrugado
+            #region
+            ResultadosE1[1] = await Corrugado1.PruebaAsync(ResultadosE1[1]);
+            if (ResultadosE1[1].OKNG && (ResultadosE1[1].Programa==1))
+            {
+                if (sinsentido)
+                {
+                    LargoBI1.SelectColor2 = true;
+                }
+                else
+                {
+                    if (ResultadosE1[1].Res == "00")
+                    {
+                        LargoBI1.SelectColor2 = true;
+                    }
+                    else if (ResultadosE1[1].Res == "01")
+                    {
+                        LargoBI1.SelectColor3 = true;
+                        ResultadosE1[1].OKNG = false;
+                    }
+                }
+            }
+            else
+            {
+                SentidoBI1.SelectColor3 = true;
+                Fail[0] = true;
+            }
+            #endregion
+
+            await Corrugado1.CambioProgramaAsync(2);
+
+            //Nut
+            #region
+            ResultadosE1[2] = await Corrugado1.PruebaAsync(ResultadosE1[2]);
+            if (ResultadosE1[2].OKNG)
+            {
+                if (!nutrojo && (ResultadosE1[2].Res == "00"))
+                {
+                    NutBI1.SelectColor2 = true;
+                }
+                else if(nutrojo && (ResultadosE1[2].Res == "01"))
+                {
+                    NutBI1.SelectColor2 = true;
+                }
+                else
+                {
+                    NutBI1.SelectColor3 = true;
+                    Fail[0] = true;
+                    ResultadosE1[2].OKNG = false;
+                }
+            }
+            else
+            {
+                NutBI1.SelectColor3 = true;
+                Fail[0] = true;
+            }
+            #endregion
+
+            //PilotBracket
+            #region
+            if (pilotbracket)
+            {
+                PilotBracketBI1.Color2 = System.Drawing.Color.Green;
+                if (bool.Parse(Com.Read("PB_E1_OK")))
+                {
+
+                }
+                else
+                {
+                    PilotBracketBI1.SelectColor3 = true;
+                    ResultadosE1[5].OKNG = false;
+                }
+            }
+            else
+            {
+                ResultadosE1[5].OKNG = true;
+                ResultadosE1[5].Res = "SinNut";
+            }
+            #endregion
+
+
+            if (Fail[0])
+            {
+
+            }
+            else
+            {
+                EsperarTaponE2.WaitOne();
+            }
+
+            await Corrugado1.CambioProgramaAsync(3);
+
+            //Tapon
+            #region
+            ResultadosE1[3] = await Corrugado1.PruebaAsync(ResultadosE1[3]);
+            if (ResultadosE1[3].OKNG)
+            {
+                TaponBI1.SelectColor2 = true;
+            }
+            else
+            {
+                TaponBI1.SelectColor3 = true;
+                Fail[0] = true;
+            }
+
+            #endregion
+
+            if (Fail[0])
+            {
+
+            }
+            else
+            {
+                EsperarEtiquetaE2.WaitOne();
+            }
+
+            await Corrugado1.CambioProgramaAsync(4);
+
+            //Etiqueta
+            #region
+            ResultadosE1[4] = await Corrugado1.PruebaAsync(ResultadosE1[4]);
+            if (ResultadosE1[4].OKNG)
+            {
+                EtiquetaBI1.SelectColor2 = true;
+            }
+            else
+            {
+                EtiquetaBI1.SelectColor3 = true;
+                Fail[0] = true;
+            }
+            #endregion
+
 
         }
 

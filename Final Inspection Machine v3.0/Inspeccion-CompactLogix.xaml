@@ -7,7 +7,7 @@
         xmlns:ah="clr-namespace:AdvancedHMIControls;assembly=AdvancedHMIControls"
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="Inspeccion_CompactLogix" Height="900" Width="1400" WindowState="Maximized" WindowStartupLocation="CenterScreen" SizeChanged="Window_SizeChanged" ResizeMode="NoResize" WindowStyle="None">
+        Title="Inspeccion_CompactLogix" Height="900" Width="1400" WindowState="Maximized" WindowStartupLocation="CenterScreen" ContentRendered="Window_ContentRendered" Loaded="Window_Loaded" LayoutUpdated="Window_LayoutUpdated">
     <Window.Background>
         <ImageBrush ImageSource="/image (1).png" Stretch="Fill" TileMode="Tile"/>
     </Window.Background>
@@ -112,13 +112,18 @@
                     </TextBlock.Foreground>
                 </TextBlock>
             </Viewbox>
+            
             <WindowsFormsHost Grid.ColumnSpan="2" Grid.Row="1" Background="Transparent">
                 <ah:MessageDisplayByValue x:Name="Estacion1Mensaje"/>
             </WindowsFormsHost>
 
-            <WindowsFormsHost Grid.Column="0" Grid.Row="2" Background="Transparent">
-                <ah:BasicIndicator x:Name="OrificeBI1"/>
-            </WindowsFormsHost>
+            <Viewbox  Grid.Column="0" Grid.Row="2" >
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="OrificeBI1" Height="45" Width="45">
+                    </ah:BasicIndicator>
+                </WindowsFormsHost>
+            </Viewbox>
+            
             <WindowsFormsHost Grid.Column="0" Grid.Row="3" Background="Transparent">
                 <ah:BasicIndicator x:Name="PilotBracketBI1"/>
             </WindowsFormsHost>

@@ -33,11 +33,24 @@ namespace Final_Inspection_Machine_v3._0
 
         IV3 Corrugado1, Corrugado2, Orifice11, Orifice12, Orifice21, Orifice22;
 
+        private void Window_LayoutUpdated(object sender, EventArgs e)
+        {
+            //AjustarControles(this.ActualHeight);
+            this.SizeChanged += Window_SizeChanged;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+        }
+
         public Inspeccion_CompactLogix()
         {
-            RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
             InitializeComponent();
-            InicializarPLC();
+            //InicializarPLC();
             //InicializarCamaras();
             ResultadosE1 = new Estructuras.ResultadosCorrugado[8];
             ResultadosE2 = new Estructuras.ResultadosCorrugado[8];
@@ -45,13 +58,14 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            AjustarControles(e.NewSize.Height);
+            //AjustarControles(e.NewSize.Height);
         }
 
 
         private void AjustarControles(double H)
         {
-            OrificeBI1.Width = OrificeBI1.Height;
+            //System.Windows.MessageBox.Show(OrificeTxB1.Height.ToString());
+            OrificeBI1.Width = (int)OrificeTxB1.Height;
             PilotBracketBI1.Size = OrificeBI1.Size;
             ResorteBI1.Size = OrificeBI1.Size;
             LargoBI1.Size = OrificeBI1.Size;
