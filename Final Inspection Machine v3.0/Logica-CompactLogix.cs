@@ -21,6 +21,8 @@ namespace Final_Inspection_Machine_v3._0
         DataSubscriber CicloEnCurso, InspTapon, InspEtiqueta, Estop;
         Thread Estacion1, Estacion2, HiloPrincipal;
 
+        Seleccion seleccion;
+
         static ManualResetEvent EsperarTaponE1, EsperarTaponE2;
         static ManualResetEvent EsperarEtiquetaE1, EsperarEtiquetaE2;
 
@@ -66,12 +68,12 @@ namespace Final_Inspection_Machine_v3._0
             ModeloBI.PLCAddressSelectColor2 = "MODELO_ACEPTADO";
             ModeloBI.Click += ModeloBI_Click;
             ModeloBI.TextChanged += ModeloBI_TextChanged;
-            
 
+            
 
         }
 
-        private void ModeloBI_TextChanged(object sender, EventArgs e)
+        public void ActualizarModelo()
         {
             if (bool.Parse(Com.Read("PILOT_BRACKET")))
             {
@@ -81,7 +83,7 @@ namespace Final_Inspection_Machine_v3._0
             else
             {
                 OcultarPilotBracket(true);
-                pilotbracket = false ;
+                pilotbracket = false;
             }
 
             if (bool.Parse(Com.Read("PROGRAM:FIM.NUT_ROJO")))
@@ -92,7 +94,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 nutrojo = false;
             }
-            
+
             if (bool.Parse(Com.Read("PROGRAM:FIM.SINSENTIDO")))
             {
                 sinsentido = true;
@@ -115,9 +117,26 @@ namespace Final_Inspection_Machine_v3._0
 
         }
 
+        private void ModeloBI_TextChanged(object sender, EventArgs e)
+        {
+            ActualizarModelo();
+        }
+
         private void ModeloBI_Click(object sender, EventArgs e)
         {
-            //Seleccion de Modelo
+
+            if (Application.Current.Windows.OfType<Seleccion>().Count() == 0)
+            {
+                seleccion = new Seleccion(Com);
+                seleccion.Show();
+            }
+            seleccion.AceptarModelo += Seleccion_AceptarModelo;
+            
+        }
+
+        private void Seleccion_AceptarModelo(object sender, EventArgs e)
+        {
+            ActualizarModelo();
         }
 
         private void Estop_DataChanged(object sender, MfgControl.AdvancedHMI.Drivers.Common.PlcComEventArgs e)

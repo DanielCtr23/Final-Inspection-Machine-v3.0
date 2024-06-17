@@ -11,6 +11,7 @@ namespace Final_Inspection_Machine_v3._0
     {
         private async void TaskE1()
         {
+            await Corrugado1.CambioProgramaAsync(0);
             serial1 = 1.ToString();
             //TaskO1();
 

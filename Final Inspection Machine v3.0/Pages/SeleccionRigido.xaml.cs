@@ -31,9 +31,9 @@ namespace Final_Inspection_Machine_v3._0.Pages
         BasicIndicator RigidoEI = new BasicIndicator();
         BasicIndicator RigidoFI = new BasicIndicator();
         BasicIndicator RigidoGI = new BasicIndicator();
-        Seleccion s;
+        public bool s;
 
-        public SeleccionRigido(EthernetIPforCLXCom ClCom, Seleccion s)
+        public SeleccionRigido(EthernetIPforCLXCom ClCom)
         {
             Com = ClCom;
             InitializeComponent();
@@ -41,7 +41,6 @@ namespace Final_Inspection_Machine_v3._0.Pages
             TmrSegundero.Tick += TmrSegundero_Tick;
             TmrSegundero.Interval = TimeSpan.FromSeconds(10);
             TmrSegundero.Start();
-            this.s = s;
         }
 
         private void TmrSegundero_Tick(object sender, EventArgs e)
@@ -50,67 +49,67 @@ namespace Final_Inspection_Machine_v3._0.Pages
             if(RigidoBI.SelectColor2 && RigidoBI.SelectColor3)
             {
                 RigidoBI.Color2 = System.Drawing.Color.Green;
-                s.listo[0] = true;
+                s = true;
             }
             else
             {
                 RigidoBI.Color2 = System.Drawing.Color.Yellow;
-                s.listo[0] = false;
+                s = false;
             }
 
             if (RigidoCI.SelectColor2 && RigidoCI.SelectColor3)
             {
                 RigidoCI.Color2 = System.Drawing.Color.Green;
-                s.listo[0] = true;
+                s = true;
             }
             else
             {
                 RigidoCI.Color2 = System.Drawing.Color.Yellow;
-                s.listo[0] = false;
+                s = false;
             }
 
             if (RigidoDI.SelectColor2 && RigidoDI.SelectColor3)
             {
                 RigidoDI.Color2 = System.Drawing.Color.Green;
-                s.listo[0] = true;
+                s = true;
             }
             else
             {
                 RigidoDI.Color2 = System.Drawing.Color.Yellow;
-                s.listo[0] = false;
+                s = false;
             }
 
             if (RigidoEI.SelectColor2 && RigidoEI.SelectColor3)
             {
                 RigidoEI.Color2 = System.Drawing.Color.Green;
-                s.listo[0] = true;
+                s = true;
             }
             else
             {
                 RigidoEI.Color2 = System.Drawing.Color.Yellow;
-                s.listo[0] = false;
+                s = false;
             }
 
             if (RigidoFI.SelectColor2 && RigidoFI.SelectColor3)
             {
                 RigidoFI.Color2 = System.Drawing.Color.Green;
-                s.listo[0] = true;
+                s = true;
             }
             else
             {
                 RigidoFI.Color2 = System.Drawing.Color.Yellow;
-                s.listo[0] = false;
+                s = false;
             }
 
             if (RigidoGI.SelectColor2 && RigidoGI.SelectColor3)
             {
                 RigidoGI.Color2 = System.Drawing.Color.Green;
-                s.listo[0] = true;
+                s = true;
             }
             else
             {
                 RigidoGI.Color2 = System.Drawing.Color.Yellow;
-                s.listo[0] = false;
+                s = false;
             }
 
         }

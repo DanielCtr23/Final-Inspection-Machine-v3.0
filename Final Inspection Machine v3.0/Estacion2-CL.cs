@@ -12,6 +12,7 @@ namespace Final_Inspection_Machine_v3._0
     {
         private async void TaskE2()
         {
+            await Corrugado2.CambioProgramaAsync(0);
             serial2 = 2.ToString();
             //TaskO2();
 

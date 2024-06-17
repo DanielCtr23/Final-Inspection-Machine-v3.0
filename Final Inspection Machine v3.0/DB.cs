@@ -86,5 +86,40 @@ namespace Final_Inspection_Machine_v3._0
             }
 
         }
+
+        public int ObtenerMalas()
+        {
+            int malas;
+            MySqlCommand cmd = new MySqlCommand("Malas", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            malas = int.Parse(cmd.ExecuteScalar().ToString());
+            return malas;
+        }
+        public int ObtenerBuenas()
+        {
+            int buenas;
+            MySqlCommand cmd = new MySqlCommand("Buenas", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            buenas = int.Parse(cmd.ExecuteScalar().ToString());
+            return buenas;
+        }
+
+        public int ObtenerContador1()
+        {
+            int Contador1;
+            MySqlCommand cmd = new MySqlCommand("ContadorE1", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            Contador1 = int.Parse(cmd.ExecuteScalar().ToString());
+            return Contador1;
+        }
+
+        public int ObtenerContador2()
+        {
+            int Contador2;
+            MySqlCommand cmd = new MySqlCommand("ContadorE2", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            Contador2 = int.Parse(cmd.ExecuteScalar().ToString());
+            return Contador2;
+        }
     }
 }

@@ -28,12 +28,16 @@ namespace Final_Inspection_Machine_v3._0
         EthernetIPforCLXCom Com;
         public event EventHandler AceptarModelo;
         public bool[] listo = new bool[2];
+
+        SeleccionRigido SeleccionRigido;
+        SeleccionCorrugado SeleccionCorrugado;
         public Seleccion(EthernetIPforCLXCom ClCom)
         {
             InitializeComponent();
             Com = ClCom;
             CargarModelos();
-            RigidoFrame.NavigationService.Navigate(new SeleccionRigido(Com,this));
+            RigidoFrame.NavigationService.Navigate(SeleccionRigido = new SeleccionRigido(Com));
+            CorrugadoFrame.NavigationService.Navigate(SeleccionCorrugado = new SeleccionCorrugado(Com, this));
         }
 
         private void CargarModelos()
@@ -50,10 +54,11 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (listo[0] && listo[1] && bool.Parse(Com.Read("MODELO_ACEPTADO")))
+            //System.Windows.MessageBox.Show(SeleccionRigido.s.ToString());
+            if (bool.Parse(Com.Read("MODELO_ACEPTADO")))
             {
                 AceptarModelo?.Invoke(this, EventArgs.Empty);
-                Com.CloseConnection();
+                //this.Visibility = Visibility.Hidden;
                 this.Close();
             }
         }
@@ -61,6 +66,11 @@ namespace Final_Inspection_Machine_v3._0
         private void ListaCBx_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Com.Write("MODELO_SELECCIONADO", ListaCBx.SelectedItem.ToString());
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            this.UpdateLayout();
         }
     }
 }

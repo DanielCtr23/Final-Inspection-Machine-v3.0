@@ -7,7 +7,7 @@
         xmlns:Pages="clr-namespace:Final_Inspection_Machine_v3._0.Pages"
         xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0"
         mc:Ignorable="d"
-        Title="Seleccion" Height="507" Width="1080" ResizeMode="NoResize" WindowStyle="None">
+        Title="Seleccion" Height="507" Width="1080" ResizeMode="NoResize" WindowStyle="None" Activated="Window_Activated">
     <Grid Background="#333">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -27,6 +27,7 @@
             <TextBlock Text="SELECCIÓN DE MODELO" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center" FontWeight="Bold" Foreground="White"/>
         </Viewbox>
         <Frame Grid.Column="1" Grid.Row="2" x:Name="RigidoFrame" NavigationUIVisibility="Hidden" Background="#373737" Margin="1,1,1,1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+        <Frame Grid.Column="3" Grid.Row="2" x:Name="CorrugadoFrame" NavigationUIVisibility="Hidden" Background="#373737" Margin="1,1,1,1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
         <ComboBox x:Name="ListaCBx" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="60,20,0,15" SelectionChanged="ListaCBx_SelectionChanged"/>
         <Button Grid.Column="3" Grid.Row="3" Margin="100,20,100,20" Click="Button_Click"/>
 

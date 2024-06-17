@@ -123,28 +123,48 @@
                     </ah:BasicIndicator>
                 </WindowsFormsHost>
             </Viewbox>
-            
-            <WindowsFormsHost Grid.Column="0" Grid.Row="3" Background="Transparent" >
-                <ah:BasicIndicator x:Name="PilotBracketBI1"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.Column="0" Grid.Row="4" Background="Transparent">
-                <ah:BasicIndicator x:Name="ResorteBI1"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.Column="0" Grid.Row="5" Background="Transparent">
-                <ah:BasicIndicator x:Name="LargoBI1"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.Column="0" Grid.Row="6" Background="Transparent">
-                <ah:BasicIndicator x:Name="SentidoBI1"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.Column="0" Grid.Row="7" Background="Transparent">
-                <ah:BasicIndicator x:Name="NutBI1"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.Column="0" Grid.Row="8" Background="Transparent">
-                <ah:BasicIndicator x:Name="TaponBI1"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.Column="0" Grid.Row="9" Background="Transparent">
-                <ah:BasicIndicator x:Name="EtiquetaBI1"/>
-            </WindowsFormsHost>
+
+            <Viewbox Grid.Column="0" Grid.Row="3">
+                <WindowsFormsHost  Background="Transparent" >
+                    <ah:BasicIndicator x:Name="PilotBracketBI1" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
+
+            <Viewbox Grid.Column="0" Grid.Row="4">
+                <WindowsFormsHost  Background="Transparent">
+                    <ah:BasicIndicator x:Name="ResorteBI1" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
+
+            <Viewbox Grid.Column="0" Grid.Row="5">
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="LargoBI1" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
+
+            <Viewbox Grid.Column="0" Grid.Row="6">
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="SentidoBI1" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
+
+            <Viewbox Grid.Column="0" Grid.Row="7">
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="NutBI1" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
+
+            <Viewbox Grid.Column="0" Grid.Row="8">
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="TaponBI1" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
+
+            <Viewbox Grid.Column="0" Grid.Row="9">
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="EtiquetaBI1" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
 
             <TextBlock x:Name="OrificeTxB1" Text="ORIFICE" Grid.Column="1" Grid.Row="2" FontSize="38" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
             <TextBlock x:Name="PilotBracketTxB1" Text="PILOT BRACKET" Grid.Column="1" Grid.Row="3" FontSize="38" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
@@ -170,30 +190,51 @@
                 <ah:MessageDisplayByValue x:Name="Estacion2Mensaje"/>
             </WindowsFormsHost>
 
-            <WindowsFormsHost Grid.Column="3" Grid.Row="2" Background="Transparent">
-                <ah:BasicIndicator x:Name="OrificeBI2"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.Column="3" Grid.Row="3" Background="Transparent">
-                <ah:BasicIndicator x:Name="PilotBracketBI2"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.Column="3" Grid.Row="4" Background="Transparent">
-                <ah:BasicIndicator x:Name="ResorteBI2"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.Column="3" Grid.Row="5" Background="Transparent">
-                <ah:BasicIndicator x:Name="LargoBI2"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.Column="3" Grid.Row="6" Background="Transparent">
-                <ah:BasicIndicator x:Name="SentidoBI2"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.Column="3" Grid.Row="7" Background="Transparent">
-                <ah:BasicIndicator x:Name="NutBI2"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.Column="3" Grid.Row="8" Background="Transparent">
-                <ah:BasicIndicator x:Name="TaponBI2"/>
-            </WindowsFormsHost>
-            <WindowsFormsHost Grid.Column="3" Grid.Row="9" Background="Transparent">
-                <ah:BasicIndicator x:Name="EtiquetaBI2"/>
-            </WindowsFormsHost>
+            <Viewbox  Grid.Column="3" Grid.Row="2">
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="OrificeBI2" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
+
+            <Viewbox Grid.Column="3" Grid.Row="3" >
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="PilotBracketBI2" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
+
+            <Viewbox Grid.Column="3" Grid.Row="4">
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="ResorteBI2" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
+
+            <Viewbox Grid.Column="3" Grid.Row="5">
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="LargoBI2" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
+
+            <Viewbox Grid.Column="3" Grid.Row="6">
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="SentidoBI2" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
+
+            <Viewbox Grid.Column="3" Grid.Row="7">
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="NutBI2" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
+            <Viewbox Grid.Column="3" Grid.Row="8">
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="TaponBI2" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
+            <Viewbox Grid.Column="3" Grid.Row="9">
+                <WindowsFormsHost Background="Transparent">
+                    <ah:BasicIndicator x:Name="EtiquetaBI2" Height="45" Width="45"/>
+                </WindowsFormsHost>
+            </Viewbox>
 
             <TextBlock x:Name="OrificeTxB2" Text="ORIFICE" Grid.Column="2" Grid.Row="2" FontSize="38" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White"/>
             <TextBlock x:Name="PilotBracketTxB2" Text="PILOT BRACKET" Grid.Column="2" Grid.Row="3" FontSize="38" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="White"/>
@@ -219,16 +260,18 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Button x:Name="RegresarBtn" Style="{StaticResource FlatButtonStyle}" Grid.RowSpan="2" Margin="15,15,15,15">
+            <Button x:Name="RegresarBtn" Style="{StaticResource FlatButtonStyle}" Grid.RowSpan="2" Margin="15,15,15,15" Click="RegresarBtn_Click">
                 <StackPanel Orientation="Horizontal" >
                     <icon:PackIconFontAwesome Kind="HomeSolid" HorizontalAlignment="Left" VerticalAlignment="Center" Height="48" Width="48"/>
                     <TextBlock Text="Regresar" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 </StackPanel>
             </Button>
 
-            <WindowsFormsHost Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="15,15,15,15">
-                <ah:BasicIndicator x:Name="ModeloBI" Shape="Rectangle" />
-            </WindowsFormsHost>
+            <Viewbox Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+                <WindowsFormsHost Background="Transparent" Margin="15,15,15,15" ChildChanged="WindowsFormsHost_ChildChanged">
+                    <ah:BasicIndicator x:Name="ModeloBI" Shape="Rectangle" Text="AS48378D" Width="220" Height="70" Color1="Red" OutlineWidth="0" Font="Segoe UI, 14pt" ForeColor="White" Click="ModeloBI_Click" Paint="ModeloBI_Paint" />
+                </WindowsFormsHost>
+            </Viewbox>
 
             <TextBlock Text="PIEZAS BUENAS: 000" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="White"/>
             <TextBlock Text="PIEZAS MALAS: 000" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="White"/>

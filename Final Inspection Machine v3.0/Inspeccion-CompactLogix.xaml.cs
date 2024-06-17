@@ -33,6 +33,21 @@ namespace Final_Inspection_Machine_v3._0
 
         IV3 Corrugado1, Corrugado2, Orifice11, Orifice12, Orifice21, Orifice22;
 
+        private void RegresarBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void WindowsFormsHost_ChildChanged(object sender, System.Windows.Forms.Integration.ChildChangedEventArgs e)
+        {
+            
+        }
+
+        private void ModeloBI_Paint(object sender, PaintEventArgs e)
+        {
+            ActualizarModelo();
+        }
+
         private void Window_LayoutUpdated(object sender, EventArgs e)
         {
             //AjustarControles(this.ActualHeight);
@@ -126,10 +141,12 @@ namespace Final_Inspection_Machine_v3._0
             if (visibilidad)
             {
                 ProcesoGrid.RowDefinitions[3].Height = ProcesoGrid.RowDefinitions[2].Height;
+                PilotBracketBI1.Visible = true;
             }
             else
             {
                 ProcesoGrid.RowDefinitions[3].Height = new GridLength(0);
+                PilotBracketBI1.Visible= false;
             }
 
         }

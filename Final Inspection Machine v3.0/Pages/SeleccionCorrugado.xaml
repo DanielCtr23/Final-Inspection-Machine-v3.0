@@ -7,7 +7,7 @@
       xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="180" d:DesignWidth="800"
-      Title="SeleccionCorrugado" VerticalAlignment="Top" SizeChanged="Page_SizeChanged" Margin="1,1,1,1" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.IsSharedSizeScope="True" ClipToBounds="True">
+      Title="SeleccionCorrugado" SizeChanged="Page_SizeChanged" Margin="1,1,1,1" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.IsSharedSizeScope="True" ClipToBounds="True">
 
     <Grid >
         <Grid.ColumnDefinitions>
@@ -17,15 +17,14 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition MaxHeight="50"/>
-            <RowDefinition x:Name="Row1"/>
+            <RowDefinition />
             <RowDefinition Height="*" MaxHeight="20"/>
         </Grid.RowDefinitions>
-        <Viewbox Grid.ColumnSpan="8" Margin="10,10,10,0">
+        <Viewbox Grid.ColumnSpan="7" Margin="10,10,10,0">
             <TextBlock Text="POSICIÓN DE CORRUGADO" Foreground="White"  VerticalAlignment="Top"/>
         </Viewbox>
         <WindowsFormsHost x:Name="CorrugadoBHost" Grid.Column="1" Grid.Row="1" Margin="5,0,5,5"/>

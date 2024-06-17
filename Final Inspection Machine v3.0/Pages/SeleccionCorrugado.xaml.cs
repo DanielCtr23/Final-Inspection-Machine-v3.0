@@ -30,7 +30,7 @@ namespace Final_Inspection_Machine_v3._0.Pages
         BasicIndicator CorrugadoDI = new BasicIndicator();
         BasicIndicator CorrugadoEI = new BasicIndicator();
         BasicIndicator CorrugadoFI = new BasicIndicator();
-        Seleccion s;
+        public Seleccion s;
 
         public SeleccionCorrugado(EthernetIPforCLXCom ClCom, Seleccion s)
         {
