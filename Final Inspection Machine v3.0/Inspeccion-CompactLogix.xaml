@@ -124,7 +124,7 @@
                 </WindowsFormsHost>
             </Viewbox>
             
-            <WindowsFormsHost Grid.Column="0" Grid.Row="3" Background="Transparent">
+            <WindowsFormsHost Grid.Column="0" Grid.Row="3" Background="Transparent" >
                 <ah:BasicIndicator x:Name="PilotBracketBI1"/>
             </WindowsFormsHost>
             <WindowsFormsHost Grid.Column="0" Grid.Row="4" Background="Transparent">

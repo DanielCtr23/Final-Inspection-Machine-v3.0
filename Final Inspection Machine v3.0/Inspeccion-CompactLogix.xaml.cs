@@ -36,11 +36,17 @@ namespace Final_Inspection_Machine_v3._0
         private void Window_LayoutUpdated(object sender, EventArgs e)
         {
             //AjustarControles(this.ActualHeight);
-            this.SizeChanged += Window_SizeChanged;
+            //this.SizeChanged += Window_SizeChanged;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            InicializarPLC();
+            ResultadosE1 = new Estructuras.ResultadosCorrugado[8];
+            ResultadosE2 = new Estructuras.ResultadosCorrugado[8];
+            dB = new DB();
+            etiquetadora = new Etiquetadora();
+            //InicializarCamaras();
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -50,10 +56,8 @@ namespace Final_Inspection_Machine_v3._0
         public Inspeccion_CompactLogix()
         {
             InitializeComponent();
-            //InicializarPLC();
-            //InicializarCamaras();
-            ResultadosE1 = new Estructuras.ResultadosCorrugado[8];
-            ResultadosE2 = new Estructuras.ResultadosCorrugado[8];
+            //CheckForIllegalCrossThreadCalls = false;
+            //Resetprograma();
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -128,6 +132,35 @@ namespace Final_Inspection_Machine_v3._0
                 ProcesoGrid.RowDefinitions[3].Height = new GridLength(0);
             }
 
+        }
+
+        private void LimpiarEstaciones()
+        {
+            OrificeBI1.SelectColor2 = false;
+            OrificeBI1.SelectColor3 = false;
+            LargoBI1.SelectColor2 = false;
+            LargoBI1.SelectColor3 = false;
+            SentidoBI1.SelectColor2 = false;
+            SentidoBI1.SelectColor3 = false;
+            NutBI1.SelectColor2 = false;
+            NutBI1.SelectColor3 = false;
+            TaponBI1.SelectColor2 = false;
+            TaponBI1.SelectColor3 = false;
+            EtiquetaBI1.SelectColor2 = false;
+            EtiquetaBI1.SelectColor3 = false;
+
+            OrificeBI2.SelectColor2 = false;
+            OrificeBI2.SelectColor3 = false;
+            LargoBI2.SelectColor2 = false;
+            LargoBI2.SelectColor3 = false;
+            SentidoBI2.SelectColor2 = false;
+            SentidoBI2.SelectColor3 = false;
+            NutBI2.SelectColor2 = false;
+            NutBI2.SelectColor3 = false;
+            TaponBI2.SelectColor2 = false;
+            TaponBI2.SelectColor3 = false;
+            EtiquetaBI2.SelectColor2 = false;
+            EtiquetaBI2.SelectColor3 = false;
         }
     }
 }
