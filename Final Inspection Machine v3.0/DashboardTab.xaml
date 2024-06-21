@@ -132,25 +132,27 @@
                         <TextBlock Text="INICIO" Foreground="White"/>
                     </StackPanel>
                 </TabItem.Header>
-                <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                    <Grid HorizontalAlignment="Stretch" Width="Auto">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <UC:BuenasActualGauge Height="400" Width="420" Margin="15" Grid.Column="0"/>
-                        <UC:BuenasTurno Height="400" Width="420" Margin="15"  Grid.Column="1"/>
-                        <UC:ModelosCorridos Height="400" Width="400" Margin="15"  Grid.Column="2"/>
-                        <UC:ModelosCorridos Height="400" Width="400" Margin="15" Grid.Column="3"/>
-                        <UC:ProduccionTurno Height="Auto" Width="1740" Margin="15" Grid.Row="1" Grid.ColumnSpan="4"/>
-                    </Grid>
-                </Viewbox>
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <Viewbox Stretch="Fill" StretchDirection="DownOnly" Height="Auto">
+                        <Grid HorizontalAlignment="Stretch" Width="Auto" Height="900">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <UC:BuenasActualGauge Height="Auto" Width="420" Margin="15" Grid.Column="0"/>
+                            <UC:BuenasTurno Height="Auto" Width="420" Margin="15"  Grid.Column="1"/>
+                            <UC:ModelosCorridos Height="Auto" Width="400" Margin="15"  Grid.Column="2"/>
+                            <UC:ModelosCorridos Height="Auto" Width="400" Margin="15" Grid.Column="3"/>
+                            <UC:ProduccionTurno Height="Auto" Width="1740" Margin="15" Grid.Row="1" Grid.ColumnSpan="4"/>
+                        </Grid>
+                    </Viewbox>
+                </ScrollViewer>
 
             </TabItem>
             <TabItem MinWidth="140" MinHeight="65" HorizontalAlignment="Stretch">
