@@ -165,8 +165,17 @@
     <Compile Include="UC\Chart270UC.xaml.cs">
       <DependentUpon>Chart270UC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UC\Grafico Diario.xaml.cs">
+      <DependentUpon>Grafico Diario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\Grafico Semanal.xaml.cs">
+      <DependentUpon>Grafico Semanal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UC\ModelosCorridos.xaml.cs">
       <DependentUpon>ModelosCorridos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\Produccion Mensual.xaml.cs">
+      <DependentUpon>Produccion Mensual.xaml</DependentUpon>
     </Compile>
     <Compile Include="UC\Produccion24Horas.xaml.cs">
       <DependentUpon>Produccion24Horas.xaml</DependentUpon>
@@ -257,7 +266,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UC\Grafico Diario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\Grafico Semanal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UC\ModelosCorridos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\Produccion Mensual.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

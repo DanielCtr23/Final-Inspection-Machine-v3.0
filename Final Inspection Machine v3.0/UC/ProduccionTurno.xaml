@@ -6,9 +6,11 @@
              xmlns:SP="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
              xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.UC"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="1410">
-    <StackPanel Background="#181818">
-        <TextBlock Text="PRODUCCIÓN POR HORA" HorizontalAlignment="Center" FontSize="46" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"/>
-        <SP:WpfPlot x:Name="ProduccionPlot" Height="360" Width="1740" HorizontalAlignment="Left" Grid.ColumnSpan="3" Foreground="White"/>
-    </StackPanel>
+             d:DesignHeight="470" d:DesignWidth="1740">
+    <Viewbox>
+        <StackPanel Background="#181818">
+            <TextBlock Text="PRODUCCIÓN POR HORA" HorizontalAlignment="Center" FontSize="46" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"/>
+            <SP:WpfPlot x:Name="ProduccionPlot" Height="320" Width="1410"  HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Foreground="White" />
+        </StackPanel>
+    </Viewbox>
 </UserControl>

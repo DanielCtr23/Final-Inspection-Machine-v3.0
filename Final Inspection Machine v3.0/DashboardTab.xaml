@@ -11,7 +11,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="Final_Inspection_Machine_v3._0.DashboardTab"
         mc:Ignorable="d"
-        Title="DashboardTab" Height="900" Width="1940">
+        Title="DashboardTab" Height="1080" Width="1920">
     <Window.Resources>
         <Style x:Key="ButtonFocusVisual">
             <Setter Property="Control.Template">
@@ -90,9 +90,9 @@
                           Checked="ToggleButton_Checked" Click="ToggleButton_Click" Unchecked="Toggle_Unchecked">
                 
             </ToggleButton>
-            
-            <TextBlock Text="FIM DASHBOARD" FontSize="80" FontWeight="Bold" Foreground="White" Grid.Column="1" 
-                       HorizontalAlignment="Center" Grid.RowSpan="3" Grid.ColumnSpan="1"/>
+            <Viewbox Grid.RowSpan="3" Grid.ColumnSpan="1" Grid.Column="1">
+                <TextBlock Text="FIM DASHBOARD" FontSize="80" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
+            </Viewbox>
             <TextBlock x:Name="FechaTB" Text="20/06/2024" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,15,0" 
                        FontSize="20" Grid.Row="0" Grid.Column="4"/>
             <TextBlock x:Name="HoraTB" Text="16:15:59 PM" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,15,0" 
@@ -132,13 +132,26 @@
                         <TextBlock Text="INICIO" Foreground="White"/>
                     </StackPanel>
                 </TabItem.Header>
-                <WrapPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <UC:BuenasActualGauge Height="400" Width="420" Margin="15"/>
-                    <UC:BuenasTurno Height="400" Width="420" Margin="15" />
-                    <UC:ModelosCorridos Height="400" Width="400" Margin="15"/>
-                    <UC:ModelosCorridos Height="400" Width="400" Margin="15"/>
-                    <UC:ProduccionTurno Height="430" Width="1800" Margin="15"/>
-                </WrapPanel>
+                <Viewbox HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <UC:BuenasActualGauge Height="400" Width="420" Margin="15" Grid.Column="0"/>
+                        <UC:BuenasTurno Height="400" Width="420" Margin="15"  Grid.Column="1"/>
+                        <UC:ModelosCorridos Height="400" Width="400" Margin="15"  Grid.Column="2"/>
+                        <UC:ModelosCorridos Height="400" Width="400" Margin="15" Grid.Column="3"/>
+                        <UC:ProduccionTurno Height="470" Width="1740" Margin="15" Grid.Row="1" Grid.ColumnSpan="4"/>
+                    </Grid>
+                </Viewbox>
+
             </TabItem>
             <TabItem MinWidth="140" MinHeight="65" HorizontalAlignment="Stretch">
                 <TabItem.Header>
@@ -147,7 +160,33 @@
                         <TextBlock Text="CONTADORES" Foreground="White"/>
                     </StackPanel>
                 </TabItem.Header>
-                <Grid Background="#FFE5E5E5"/>
+                <Viewbox VerticalAlignment="Top">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Margin="20,5,15,0" Background="#181818" Grid.ColumnSpan="2" Width="1725" HorizontalAlignment="Left">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Height="30"/>
+                        </Grid>
+                        
+                        <UC:Grafico_Diario Width="840" Grid.Row="1" Grid.Column="0" Margin="15"/>
+                        <UC:Grafico_Semanal Width="840" Grid.Row="1" Grid.Column="1" Margin="15"/>
+                        <UC:Produccion_Mensual Height="470" Width="1740" Margin="15" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+                    </Grid>
+                </Viewbox>
             </TabItem>
             <TabItem MinWidth="140" MinHeight="65" HorizontalAlignment="Stretch">
                 <TabItem.Header>

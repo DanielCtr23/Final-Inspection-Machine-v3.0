@@ -57,6 +57,11 @@ namespace Final_Inspection_Machine_v3._0
         {
             TE = false;
         }
+
+        private void Viewbox_GiveFeedback(object sender, GiveFeedbackEventArgs e)
+        {
+
+        }
     }
 
 }
