@@ -48,6 +48,11 @@ namespace Final_Inspection_Machine_v3._0
             ActualizarModelo();
         }
 
+        private void ResetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            dB.ResetContadores();
+        }
+
         private void Window_LayoutUpdated(object sender, EventArgs e)
         {
             //AjustarControles(this.ActualHeight);

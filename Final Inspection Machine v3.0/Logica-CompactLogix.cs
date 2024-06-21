@@ -252,12 +252,6 @@ namespace Final_Inspection_Machine_v3._0
 
         }
 
-        
-
-        
-
-        
-
         private void LimpiarPantalla()
         {
             OrificeBI1.SelectColor2 = false;
@@ -327,6 +321,12 @@ namespace Final_Inspection_Machine_v3._0
 
             Com.Write("E1_TERMINADO0", 0);
             Com.Write("E2_TERMINADO0", 0);
+        }
+
+        private void ActualizarContadores()
+        {
+            ContadorBuenas.Text = "PIEZAS BUENAS: " + (dB.ObtenerBuenas().ToString());
+            ContadorMalas.Text = " PIEZAS MALAS: " + (dB.ObtenerMalas().ToString());
         }
     }
 }

@@ -9,7 +9,7 @@
     <Viewbox>
 
         <Grid>
-            <Canvas Name="canvas" Width="230" Height="240">
+            <Canvas Name="canvas" Width="230" Height="200">
                 <!-- Background Arc -->
                 <Path Name="backgroundArc" StrokeThickness="20" Fill="Transparent" />
                 <!-- Foreground Arc -->

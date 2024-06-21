@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,8 +13,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using Google.Protobuf.WellKnownTypes;
 using LiveCharts;
 using LiveCharts.Wpf;
+using ScottPlot;
+using ScottPlot.WPF;
 
 namespace Final_Inspection_Machine_v3._0
 {
@@ -22,36 +27,36 @@ namespace Final_Inspection_Machine_v3._0
     /// </summary>
     public partial class DashboardTab : Window
     {
+        bool TE = false;
+        DispatcherTimer Segundero = new DispatcherTimer();
         public DashboardTab()
         {
             InitializeComponent();
-            SeriesCollection = new SeriesCollection
-            {
-                new StackedColumnSeries
-                {
-                    Values = new ChartValues<double> {200, 189, 199, 220, 270, 134, 175},
-                    StackMode = StackMode.Values, // this is not necessary, values is the default stack mode
-                    DataLabels = true
-                },
-                new StackedColumnSeries
-                {
-                    Values = new ChartValues<double> {2, 4, 5, 7, 1, 10, 5},
-                    StackMode = StackMode.Values,
-                    DataLabels = true
-                }
-            };
-
-
-            Labels = new[] { "7am", "8am", "9am", "10am", "11am", "12am", "1pm", "2pm", };
-            Formatter = value => value + " Pcs.";
-
-            DataContext = this;
+            Segundero.Tick += new EventHandler(Segundero_Tick);
+            Segundero.Interval = TimeSpan.FromSeconds(1);
+            Segundero.Start();
         }
 
-        public SeriesCollection SeriesCollection { get; set; }
-        public string[] Labels { get; set; }
-        public Func<double, string> Formatter { get; set; }
+        private void Segundero_Tick(object sender, EventArgs e)
+        {
+            HoraTB.Text = DateTime.Now.ToString("T");
+            FechaTB.Text = DateTime.Now.ToString("d");
+        }
 
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            TE = true;
+            MessageBox.Show("Extra");
+        }
+
+        private void ToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Toggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TE = false;
+        }
     }
 
 }

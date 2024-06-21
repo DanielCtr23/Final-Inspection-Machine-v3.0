@@ -1,0 +1,29 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.UC"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="Final_Inspection_Machine_v3._0.UC.ModelosCorridos"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="400">
+    
+    <Grid Background="#181818">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".3*"/>
+            <RowDefinition/>
+            <RowDefinition Height=".3*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="MODELOS" Grid.Row="0" HorizontalAlignment="Center" FontSize="46" Foreground="White"/>
+        <DataGrid x:Name="DG" Grid.Row="1" MinColumnWidth="194" HorizontalGridLinesBrush="#272727" FontSize="28" Background="#181818" RowBackground="#272727" Foreground="White" HeadersVisibility="Column" Margin="5" BorderBrush="#272727" IsReadOnly="True">
+            <DataGrid.Resources>
+                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#181818" />
+                </Style>
+                <Style BasedOn="{StaticResource {x:Type DataGridRowHeader}}" TargetType="{x:Type DataGridRowHeader}">
+                    <Setter Property="Background" Value="#181818" />
+                </Style>
+            </DataGrid.Resources>
+        </DataGrid>
+    </Grid>
+</UserControl>

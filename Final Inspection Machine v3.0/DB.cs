@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Final_Inspection_Machine_v3._0.Pages;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -121,5 +122,75 @@ namespace Final_Inspection_Machine_v3._0
             Contador2 = int.Parse(cmd.ExecuteScalar().ToString());
             return Contador2;
         }
+
+        public void ResetContadores()
+        {
+            MySqlCommand cmd = new MySqlCommand("ResetContadores", con);
+            cmd.CommandType= CommandType.StoredProcedure;
+            cmd.ExecuteNonQuery();
+        }
+        public DataTable Produccion(int op)
+        {
+            DataTable produccion = new DataTable();
+            MySqlCommand cmd;
+
+            if (op == 1)
+            {
+                cmd = new MySqlCommand("ProduccionT1N", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                produccion.Load(cmd.ExecuteReader());
+            }
+            else if (op == 2)
+            {
+                cmd = new MySqlCommand("ProduccionT1E", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                produccion.Load(cmd.ExecuteReader());
+            }
+            else if (op == 3)
+            {
+                cmd = new MySqlCommand("ProduccionT2N", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@F", DateTime.Now);
+                produccion.Load(cmd.ExecuteReader());
+            }
+            else if (op == 4)
+            {
+                cmd = new MySqlCommand("ProduccionT2E", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@F", DateTime.Now);
+                produccion.Load(cmd.ExecuteReader());
+            }
+
+            return produccion;
+        }
+
+        public int Produccion()
+        {
+            MySqlCommand cmd = new MySqlCommand("ProduccionHoraActual", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            return int.Parse(cmd.ExecuteScalar().ToString());
+        }
+
+        public int Produccion(DateTime Inicio, DateTime Fin)
+        {
+            MySqlCommand cmd = new MySqlCommand("Produccion", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Inicio", Inicio);
+            cmd.Parameters.AddWithValue("@Fin", Fin);
+            return int.Parse(cmd.ExecuteScalar().ToString());
+        }
+
+        public DataSet ModelosProducidos(DateTime Inicio, DateTime Fin)
+        {
+            DataSet ds = new DataSet(); 
+            MySqlCommand cmd = new MySqlCommand("ProduccionModelos", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Inicio", Inicio);
+            cmd.Parameters.AddWithValue("@Fin", Fin);
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            da.Fill(ds);
+            return ds;
+        }
+
     }
 }

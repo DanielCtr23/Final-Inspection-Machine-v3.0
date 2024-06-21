@@ -273,10 +273,10 @@
                 </WindowsFormsHost>
             </Viewbox>
 
-            <TextBlock Text="PIEZAS BUENAS: 000" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="White"/>
-            <TextBlock Text="PIEZAS MALAS: 000" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="White"/>
+            <TextBlock x:Name="ContadorBuenas" Text="PIEZAS BUENAS: 000" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="White"/>
+            <TextBlock x:Name="ContadorMalas" Text="PIEZAS MALAS: 000" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="White"/>
 
-            <Button x:Name="ResetBtn" Style="{StaticResource FlatButtonStyle}" Grid.RowSpan="2" Grid.Column="3" Margin="15,15,15,15">
+            <Button x:Name="ResetBtn" Style="{StaticResource FlatButtonStyle}" Grid.RowSpan="2" Grid.Column="3" Margin="15,15,15,15" Click="ResetBtn_Click">
                 <StackPanel Orientation="Horizontal" >
                     <icon:PackIconBoxIcons Kind="RegularRefresh" HorizontalAlignment="Left" VerticalAlignment="Center" Height="48" Width="48" Foreground="White"/>
                     <TextBlock Text="Reset" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="White"/>
