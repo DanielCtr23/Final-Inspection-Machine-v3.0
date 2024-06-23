@@ -106,6 +106,7 @@ namespace Final_Inspection_Machine_v3._0.UC
         private void BusquedaTmr_Tick(object sender, EventArgs e)
         {
             BusquedaTmr?.Stop();
+            MensajeTB.Text = "Actualizando...";
             CargarTabla();
         }
 
@@ -199,6 +200,23 @@ namespace Final_Inspection_Machine_v3._0.UC
             FailCB.IsChecked = false;
 
             BusquedaTmr.Stop();
+        }
+
+        private void PruebasDG_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            DataRowView valor = PruebasDG.SelectedItem as DataRowView;
+            if (e.AddedCells.Count>0)
+            {
+                try
+                {
+                    string valor1 = valor.Row[0].ToString();
+                    DetalleTB.Text = valor1;
+                }
+                catch (Exception)
+                {
+                    DetalleTB.Text = "";
+                }
+            }
         }
     }
 }

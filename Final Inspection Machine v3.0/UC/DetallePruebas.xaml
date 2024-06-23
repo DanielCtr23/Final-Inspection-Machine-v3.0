@@ -535,7 +535,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="Buscar por Serial:" FontSize="18" Foreground="White" HorizontalAlignment="Right" Margin="0,0,8,0" VerticalAlignment="Center"/>
-            <TextBox x:Name="BuscadorTB" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" TextChanged="BuscadorTB_TextChanged" Height="30" Width="350" HorizontalAlignment="Left" Background="#212121" Foreground="White" BorderBrush="#191919"/>
+            <TextBox x:Name="BuscadorTB" Grid.Column="1" Grid.ColumnSpan="3" Margin="5" TextChanged="BuscadorTB_TextChanged" Height="30" Width="350" HorizontalAlignment="Left" Background="#212121" Foreground="White" BorderBrush="#191919" VerticalAlignment="Center" VerticalContentAlignment="Center" />
             <TextBlock Text="Modelo:" FontSize="16" Foreground="White" Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,8,0" VerticalAlignment="Center"/>
             <ComboBox x:Name="ModelosCB" Style="{StaticResource DarkComboBox}"  Grid.Row="1" Grid.Column="1" Margin="2,2,2,2" SelectionChanged="ModelosCB_SelectionChanged" Height="30"/>
             <TextBlock Text="Estación:" FontSize="16" Foreground="White" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,8,0" VerticalAlignment="Center" />
@@ -550,7 +550,7 @@
         </Grid>
         <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="4"  Background="#444"/>
         <DataGrid x:Name="PruebasDG" AutoGenerateColumns="True" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" HorizontalGridLinesBrush="#272727" FontSize="14" Background="#181818" 
-                  RowBackground="#272727" Foreground="White" HeadersVisibility="Column" Margin="10" BorderBrush="#272727" IsReadOnly="True" MinColumnWidth="120">
+                  RowBackground="#272727" Foreground="White" HeadersVisibility="Column" Margin="10" BorderBrush="#272727" IsReadOnly="True" MinColumnWidth="120" SelectedCellsChanged="PruebasDG_SelectedCellsChanged">
             <DataGrid.Resources>
                 <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="Background" Value="#181818" />
