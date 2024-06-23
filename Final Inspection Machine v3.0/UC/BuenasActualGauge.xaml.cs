@@ -49,17 +49,25 @@ namespace Final_Inspection_Machine_v3._0.UC
 
         public void Refresh()
         {
-            Plot.Reset();
+            //Plot.Reset();
+            Plot.Plot.Clear();
             TB2.Text = DateTime.Now.Hour.ToString() + ":00" + " - " + DateTime.Now.Hour.ToString() + ":59";
             double[] values = { db.Produccion(), 0 };
             values[1] = 200 - values[0];
-            var Gauge = Plot.Plot.Add.RadialGaugePlot(values);
+            var Gauge = Plot.Plot.Add.RadialGaugePlot(values); 
+            Gauge.GaugeMode = ScottPlot.RadialGaugeMode.SingleGauge;
+            Gauge.Clockwise = true;
+            Gauge.OrderInsideOut = true;
+            Gauge.MaximumAngle = 270;
+            Gauge.StartingAngle = 135;
+            Gauge.ShowLevels = false;
+            Gauge.SpaceFraction = 1;
+            Gauge.Colors = new ScottPlot.Color[] { ScottPlot.Colors.Green, ScottPlot.Colors.LightGrey };
             TB.Text = values[0].ToString() + "/" + 200.ToString();
         }
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Refresh();
         }
     }
 }

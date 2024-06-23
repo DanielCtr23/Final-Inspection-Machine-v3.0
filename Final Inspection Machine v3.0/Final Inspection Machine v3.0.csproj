@@ -165,6 +165,9 @@
     <Compile Include="UC\Chart270UC.xaml.cs">
       <DependentUpon>Chart270UC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UC\DetallePruebas.xaml.cs">
+      <DependentUpon>DetallePruebas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UC\Grafico Diario.xaml.cs">
       <DependentUpon>Grafico Diario.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,9 @@
     </Compile>
     <Compile Include="UC\ProduccionTurno.xaml.cs">
       <DependentUpon>ProduccionTurno.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\TiemposTurno.xaml.cs">
+      <DependentUpon>TiemposTurno.xaml</DependentUpon>
     </Compile>
     <Page Include="Dashboard.xaml">
       <SubType>Designer</SubType>
@@ -266,6 +272,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UC\DetallePruebas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UC\Grafico Diario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -287,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UC\ProduccionTurno.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\TiemposTurno.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

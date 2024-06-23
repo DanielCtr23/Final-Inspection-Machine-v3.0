@@ -22,13 +22,11 @@ namespace Final_Inspection_Machine_v3._0.UC
     /// </summary>
     public partial class ProduccionTurno : UserControl
     {
-        bool TE;
         DB db = new DB();
         DataTable produccion;
         public ProduccionTurno()
         {
             InitializeComponent();
-            TE = true;
             TiempoExtra();
         }
 
@@ -179,19 +177,21 @@ namespace Final_Inspection_Machine_v3._0.UC
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+        }
+
+        public void Refresh(bool TE)
+        {
             if (TE)
-            {
-                ProduccionPlot.Reset();
-                TiempoNormal();
-                ProduccionPlot.Refresh();
-                TE = false;
-            }
-            else
             {
                 ProduccionPlot.Reset();
                 TiempoExtra();
                 ProduccionPlot.Refresh();
-                TE = true;
+            }
+            else
+            {
+                ProduccionPlot.Reset();
+                TiempoNormal();
+                ProduccionPlot.Refresh();
             }
         }
     }

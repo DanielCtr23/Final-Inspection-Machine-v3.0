@@ -145,11 +145,11 @@
                                 <RowDefinition/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <UC:BuenasActualGauge Height="Auto" Width="420" Margin="15" Grid.Column="0"/>
-                            <UC:BuenasTurno Height="Auto" Width="420" Margin="15"  Grid.Column="1"/>
-                            <UC:ModelosCorridos Height="Auto" Width="400" Margin="15"  Grid.Column="2"/>
-                            <UC:ModelosCorridos Height="Auto" Width="400" Margin="15" Grid.Column="3"/>
-                            <UC:ProduccionTurno Height="Auto" Width="1740" Margin="15" Grid.Row="1" Grid.ColumnSpan="4"/>
+                            <UC:BuenasActualGauge x:Name="ProduccionActual" Height="Auto" Width="420" Margin="15" Grid.Column="0"/>
+                            <UC:BuenasTurno x:Name="ProduccionTurno" Height="Auto" Width="420" Margin="15"  Grid.Column="1"/>
+                            <UC:ModelosCorridos x:Name="ModelosTurno" Height="Auto" Width="400" Margin="15"  Grid.Column="2"/>
+                            <UC:TiemposTurno x:Name="TiemposTurno" Height="Auto" Width="400" Margin="15" Grid.Column="3"/>
+                            <UC:ProduccionTurno x:Name="GraficaTurno" Height="Auto" Width="1740" Margin="15" Grid.Row="1" Grid.ColumnSpan="4"/>
                         </Grid>
                     </Viewbox>
                 </ScrollViewer>
@@ -197,6 +197,11 @@
                         <TextBlock Text="DETALLE" Foreground="White"/>
                     </StackPanel>
                 </TabItem.Header>
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <Viewbox Stretch="UniformToFill" StretchDirection="Both">
+                        <UC:DetallePruebas Width="1080" Height="800" Margin="15"/>
+                    </Viewbox>
+                </ScrollViewer>
             </TabItem>
             <TabItem MinWidth="140" MinHeight="65" HorizontalAlignment="Stretch">
                 <TabItem.Header>

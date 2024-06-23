@@ -134,6 +134,17 @@ namespace Final_Inspection_Machine_v3._0
             DataTable produccion = new DataTable();
             MySqlCommand cmd;
 
+            DateTime fecha;
+
+            if (DateTime.Now.Hour<7)
+            {
+                fecha = DateTime.Now.AddDays(-1);
+            }
+            else
+            {
+                fecha = DateTime.Now;
+            }
+
             if (op == 1)
             {
                 cmd = new MySqlCommand("ProduccionT1N", con);
@@ -150,14 +161,14 @@ namespace Final_Inspection_Machine_v3._0
             {
                 cmd = new MySqlCommand("ProduccionT2N", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@F", DateTime.Now);
+                cmd.Parameters.AddWithValue("@F", fecha);
                 produccion.Load(cmd.ExecuteReader());
             }
             else if (op == 4)
             {
                 cmd = new MySqlCommand("ProduccionT2E", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@F", DateTime.Now);
+                cmd.Parameters.AddWithValue("@F", fecha);
                 produccion.Load(cmd.ExecuteReader());
             }
 
@@ -180,6 +191,24 @@ namespace Final_Inspection_Machine_v3._0
             return int.Parse(cmd.ExecuteScalar().ToString());
         }
 
+        public double TiempoCiclo(DateTime Inicio, DateTime Fin)
+        {
+            MySqlCommand cmd = new MySqlCommand("TiempoCiclo", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Inicio", Inicio);
+            cmd.Parameters.AddWithValue("@Fin", Fin);
+            try
+            {
+
+                return double.Parse(cmd.ExecuteScalar().ToString());
+            }
+            catch (Exception)
+            {
+
+                return 0;
+            }
+        }
+
         public DataSet ModelosProducidos(DateTime Inicio, DateTime Fin)
         {
             DataSet ds = new DataSet(); 
@@ -190,6 +219,53 @@ namespace Final_Inspection_Machine_v3._0
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             da.Fill(ds);
             return ds;
+        }
+
+        public DataTable DetallePruebas(string serial, int? modelo, int? estacion, DateTime? Inicio, DateTime? Fin, bool? Pass, bool? Fail)
+        {
+            DataTable detalles = new DataTable();
+
+            MySqlCommand cmd = new MySqlCommand("DetallePruebas", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@S", serial);
+            cmd.Parameters.AddWithValue("@Estacion", estacion);
+            cmd.Parameters.AddWithValue("@Modelo", modelo);
+            cmd.Parameters.AddWithValue("@Inicio", Inicio);
+            cmd.Parameters.AddWithValue("@Fin", Fin);
+            cmd.Parameters.AddWithValue("@Pass", Pass);
+            cmd.Parameters.AddWithValue("@Fail", Fail); 
+            try
+            {
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(detalles);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return detalles;
+        }
+
+        public DataTable ObtenerModelos()
+        {
+            DataTable modelos = new DataTable();
+
+            MySqlCommand cmd = new MySqlCommand("ObtenerModelos", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(modelos);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return modelos;
         }
 
     }

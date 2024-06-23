@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Final_Inspection_Machine_v3._0.UC;
 using Google.Protobuf.WellKnownTypes;
 using LiveCharts;
 using LiveCharts.Wpf;
@@ -41,12 +42,16 @@ namespace Final_Inspection_Machine_v3._0
         {
             HoraTB.Text = DateTime.Now.ToString("T");
             FechaTB.Text = DateTime.Now.ToString("d");
+            if (DateTime.Now.Second == 59)
+            {
+                Refresh();
+            }
         }
 
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             TE = true;
-            MessageBox.Show("Extra");
+            Refresh();
         }
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
@@ -56,11 +61,21 @@ namespace Final_Inspection_Machine_v3._0
         private void Toggle_Unchecked(object sender, RoutedEventArgs e)
         {
             TE = false;
+            Refresh();
         }
 
         private void Viewbox_GiveFeedback(object sender, GiveFeedbackEventArgs e)
         {
 
+        }
+
+        private void Refresh()
+        {
+            ProduccionActual.Refresh();
+            ProduccionTurno.Refresh(TE);
+            ModelosTurno.Refresh(TE);
+            GraficaTurno.Refresh(TE);
+            TiemposTurno.Refresh(TE);
         }
     }
 
