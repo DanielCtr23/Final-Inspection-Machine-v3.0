@@ -20,18 +20,17 @@ namespace Final_Inspection_Machine_v3._0
     /// </summary>
     public partial class Principal : Window
     {
-        Inspeccion_CompactLogix inspeccion_CL;
+        ventana_de_prueba inspeccion_CL;
         public Principal()
         {
             InitializeComponent();
-            inspeccion_CL = new Inspeccion_CompactLogix();
+            inspeccion_CL = new ventana_de_prueba();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
             inspeccion_CL.Show();
-            inspeccion_CL.Closing += Inspeccion_CL_Closed;
 
         }
 

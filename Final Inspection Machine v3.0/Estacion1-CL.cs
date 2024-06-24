@@ -15,19 +15,19 @@ namespace Final_Inspection_Machine_v3._0
             serial1 = 1.ToString();
             //TaskO1();
 
-            PilotBracketBI1.Color2 = System.Drawing.Color.Yellow;
+            //PilotBracketBI1.Color2 = System.Drawing.Color.Yellow;
 
             //Largo de Corrugado
             #region
             ResultadosE1[0] = await Corrugado1.PruebaAsync(ResultadosE1[0]);
             if (ResultadosE1[0].OKNG && (ResultadosE1[0].Programa == 0))
             {
-                LargoBI1.SelectColor2 = true;
+                //LargoBI1.SelectColor2 = true;
 
             }
             else
             {
-                LargoBI1.SelectColor3 = true;
+                //LargoBI1.SelectColor3 = true;
                 Fail[0] = true;
             }
             #endregion
@@ -41,24 +41,24 @@ namespace Final_Inspection_Machine_v3._0
             {
                 if (sinsentido)
                 {
-                    SentidoBI1.SelectColor2 = true;
+                    //SentidoBI1.SelectColor2 = true;
                 }
                 else
                 {
                     if (ResultadosE1[1].Res == "00")
                     {
-                        SentidoBI1.SelectColor2 = true;
+                        //SentidoBI1.SelectColor2 = true;
                     }
                     else if (ResultadosE1[1].Res == "01")
                     {
-                        SentidoBI1.SelectColor3 = true;
+                        //SentidoBI1.SelectColor3 = true;
                         ResultadosE1[1].OKNG = false;
                     }
                 }
             }
             else
             {
-                SentidoBI1.SelectColor3 = true;
+                //SentidoBI1.SelectColor3 = true;
                 Fail[0] = true;
             }
             #endregion
@@ -72,22 +72,22 @@ namespace Final_Inspection_Machine_v3._0
             {
                 if (!nutrojo && (ResultadosE1[2].Res == "00"))
                 {
-                    NutBI1.SelectColor2 = true;
+                    //NutBI1.SelectColor2 = true;
                 }
                 else if (nutrojo && (ResultadosE1[2].Res == "01"))
                 {
-                    NutBI1.SelectColor2 = true;
+                    //NutBI1.SelectColor2 = true;
                 }
                 else
                 {
-                    NutBI1.SelectColor3 = true;
+                    //NutBI1.SelectColor3 = true;
                     Fail[0] = true;
                     ResultadosE1[2].OKNG = false;
                 }
             }
             else
             {
-                NutBI1.SelectColor3 = true;
+                //NutBI1.SelectColor3 = true;
                 Fail[0] = true;
             }
             #endregion
@@ -96,14 +96,14 @@ namespace Final_Inspection_Machine_v3._0
             #region
             if (pilotbracket)
             {
-                PilotBracketBI1.Color2 = System.Drawing.Color.Green;
+                //PilotBracketBI1.Color2 = System.Drawing.Color.Green;
                 if (bool.Parse(Com.Read("PB_E1_OK")))
                 {
 
                 }
                 else
                 {
-                    PilotBracketBI1.SelectColor3 = true;
+                    //PilotBracketBI1.SelectColor3 = true;
                     ResultadosE1[5].OKNG = false;
                     Fail[0] = true;
                 }
@@ -133,7 +133,7 @@ namespace Final_Inspection_Machine_v3._0
             ResultadosE1[3] = await Corrugado1.PruebaAsync(ResultadosE1[3]);
             if (ResultadosE1[3].OKNG)
             {
-                TaponBI1.SelectColor2 = true;
+                //TaponBI1.SelectColor2 = true;
                 Com.Write("E1_TAPON_COLOCADO", 1);
                 serial1 = GenerarSerial(modelo, 1, Contador2);
                 //Thread.Sleep(1000);
@@ -142,7 +142,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             else
             {
-                TaponBI1.SelectColor3 = true;
+                //TaponBI1.SelectColor3 = true;
                 Fail[0] = true;
             }
 
@@ -165,13 +165,13 @@ namespace Final_Inspection_Machine_v3._0
             ResultadosE1[4] = await Corrugado1.PruebaAsync(ResultadosE1[4]);
             if (ResultadosE1[4].OKNG)
             {
-                EtiquetaBI1.SelectColor2 = true;
+                //EtiquetaBI1.SelectColor2 = true;
                 Pass[0] = true;
                 Com.Write("E1_TERMINADO", 1);
             }
             else
             {
-                EtiquetaBI1.SelectColor3 = true;
+                //EtiquetaBI1.SelectColor3 = true;
                 Fail[0] = true;
             }
             #endregion
@@ -183,11 +183,11 @@ namespace Final_Inspection_Machine_v3._0
         {
             if ((await Orifice11.PruebaOrifice()).OKNG)
             {
-                OrificeBI1.SelectColor2 = true;
+                //OrificeBI1.SelectColor2 = true;
             }
             else
             {
-                OrificeBI1.SelectColor3 = true;
+                //OrificeBI1.SelectColor3 = true;
                 Fail[0] = true;
             }
         }

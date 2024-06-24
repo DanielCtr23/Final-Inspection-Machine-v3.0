@@ -14,7 +14,8 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>F:\V3\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -24,10 +25,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -73,6 +74,18 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>013AC872A40A4F2BA882F9430B869160A80A8034</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Final Inspection Machine v3.0_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="IV3-Keyence">
       <HintPath>..\packages\IV3-Keyence.dll</HintPath>
@@ -110,6 +123,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CompactLogix.cs" />
     <Compile Include="Contador.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -127,6 +141,9 @@
     </Compile>
     <Compile Include="Inspeccion-CompactLogix.xaml.cs">
       <DependentUpon>Inspeccion-CompactLogix.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InspeccionCL2.xaml.cs">
+      <DependentUpon>InspeccionCL2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logica-CompactLogix.cs" />
     <Compile Include="Pages\BarraAlta.xaml.cs">
@@ -174,6 +191,9 @@
     <Compile Include="UC\Grafico Semanal.xaml.cs">
       <DependentUpon>Grafico Semanal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UC\Indicador.xaml.cs">
+      <DependentUpon>Indicador.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UC\ModelosCorridos.xaml.cs">
       <DependentUpon>ModelosCorridos.xaml</DependentUpon>
     </Compile>
@@ -189,6 +209,9 @@
     <Compile Include="UC\TiemposTurno.xaml.cs">
       <DependentUpon>TiemposTurno.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ventana de prueba.xaml.cs">
+      <DependentUpon>ventana de prueba.xaml</DependentUpon>
+    </Compile>
     <Page Include="Dashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -202,6 +225,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Inspeccion-CompactLogix.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InspeccionCL2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -284,6 +311,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UC\Indicador.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UC\ModelosCorridos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -301,6 +332,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UC\TiemposTurno.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ventana de prueba.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -330,6 +365,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Contador.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Final Inspection Machine v3.0_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -382,7 +418,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 y x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

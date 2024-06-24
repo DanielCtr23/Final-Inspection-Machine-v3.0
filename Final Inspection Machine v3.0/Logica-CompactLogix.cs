@@ -254,20 +254,20 @@ namespace Final_Inspection_Machine_v3._0
 
         private void LimpiarPantalla()
         {
-            OrificeBI1.SelectColor2 = false;
-            OrificeBI1.SelectColor3 = false;
-            PilotBracketBI1.SelectColor2 = false;
-            PilotBracketBI1.SelectColor3 = false;
-            ResorteBI1.SelectColor2 = false;
-            ResorteBI1.SelectColor3 = false;
-            LargoBI1.SelectColor2 = false;
-            LargoBI1.SelectColor3 = false;
-            SentidoBI1.SelectColor2 = false;
-            SentidoBI1.SelectColor3 = false;
-            NutBI1.SelectColor2 = false;
-            NutBI1.SelectColor3 = false;
-            EtiquetaBI1.SelectColor2 = false;
-            EtiquetaBI1.SelectColor3 = false;
+            //OrificeBI1.SelectColor2 = false;
+            //OrificeBI1.SelectColor3 = false;
+            //PilotBracketBI1.SelectColor2 = false;
+            //PilotBracketBI1.SelectColor3 = false;
+            //ResorteBI1.SelectColor2 = false;
+            //ResorteBI1.SelectColor3 = false;
+            //LargoBI1.SelectColor2 = false;
+            //LargoBI1.SelectColor3 = false;
+            //SentidoBI1.SelectColor2 = false;
+            //SentidoBI1.SelectColor3 = false;
+            //NutBI1.SelectColor2 = false;
+            //NutBI1.SelectColor3 = false;
+            //EtiquetaBI1.SelectColor2 = false;
+            //EtiquetaBI1.SelectColor3 = false;
 
             OrificeBI2.SelectColor2 = false;
             OrificeBI2.SelectColor3 = false;

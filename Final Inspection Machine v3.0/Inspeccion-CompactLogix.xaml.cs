@@ -73,9 +73,12 @@ namespace Final_Inspection_Machine_v3._0
         {
         }
 
+
         public Inspeccion_CompactLogix()
         {
             InitializeComponent();
+            RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
+            RenderOptions.SetBitmapScalingMode(this, BitmapScalingMode.Fant);
             //CheckForIllegalCrossThreadCalls = false;
             //Resetprograma();
         }
@@ -89,15 +92,15 @@ namespace Final_Inspection_Machine_v3._0
         private void AjustarControles(double H)
         {
             //System.Windows.MessageBox.Show(OrificeTxB1.Height.ToString());
-            OrificeBI1.Width = (int)OrificeTxB1.Height;
-            PilotBracketBI1.Size = OrificeBI1.Size;
-            ResorteBI1.Size = OrificeBI1.Size;
-            LargoBI1.Size = OrificeBI1.Size;
-            SentidoBI1.Size = OrificeBI1.Size;
-            NutBI1.Size = OrificeBI1.Size;
-            TaponBI1.Size = OrificeBI1.Size;
-            EtiquetaBI1.Size = OrificeBI1.Size;
-            OrificeBI2.Size = OrificeBI1.Size;
+            //OrificeBI1.Width = (int)OrificeTxB1.Height;
+            //PilotBracketBI1.Size = OrificeBI1.Size;
+            //ResorteBI1.Size = OrificeBI1.Size;
+            //LargoBI1.Size = OrificeBI1.Size;
+            //SentidoBI1.Size = OrificeBI1.Size;
+            //NutBI1.Size = OrificeBI1.Size;
+            //TaponBI1.Size = OrificeBI1.Size;
+            //EtiquetaBI1.Size = OrificeBI1.Size;
+           // OrificeBI2.Size = OrificeBI1.Size;
             PilotBracketBI2.Size = OrificeBI2.Size;
             ResorteBI2.Size = OrificeBI2.Size;
             LargoBI2.Size = OrificeBI2.Size;
@@ -146,30 +149,30 @@ namespace Final_Inspection_Machine_v3._0
             if (visibilidad)
             {
                 ProcesoGrid.RowDefinitions[3].Height = ProcesoGrid.RowDefinitions[2].Height;
-                PilotBracketBI1.Visible = true;
+                //PilotBracketBI1.Visible = true;
             }
             else
             {
                 ProcesoGrid.RowDefinitions[3].Height = new GridLength(0);
-                PilotBracketBI1.Visible= false;
+                //PilotBracketBI1.Visible= false;
             }
 
         }
 
         private void LimpiarEstaciones()
         {
-            OrificeBI1.SelectColor2 = false;
-            OrificeBI1.SelectColor3 = false;
-            LargoBI1.SelectColor2 = false;
-            LargoBI1.SelectColor3 = false;
-            SentidoBI1.SelectColor2 = false;
-            SentidoBI1.SelectColor3 = false;
-            NutBI1.SelectColor2 = false;
-            NutBI1.SelectColor3 = false;
-            TaponBI1.SelectColor2 = false;
-            TaponBI1.SelectColor3 = false;
-            EtiquetaBI1.SelectColor2 = false;
-            EtiquetaBI1.SelectColor3 = false;
+        //    OrificeBI1.SelectColor2 = false;
+        //    OrificeBI1.SelectColor3 = false;
+        //    LargoBI1.SelectColor2 = false;
+        //    LargoBI1.SelectColor3 = false;
+        //    SentidoBI1.SelectColor2 = false;
+        //    SentidoBI1.SelectColor3 = false;
+        //    NutBI1.SelectColor2 = false;
+        //    NutBI1.SelectColor3 = false;
+        //    TaponBI1.SelectColor2 = false;
+        //    TaponBI1.SelectColor3 = false;
+        //    EtiquetaBI1.SelectColor2 = false;
+        //    EtiquetaBI1.SelectColor3 = false;
 
             OrificeBI2.SelectColor2 = false;
             OrificeBI2.SelectColor3 = false;
