@@ -31,7 +31,7 @@ namespace Final_Inspection_Machine_v3._0.UC
 
         // Dependency Property for Color
         public static readonly DependencyProperty ColorProperty =
-            DependencyProperty.Register("Color", typeof(Brush), typeof(Button), new PropertyMetadata(Brushes.Red, OnColorChanged));
+            DependencyProperty.Register("Color", typeof(Brush), typeof(Button), new PropertyMetadata(Brushes.Gray, OnColorChanged));
 
         // Dependency Property for Text
         public static readonly DependencyProperty IndicatorTextProperty =

@@ -142,6 +142,8 @@
     <Compile Include="Inspeccion-CompactLogix.xaml.cs">
       <DependentUpon>Inspeccion-CompactLogix.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InspeccionCL2-Estaciones.cs" />
+    <Compile Include="InspeccionCL2-PLC.cs" />
     <Compile Include="InspeccionCL2.xaml.cs">
       <DependentUpon>InspeccionCL2.xaml</DependentUpon>
     </Compile>
