@@ -1,5 +1,6 @@
 ﻿using AdvancedHMIControls;
 using MfgControl.AdvancedHMI.Controls;
+using ScottPlot.Colormaps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,19 +74,20 @@ namespace Final_Inspection_Machine_v3._0.UC
             if (s)
             {
                 IndicatorText.Text = "OK";
-                this.Color = Brushes.Green;
+                IndicatorEllipse.Fill = Brushes.Green;
             }
             else
             {
                 IndicatorText.Text = "NOK";
-                this.Color = Brushes.Red;
+                IndicatorEllipse.Fill = Brushes.Red;
+
             }
         }
 
         public void Reset()
         {
             IndicatorText.Text = "";
-            this.Color = Brushes.Gray;
+            IndicatorEllipse.Fill = Brushes.Gray;
         }
 
         private void UpdateShape()
