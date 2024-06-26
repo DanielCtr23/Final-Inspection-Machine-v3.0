@@ -244,7 +244,7 @@ namespace Final_Inspection_Machine_v3._0
         }
         private async void TaskE2()
         {
-            /await Corrugado2.CambioProgramaAsync(0);
+            //await Corrugado2.CambioProgramaAsync(0);
             //serial1 = 1.ToString();
             ////TaskO1();
 

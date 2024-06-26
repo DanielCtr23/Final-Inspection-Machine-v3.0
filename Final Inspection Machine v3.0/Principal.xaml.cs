@@ -20,25 +20,39 @@ namespace Final_Inspection_Machine_v3._0
     /// </summary>
     public partial class Principal : Window
     {
-        ventana_de_prueba inspeccion_CL;
+        InspeccionCL2 inspeccion_CL2;
+        DashboardTab DashboardTab;
         public Principal()
         {
             InitializeComponent();
-            inspeccion_CL = new ventana_de_prueba();
         }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            inspeccion_CL2 = new InspeccionCL2();
+            inspeccion_CL2.Closed += Inspeccion_CL2_Closed;
+            inspeccion_CL2.Show();
             this.Hide();
-            inspeccion_CL.Show();
-
         }
 
-        private void Inspeccion_CL_Closed(object sender, System.EventArgs e)
+        private void Inspeccion_CL2_Closed(object sender, System.EventArgs e)
         {
             try
             {
-                this.Visibility = Visibility.Visible;
+                this.Show();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void DashboardTab_Closed(object sender, EventArgs e)
+        {
+            try
+            {
+                this.Show();
             }
             catch (Exception)
             {
@@ -48,12 +62,19 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            App.Current.Shutdown();
         }
 
         private void CerrarBtn_Click(object sender, RoutedEventArgs e)
         {
             App.Current.Shutdown();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            DashboardTab = new DashboardTab();
+            DashboardTab.Closed += DashboardTab_Closed;
+            DashboardTab.Show();
+            this.Hide();
         }
     }
 }

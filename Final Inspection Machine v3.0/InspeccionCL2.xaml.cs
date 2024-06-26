@@ -148,5 +148,10 @@ namespace Final_Inspection_Machine_v3._0
         {
 
         }
+
+        private void RegresarBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

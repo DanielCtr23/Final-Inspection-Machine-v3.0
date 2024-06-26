@@ -77,6 +77,11 @@ namespace Final_Inspection_Machine_v3._0
             GraficaTurno.Refresh(TE);
             TiemposTurno.Refresh(TE);
         }
+
+        private void CerrarBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 
 }

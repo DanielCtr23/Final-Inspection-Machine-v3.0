@@ -8,10 +8,11 @@
         xmlns:UC="clr-namespace:Final_Inspection_Machine_v3._0.UC"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:SP="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+        xmlns:iconpacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="Final_Inspection_Machine_v3._0.DashboardTab"
         mc:Ignorable="d"
-        Title="DashboardTab" Height="1080" Width="1920">
+        Title="DashboardTab" Height="1080" Width="1920" WindowState="Maximized">
     <Window.Resources>
         <Style x:Key="ButtonFocusVisual">
             <Setter Property="Control.Template">
@@ -70,7 +71,7 @@
     </Window.Resources>
     <Grid Background="#222" Margin="0,0,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition MinHeight="70"/>
+            <RowDefinition MinHeight="90"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
 
@@ -84,6 +85,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
 
             <ToggleButton x:Name="TiempoExtraToggle" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Style="{StaticResource ToggleButtonStyle1}" 
@@ -94,9 +96,14 @@
                 <TextBlock Text="FIM DASHBOARD" FontSize="80" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
             </Viewbox>
             <TextBlock x:Name="FechaTB" Text="20/06/2024" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,15,0" 
-                       FontSize="20" Grid.Row="0" Grid.Column="4"/>
-            <TextBlock x:Name="HoraTB" Text="16:15:59 PM" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,15,0" 
                        FontSize="20" Grid.Row="1" Grid.Column="4"/>
+            <TextBlock x:Name="HoraTB" Text="16:15:59 PM" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,15,0" 
+                       FontSize="20" Grid.Row="2" Grid.Column="4"/>
+            <Viewbox Grid.Column="4" HorizontalAlignment="Right">
+                <Button x:Name="CerrarBtn" Background="Transparent" MinWidth="60" MinHeight="60" VerticalAlignment="Top" HorizontalAlignment="Right" BorderThickness="0" Click="CerrarBtn_Click">
+                    <iconpacks:PackIconMaterialDesign Kind="Close" Foreground="White"/>
+                </Button>
+            </Viewbox>
         </Grid>
 
         <TabControl Grid.Row="1" VerticalAlignment="Stretch" TabStripPlacement="Left" Background="#444" BorderBrush="#444" BorderThickness="1">
@@ -134,7 +141,7 @@
                 </TabItem.Header>
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                     <Viewbox Stretch="Fill" StretchDirection="DownOnly" Height="Auto">
-                        <Grid HorizontalAlignment="Stretch" Width="Auto" Height="900">
+                        <Grid HorizontalAlignment="Stretch" Width="Auto" Height="940">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
@@ -142,14 +149,14 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
+                                <RowDefinition Height="447.5"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <UC:BuenasActualGauge x:Name="ProduccionActual" Height="Auto" Width="420" Margin="15" Grid.Column="0"/>
-                            <UC:BuenasTurno x:Name="ProduccionTurno" Height="Auto" Width="420" Margin="15"  Grid.Column="1"/>
-                            <UC:ModelosCorridos x:Name="ModelosTurno" Height="Auto" Width="400" Margin="15"  Grid.Column="2"/>
-                            <UC:TiemposTurno x:Name="TiemposTurno" Height="Auto" Width="400" Margin="15" Grid.Column="3"/>
-                            <UC:ProduccionTurno x:Name="GraficaTurno" Height="Auto" Width="1740" Margin="15" Grid.Row="1" Grid.ColumnSpan="4"/>
+                            <UC:BuenasActualGauge x:Name="ProduccionActual" Height="417.5" Width="417.5" Margin="15" Grid.Column="0"/>
+                            <UC:BuenasTurno x:Name="ProduccionTurno" Height="417.5" Width="417.5" Margin="15"  Grid.Column="1"/>
+                            <UC:ModelosCorridos x:Name="ModelosTurno" Height="417.5" Width="417.5" Margin="15"  Grid.Column="2"/>
+                            <UC:TiemposTurno x:Name="TiemposTurno" Height="417.5" Width="417.5" Margin="15" Grid.Column="3"/>
+                            <UC:ProduccionTurno x:Name="GraficaTurno" Height="Auto" Width="1760" Margin="15" Grid.Row="1" Grid.ColumnSpan="4"/>
                         </Grid>
                     </Viewbox>
                 </ScrollViewer>
