@@ -169,15 +169,16 @@
                         <TextBlock Text="CONTADORES" Foreground="White"/>
                     </StackPanel>
                 </TabItem.Header>
-                <Viewbox VerticalAlignment="Top">
-                    <Grid Width="1920" Height="1000">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <Viewbox Stretch="Fill" StretchDirection="DownOnly" Height="Auto">
+                    <Grid Width="1920" Height="1050">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="11.2*"/>
+                            <ColumnDefinition Width="8*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="530"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
@@ -191,11 +192,12 @@
                             <CheckBox Height="30"/>
                         </Grid>
                         
-                        <UC:Grafico_Diario Width="840" Grid.Row="1" Grid.Column="0" Margin="15"/>
-                        <UC:Grafico_Semanal Width="840" Grid.Row="1" Grid.Column="1" Margin="15"/>
-                        <UC:Produccion_Mensual Height="470" Width="1740" Margin="15" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+                        <UC:Grafico_Diario Height="490" Width="1100" Grid.Row="1" Grid.Column="0" Margin="15"/>
+                        <UC:Grafico_Semanal Height="490" Width="880" Grid.Row="1" Grid.Column="1" Margin="15"/>
+                        <UC:Produccion_Mensual Height="530" Width="1890" Margin="15,5,15,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
                     </Grid>
-                </Viewbox>
+                    </Viewbox>
+                </ScrollViewer>
             </TabItem>
             <TabItem MinWidth="140" MinHeight="65" HorizontalAlignment="Stretch">
                 <TabItem.Header>

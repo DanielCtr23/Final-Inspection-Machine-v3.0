@@ -175,6 +175,18 @@ namespace Final_Inspection_Machine_v3._0
             return produccion;
         }
 
+        public DataTable ProduccionDiaria()
+        {
+
+            DataTable produccion = new DataTable();
+            MySqlCommand cmd;
+            cmd = new MySqlCommand("ProduccionDiaria", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            produccion.Load(cmd.ExecuteReader());
+
+            return produccion;
+        }
+
         public int Produccion()
         {
             MySqlCommand cmd = new MySqlCommand("ProduccionHoraActual", con);
