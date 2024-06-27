@@ -193,7 +193,7 @@
                         </Grid>
                         
                         <UC:Grafico_Diario Height="490" Width="1100" Grid.Row="1" Grid.Column="0" Margin="15"/>
-                        <UC:Grafico_Semanal Height="490" Width="880" Grid.Row="1" Grid.Column="1" Margin="15"/>
+                        <UC:Grafico_Semanal Height="490" Width="770" Grid.Row="1" Grid.Column="1" Margin="15"/>
                         <UC:Produccion_Mensual Height="530" Width="1890" Margin="15,5,15,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
                     </Grid>
                     </Viewbox>

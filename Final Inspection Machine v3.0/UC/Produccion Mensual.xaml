@@ -9,7 +9,7 @@
              d:DesignHeight="465" d:DesignWidth="1690">
     <StackPanel Background="#181818">
         <TextBlock Text="PRODUCCIÓN MENSUAL" FontSize="48" Foreground="White" HorizontalAlignment="Center"/>
-        <SP:WpfPlot x:Name="Plot" Height="360" Margin="3"/>
+        <SP:WpfPlot x:Name="Plot" Height="320" Margin="3"/>
         <TextBlock x:Name="LapsoTB" Text="01 - 31 JUNIO" FontSize="24" Foreground="White" HorizontalAlignment="Center" />
     </StackPanel>
 </UserControl>
