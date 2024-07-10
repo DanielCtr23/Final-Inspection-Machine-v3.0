@@ -15,7 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>F:\V3\</PublishUrl>
+    <PublishUrl>E:\V3\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -25,7 +25,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -75,7 +75,7 @@
     </StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>013AC872A40A4F2BA882F9430B869160A80A8034</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>7233866175EA325BDC859B9BB2F5CE8505A65611</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>Final Inspection Machine v3.0_TemporaryKey.pfx</ManifestKeyFile>
@@ -136,6 +136,12 @@
     <Compile Include="Estacion1-CL.cs" />
     <Compile Include="Estacion2-CL.cs" />
     <Compile Include="Etiquetadora.cs" />
+    <Compile Include="form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="form.Designer.cs">
+      <DependentUpon>form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Inspeccion-CL.xaml.cs">
       <DependentUpon>Inspeccion-CL.xaml</DependentUpon>
     </Compile>
@@ -146,6 +152,12 @@
     <Compile Include="InspeccionCL2-PLC.cs" />
     <Compile Include="InspeccionCL2.xaml.cs">
       <DependentUpon>InspeccionCL2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InspeccionForms.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InspeccionForms.Designer.cs">
+      <DependentUpon>InspeccionForms.cs</DependentUpon>
     </Compile>
     <Compile Include="Logica-CompactLogix.cs" />
     <Compile Include="Pages\BarraAlta.xaml.cs">
@@ -359,6 +371,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="form.resx">
+      <DependentUpon>form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InspeccionForms.resx">
+      <DependentUpon>InspeccionForms.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -420,7 +438,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 y x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

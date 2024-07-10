@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
@@ -21,10 +22,25 @@ namespace Final_Inspection_Machine_v3._0
             Com.InspeccionarTapon += Com_InspeccionarTapon;
             Com.MensajeRecibido += Com_MensajeRecibido;
             Com.DetenerCiclo += Com_DetenerCiclo;
+            
         }
 
         private void Com_DetenerCiclo(object sender, EventArgs e)
         {
+            try
+            {
+                Estacion1.Abort();
+                Estacion2.Abort();
+            }
+            catch (Exception)
+            {
+
+            }
+            Com.Terminar();
+            Thread.Sleep(800);
+            ModeloBtn.IsEnabled = true;
+            RegresarBtn.IsEnabled = true;
+            LimpiarPantalla();
         }
 
         private void Com_MensajeRecibido(object sender, int e)
@@ -35,46 +51,67 @@ namespace Final_Inspection_Machine_v3._0
                 MensajeProceso.Foreground = Brushes.Green;
                 MensajeProceso.Background = Brushes.Transparent;
             }
-            if (e==1)
+            else if (e==1)
             {
                 MensajeProceso.Text = "PARO DE EMERGENCIA PRESIONADO";
                 MensajeProceso.Foreground = Brushes.Red;
                 MensajeProceso.Background = Brushes.Yellow;
             }
-            if (e==2)
-            {
-                MensajeProceso.Text = "CICLO EN CURSO";
-                MensajeProceso.Foreground = Brushes.Green;
-                MensajeProceso.Background = Brushes.Transparent;
-            }
-            if (e==3)
+            else if (e==2)
             {
                 MensajeProceso.Text = "CORTINAS OBSTRUIDAS";
                 MensajeProceso.Foreground = Brushes.Red;
                 MensajeProceso.Background = Brushes.Transparent;
             }
-            if (e==4)
+            else if (e==3)
             {
-                MensajeProceso.Text = "SET-UP INCORRECTO";
+                MensajeProceso.Text = "CICLO EN CURSO";
+                MensajeProceso.Foreground = Brushes.Green;
+                MensajeProceso.Background = Brushes.Transparent;
+            }
+            else if (e==4)
+            {
+                MensajeProceso.Text = "CICLO PAUSADO: ESPERANDO TAPÓN";
+                MensajeProceso.Foreground = Brushes.Green;
+                MensajeProceso.Background = Brushes.Transparent;
+            }
+            else if (e == 5)
+            {
+                MensajeProceso.Text = "CICLO PAUSADO: ESPERANDO ETIQUETA";
+                MensajeProceso.Foreground = Brushes.Green;
+                MensajeProceso.Background = Brushes.Transparent;
+            }
+            else if (e == 6)
+            {
+                MensajeProceso.Text = "CORTINAS OBSTRUIDAS: ESPERANDO TAPÓN";
                 MensajeProceso.Foreground = Brushes.Red;
-                MensajeProceso.Background = Brushes.Yellow;
+                MensajeProceso.Background = Brushes.Transparent;
+            }
+            else if (e == 7)
+            {
+                MensajeProceso.Text = "CORTINAS OBSTRUIDAS: ESPERANDO ETIQUETA";
+                MensajeProceso.Foreground = Brushes.Red;
+                MensajeProceso.Background = Brushes.Transparent;
             }
         }
 
         private void Com_InspeccionarTapon(object sender, EventArgs e)
         {
+            EsperarTaponE1.Set();
+            EsperarTaponE2.Set();
         }
 
         private void Com_InspeccionarEtiqueta(object sender, EventArgs e)
         {
+            EsperarEtiquetaE1.Set();
+            EsperarEtiquetaE2.Set();
         }
 
         private void Com_IniciarCiclo(object sender, EventArgs e)
         {
-            pilotbracket = Com.PilotBracket();
             nutrojo = Com.NutRojo();
             sinsentido = Com.SinSentido();
-            HiloPrincipal = new System.Threading.Thread(Ejecucion);
+            HiloPrincipal = new Thread(Ejecucion);
             HiloPrincipal.Start();
         }
 
@@ -89,6 +126,9 @@ namespace Final_Inspection_Machine_v3._0
             {
                 ModeloBtn.Background = new SolidColorBrush(Colors.Red);
             }
+            pilotbracket = Com.PilotBracket();
+            OcultarPilotBracket(pilotbracket);
+            OcultarResorte(resorte);
         }
     }
 }

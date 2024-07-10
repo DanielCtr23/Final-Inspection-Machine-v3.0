@@ -59,7 +59,7 @@ namespace Final_Inspection_Machine_v3._0.UC
             {
                 TiempoNormal();
             }
-
+            Plot.Refresh();
         }
 
         public void TiempoNormal()
@@ -69,30 +69,50 @@ namespace Final_Inspection_Machine_v3._0.UC
             {
                 values = new double[]{ db.Produccion(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7,0,0), 
                     new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 16, 36, 0)), 0 };
-                values[1] = 2100 - values[0];
+                if (values[0] <= 1750)
+                {
+                    values[1] = 1750 - values[0];
+                }
+                else
+                {
+                    values[1] = 0;
+                }
 
-                TB.Text = values[0].ToString() + "/" + 2100.ToString();
+                TB.Text = values[0].ToString() + "/" + 1750.ToString();
                 TB2.Text = "7:00 - 16:36";
             }
             else if((DateTime.Now.Hour >= 5 && DateTime.Now.Hour <= 23) || (DateTime.Now.Hour == 16 && DateTime.Now.Minute >= 37))
             {
                 values = new double[]{ db.Produccion(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 16,37,0),
                     new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day+1, 1, 0, 0)), 0 };
-                values[1] = 2100 - values[0];
-                
+                if (values[0] <= 1750)
+                {
+                    values[1] = 1750 - values[0];
+                }
+                else
+                {
+                    values[1] = 0;
+                }
+
                 //MessageBox.Show(values[0].ToString());
 
 
-                TB.Text = values[0].ToString() + "/" + 2100.ToString();
+                TB.Text = values[0].ToString() + "/" + 1750.ToString();
                 TB2.Text = "16:36 - 01:00";
             }
             else
             {
                 values = new double[]{ db.Produccion(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day-1, 16,37,0),
                     new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 1, 0, 0)), 0 };
-                values[1] = 2100 - values[0];
-
-                TB.Text = values[0].ToString() + "/" + 2100.ToString();
+                if (values[0] <= 1750)
+                {
+                    values[1] = 1750 - values[0];
+                }
+                else
+                {
+                    values[1] = 0;
+                }
+                TB.Text = values[0].ToString() + "/" + 1750.ToString();
                 TB2.Text = "4:36 - 01:00";
 
             }
@@ -123,34 +143,55 @@ namespace Final_Inspection_Machine_v3._0.UC
             {
                 values = new double[]{ db.Produccion(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7,0,0),
                     new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 59, 59)), 0 };
-                values[1] = 2100 - values[0];
+                if (values[0] <= 2170)
+                {
+                    values[1] = 2170 - values[0];
+                }
+                else
+                {
+                    values[1] = 0;
+                }
 
-                TB.Text = values[0].ToString() + "/" + 2100.ToString();
+                TB.Text = values[0].ToString() + "/" + 2170.ToString();
                 TB2.Text = "7:00 - 19:00";
             }
             else if ((DateTime.Now.Hour >= 19 && DateTime.Now.Hour <= 23))
             {
                 values = new double[]{ db.Produccion(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 19,0,0),
                     new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day+1, 6, 59, 59)), 0 };
-                values[1] = 2100 - values[0];
+                if (values[0] <= 2170)
+                {
+                    values[1] = 2170 - values[0];
+                }
+                else
+                {
+                    values[1] = 0;
+                }
 
-                TB.Text = values[0].ToString() + "/" + 2100.ToString();
+                TB.Text = values[0].ToString() + "/" + 2170.ToString();
                 TB2.Text = "19:00 - 7:00";
             }
             else
             {
                 values = new double[]{ db.Produccion(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day-1, 19,0,0),
                     new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 59, 59)), 0 };
-                values[1] = 2100 - values[0];
+                if (values[0] <= 2170)
+                {
+                    values[1] = 2170 - values[0];
+                }
+                else
+                {
+                    values[1] = 0;
+                }
 
-                TB.Text = values[0].ToString() + "/" + 2100.ToString();
+                TB.Text = values[0].ToString() + "/" + 2170.ToString();
                 TB2.Text = "19:00 - 7:00";
             }
 
             Plot.Plot.Clear();
 
             var Gauge = Plot.Plot.Add.RadialGaugePlot(values);
-            Gauge = Plot.Plot.Add.RadialGaugePlot(values);
+            //Gauge = Plot.Plot.Add.RadialGaugePlot(values);
             Gauge.GaugeMode = ScottPlot.RadialGaugeMode.SingleGauge;
             Gauge.Clockwise = true;
             Gauge.OrderInsideOut = true;

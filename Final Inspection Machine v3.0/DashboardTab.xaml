@@ -12,7 +12,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="Final_Inspection_Machine_v3._0.DashboardTab"
         mc:Ignorable="d"
-        Title="DashboardTab" Height="1080" Width="1920" WindowState="Maximized">
+        Title="DashboardTab" Height="1080" Width="1920" WindowState="Maximized" WindowStyle="None">
     <Window.Resources>
         <Style x:Key="ButtonFocusVisual">
             <Setter Property="Control.Template">
@@ -70,12 +70,16 @@
         </Style>
     </Window.Resources>
     <Grid Background="#222" Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="319*"/>
+            <ColumnDefinition Width="161*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="90"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -90,7 +94,7 @@
 
             <ToggleButton x:Name="TiempoExtraToggle" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Style="{StaticResource ToggleButtonStyle1}" 
                           Checked="ToggleButton_Checked" Click="ToggleButton_Click" Unchecked="Toggle_Unchecked">
-                
+
             </ToggleButton>
             <Viewbox Grid.RowSpan="3" Grid.ColumnSpan="1" Grid.Column="1">
                 <TextBlock Text="FIM DASHBOARD" FontSize="80" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
@@ -106,7 +110,7 @@
             </Viewbox>
         </Grid>
 
-        <TabControl Grid.Row="1" VerticalAlignment="Stretch" TabStripPlacement="Left" Background="#444" BorderBrush="#444" BorderThickness="1">
+        <TabControl TabStripPlacement="Left" Background="#444" BorderBrush="#444" BorderThickness="1" Grid.ColumnSpan="2" Margin="0,118,0,0" Grid.RowSpan="2">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabItem}">
                     <Setter Property="Template">
@@ -171,31 +175,31 @@
                 </TabItem.Header>
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                     <Viewbox Stretch="Fill" StretchDirection="DownOnly" Height="Auto">
-                    <Grid Width="1920" Height="1050">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="11.2*"/>
-                            <ColumnDefinition Width="8*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="530"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-
-                        <Grid Margin="20,5,15,0" Background="#181818" Grid.ColumnSpan="2" Width="1725" Height="40" HorizontalAlignment="Left">
+                        <Grid Width="1920" Height="1050">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="11.2*"/>
+                                <ColumnDefinition Width="8*"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Height="30"/>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="530"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Margin="20,5,15,0" Background="#181818" Grid.ColumnSpan="2" Width="1725" Height="40" HorizontalAlignment="Left">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Height="30"/>
+                            </Grid>
+
+                            <UC:Grafico_Diario Height="490" Width="1100" Grid.Row="1" Grid.Column="0" Margin="15"/>
+                            <UC:Grafico_Semanal Height="490" Width="770" Grid.Row="1" Grid.Column="1" Margin="15"/>
+                            <UC:Produccion_Mensual Height="530" Width="1890" Margin="15,5,15,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
                         </Grid>
-                        
-                        <UC:Grafico_Diario Height="490" Width="1100" Grid.Row="1" Grid.Column="0" Margin="15"/>
-                        <UC:Grafico_Semanal Height="490" Width="770" Grid.Row="1" Grid.Column="1" Margin="15"/>
-                        <UC:Produccion_Mensual Height="530" Width="1890" Margin="15,5,15,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
-                    </Grid>
                     </Viewbox>
                 </ScrollViewer>
             </TabItem>

@@ -92,7 +92,7 @@ namespace Final_Inspection_Machine_v3._0.UC
             line.LinePattern = LinePattern.Dashed;
 
 
-            ProduccionPlot.Plot.Axes.SetLimits(-0.5, 11.5, 0, 300);
+            ProduccionPlot.Plot.Axes.SetLimits(-0.5, 11.5, 0, 330);
 
             ScottPlot.Control.Interaction interaction = new ScottPlot.Control.Interaction(ProduccionPlot);
             interaction.Disable();
@@ -107,7 +107,7 @@ namespace Final_Inspection_Machine_v3._0.UC
 
             Random rand = new Random();
 
-            if (DateTime.Now.Hour > 7 && DateTime.Now.Hour < 17)
+            if ((DateTime.Now.Hour > 7 && DateTime.Now.Hour < 16) ||( DateTime.Now.Hour == 16 && DateTime.Now.Minute < 36))
             {
                 produccion = db.Produccion(1);
                 j = 10;
@@ -168,7 +168,7 @@ namespace Final_Inspection_Machine_v3._0.UC
             line.LinePattern = LinePattern.Dashed;
 
 
-            ProduccionPlot.Plot.Axes.SetLimits(-0.5, 10.5, 0, 300);
+            ProduccionPlot.Plot.Axes.SetLimits(-0.5, 10.5, 0, 330);
 
             ScottPlot.Control.Interaction interaction = new ScottPlot.Control.Interaction(ProduccionPlot);
             interaction.Disable();

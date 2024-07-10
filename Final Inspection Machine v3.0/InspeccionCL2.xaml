@@ -78,7 +78,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="MensajeProceso" />
+            <TextBlock x:Name="MensajeProceso" HorizontalAlignment="Center" FontSize="16"/>
         </Grid>
 
         <Grid x:Name="ProcesoGrid" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="6">

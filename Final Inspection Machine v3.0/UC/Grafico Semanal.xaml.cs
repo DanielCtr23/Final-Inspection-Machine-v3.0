@@ -26,7 +26,7 @@ namespace Final_Inspection_Machine_v3._0.UC
         public Grafico_Semanal()
         {
             InitializeComponent();
-            Actualizar();
+            //Actualizar();
         }
         public void Actualizar()
         {

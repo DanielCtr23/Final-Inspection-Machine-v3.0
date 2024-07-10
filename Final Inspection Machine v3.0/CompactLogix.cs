@@ -14,7 +14,7 @@ namespace Final_Inspection_Machine_v3._0
 
     public class CompactLogix
     {
-        EthernetIPforCLXCom Com;
+        public EthernetIPforCLXCom Com;
         DataSubscriber CicloEnCurso, InspTapon, InspEtiqueta, Estop, Modelo, Mensaje;
 
         public event EventHandler IniciarCiclo;
@@ -51,7 +51,7 @@ namespace Final_Inspection_Machine_v3._0
             InspEtiqueta.DataChanged += InspEtiqueta_DataChanged;
 
             Estop.ComComponent = Com;
-            Estop.PLCAddressValue = new PLCAddressItem("INPUT_BITS.0");
+            Estop.PLCAddressValue = new PLCAddressItem("E_STOP");
             Estop.DataChanged += Estop_DataChanged;
 
             Modelo.ComComponent = Com;
@@ -67,7 +67,7 @@ namespace Final_Inspection_Machine_v3._0
         //Eventos
         private void Mensaje_DataChanged(object sender, PlcComEventArgs e)
         {
-            MensajeRecibido?.Invoke(sender, int.Parse(e.Values[0]));
+            MensajeRecibido?.Invoke(this, int.Parse(e.Values[0]));
         }
         private void Modelo_DataChanged(object sender, PlcComEventArgs e)
         {
@@ -76,7 +76,7 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Estop_DataChanged(object sender, PlcComEventArgs e)
         {
-            if (bool.Parse(e.Values[0]))
+            if (!bool.Parse(e.Values[0]))
             {
                 DetenerCiclo?.Invoke(this, e);
             }
@@ -131,11 +131,11 @@ namespace Final_Inspection_Machine_v3._0
         }
         public bool NutRojo()
         {
-            return bool.Parse(Com.Read("PROGRAM:FIM.NUT_ROJO"));
+            return bool.Parse(Com.Read("NUT_ROJO"));
         }
         public bool SinSentido()
         {
-            return bool.Parse(Com.Read("PROGRAM:FIM.SINSENTIDO"));
+            return bool.Parse(Com.Read("SINSENTIDO"));
         }
 
         //Escritura
@@ -162,6 +162,11 @@ namespace Final_Inspection_Machine_v3._0
         {
             Com.Write("E2_TERMINADO", 1);
             Com.Write("E1_TERMINADO", 1);
+        }
+
+        public void Cerrar()
+        {
+            Com.CloseConnection();
         }
 
     }

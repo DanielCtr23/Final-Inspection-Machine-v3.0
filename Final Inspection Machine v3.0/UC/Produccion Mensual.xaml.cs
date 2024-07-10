@@ -3,6 +3,7 @@ using ScottPlot.Plottables;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace Final_Inspection_Machine_v3._0.UC
 
         public void Actualizar()
         {
+            LapsoTB.Text = "01 - "+DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) + " DE " + DateTime.Now.ToString("MMMM", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
             DataTable Produccion = db.ProduccionMensual();
 
             Bar[] barBuenas = new Bar[Produccion.Rows.Count];
