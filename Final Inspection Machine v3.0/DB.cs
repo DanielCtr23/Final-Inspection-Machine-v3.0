@@ -52,7 +52,7 @@ namespace Final_Inspection_Machine_v3._0
         }
 
         //Guardado del 3 Pass---
-        public void Guardar(string Serial, string Modelo, DateTime Fecha, bool Pass, bool RoscaPass, int RoscaCal, bool CrackPass, int CrackD, int CrackT,
+        public void Guardar(string Serial, string Modelo, DateTime Fecha, bool Pass, bool Fail, bool RoscaPass, int RoscaCal, bool CrackPass, int CrackD, int CrackT,
             bool LargoPass, int LargoCal, bool SentidoPass, int SentidoCal, int SentidoTipo, bool NutPass, int NutCal, int NutTipo)
         {
             try
@@ -62,9 +62,21 @@ namespace Final_Inspection_Machine_v3._0
                 cmd.Parameters.AddWithValue("@S", Serial);
                 cmd.Parameters.AddWithValue("@Modelo", BuscarModelo(Modelo));
                 cmd.Parameters.AddWithValue("@PASS", Pass);
+                cmd.Parameters.AddWithValue("@Fail", Fail);
                 cmd.Parameters.AddWithValue("@Fecha", Fecha);
                 cmd.Parameters.AddWithValue("@Rosca_Pass", RoscaPass);
-                cmd.Parameters.AddWithValue("@Rosca_Cal", Fecha);
+                cmd.Parameters.AddWithValue("@Rosca_Cal", RoscaCal);
+                cmd.Parameters.AddWithValue("@Crack_Pass", CrackPass);
+                cmd.Parameters.AddWithValue("@Crack_D", CrackD);
+                cmd.Parameters.AddWithValue("@Crack_T", CrackT);
+                cmd.Parameters.AddWithValue("@Largo_Pass", LargoPass);
+                cmd.Parameters.AddWithValue("@Largo_Cal", LargoCal);
+                cmd.Parameters.AddWithValue("@Sentido_Pass", SentidoPass);
+                cmd.Parameters.AddWithValue("@Sentido_Cal", SentidoCal);
+                cmd.Parameters.AddWithValue("@Sentido_Tipo", SentidoTipo);
+                cmd.Parameters.AddWithValue("@Nut_Pass", NutPass);
+                cmd.Parameters.AddWithValue("@Nut_Cal", NutCal);
+                cmd.Parameters.AddWithValue("@Nut_Tipo", NutTipo);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)
