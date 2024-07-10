@@ -35,6 +35,9 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Ejecucion()
         {
+            ResultadosE1 = new ResultadosCorrugado[8]; 
+            ResultadosE2 = new ResultadosCorrugado[8];
+
             Fail[0] = false;
             Pass[0] = false;
             Fail[1] = false;
@@ -81,20 +84,16 @@ namespace Final_Inspection_Machine_v3._0
         }
         private async void TaskE1()
         {
-            //MensajeE1.Text = MensajeEstacion(0);
             await Corrugado1.CambioProgramaAsync(0);
             serial1 = 1.ToString();
-            //TaskO1();
-            //MensajeE1.Text = MensajeEstacion(1);
-
             Task Orifice1 = TaskO1();
+
             //Largo de Corrugado
             #region
             ResultadosE1[0] = await Corrugado1.PruebaAsync(ResultadosE1[0]);
             if (ResultadosE1[0].OKNG && (ResultadosE1[0].Programa == 0))
             {
                 Dispatcher.Invoke(() => LargoBI1.OK(true));
-
             }
             else
             {
@@ -189,17 +188,13 @@ namespace Final_Inspection_Machine_v3._0
 
             if (Fail[0])
             {
-                //MessageBox.Show("Falla");
-                //MensajeE1.Text = MensajeEstacion(6);
                 db.Guardar(serial1, modelo, DateTime.Now, false);
                 Thread.Sleep(500);
                 Estacion1.Abort();
-
             }
             else
             {
                 Com.E1_3Pass(true);
-                //MensajeE1.Text = MensajeEstacion(2);
                 EsperarTaponE1.WaitOne();
             }
 
@@ -212,12 +207,9 @@ namespace Final_Inspection_Machine_v3._0
             {
                 Dispatcher.Invoke(() => TaponBI1.OK(true));
                 Com.E1_TAPON_COLOCADO(true);
-                //MensajeE1.Text = MensajeEstacion(3);
                 serial1 = GenerarSerial(modelo, 1, Contador1);
-                //Thread.Sleep(1000);
                 etiquetadora.GenerarEtiqueta(serial1);
                 db.Guardar(serial1, modelo, DateTime.Now, true);
-                //Contador1++;
             }
             else
             {
@@ -229,15 +221,12 @@ namespace Final_Inspection_Machine_v3._0
 
             if (Fail[0])
             {
-                //MensajeE1.Text = MensajeEstacion(6);
                 db.Guardar(serial1, modelo, DateTime.Now, false);
                 Thread.Sleep(500);
-                //Com.Terminar();
                 Estacion1.Abort();
             }
             else
             {
-                //MensajeE1.Text = MensajeEstacion(4);
                 EsperarEtiquetaE1.WaitOne();
             }
 
@@ -248,13 +237,11 @@ namespace Final_Inspection_Machine_v3._0
             ResultadosE1[4] = await Corrugado1.PruebaAsync(ResultadosE1[4]);
             if (ResultadosE1[4].OKNG)
             {
-                //MensajeE1.Text = MensajeEstacion(5);
                 Dispatcher.Invoke(() => EtiquetaBI1.OK(true));
                 Pass[0] = true;
             }
             else
             {
-                //MensajeE1.Text = MensajeEstacion(6);
                 Dispatcher.Invoke(() => EtiquetaBI1.OK(false));
                 db.Guardar(serial1, modelo, DateTime.Now, false);
                 Fail[0] = true;

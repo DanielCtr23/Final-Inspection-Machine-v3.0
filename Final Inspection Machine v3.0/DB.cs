@@ -51,7 +51,9 @@ namespace Final_Inspection_Machine_v3._0
             }
         }
 
-        public void Guardar(string Serial, string Modelo, DateTime Fecha, bool Pass)
+        //Guardado del 3 Pass---
+        public void Guardar(string Serial, string Modelo, DateTime Fecha, bool Pass, bool RoscaPass, int RoscaCal, bool CrackPass, int CrackD, int CrackT,
+            bool LargoPass, int LargoCal, bool SentidoPass, int SentidoCal, int SentidoTipo, bool NutPass, int NutCal, int NutTipo)
         {
             try
             {
@@ -59,6 +61,28 @@ namespace Final_Inspection_Machine_v3._0
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@S", Serial);
                 cmd.Parameters.AddWithValue("@Modelo", BuscarModelo(Modelo));
+                cmd.Parameters.AddWithValue("@PASS", Pass);
+                cmd.Parameters.AddWithValue("@Fecha", Fecha);
+                cmd.Parameters.AddWithValue("@Rosca_Pass", RoscaPass);
+                cmd.Parameters.AddWithValue("@Rosca_Cal", Fecha);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        //Seria un Update
+        public void Guardar(string Serial, DateTime Fecha, bool Pass, bool TaponPass, 
+            int TaponCal, bool EtiquetaPass)
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("GuardarCompleto", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@S", Serial);
                 cmd.Parameters.AddWithValue("@PASS", Pass);
                 cmd.Parameters.AddWithValue("@Fecha", Fecha);
                 cmd.ExecuteNonQuery();
