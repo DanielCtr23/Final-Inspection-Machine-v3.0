@@ -19,6 +19,7 @@ namespace Final_Inspection_Machine_v3._0
         Estructuras.ResultadosCorrugado[] ResultadosE1 = new ResultadosCorrugado[8];
         Estructuras.ResultadosCorrugado[] ResultadosE2 = new ResultadosCorrugado[8];
         Estructuras.Orifice ResultadosOrifice1 = new Orifice();
+        Estructuras.Orifice ResultadosOrifice2 = new Orifice();
         IV3 Corrugado1, Corrugado2, Orifice11, Orifice12, Orifice21, Orifice22;
         bool[] Fail = new bool[2];
         bool[] Pass = new bool[2];
@@ -274,13 +275,10 @@ namespace Final_Inspection_Machine_v3._0
         }
         private async void TaskE2()
         {
-            //MensajeE1.Text = MensajeEstacion(0);
             await Corrugado2.CambioProgramaAsync(0);
             serial2 = 2.ToString();
-            ////TaskO1();
-            //MensajeE1.Text = MensajeEstacion(1);
 
-            TaskO2();
+            Task Orifice2 = TaskO2();
 
             //Largo de Corrugado
             #region
@@ -379,19 +377,27 @@ namespace Final_Inspection_Machine_v3._0
             }
             #endregion
 
+            await Orifice2;
+
+            serial2 = GenerarSerial(modelo, 2, Contador2);
+
             if (Fail[1])
             {
-                //MessageBox.Show("Falla");
-                //MensajeE1.Text = MensajeEstacion(6);
-                db.Guardar(serial2, modelo, DateTime.Now, false);
+                db.Guardar(serial2, modelo, DateTime.Now, false, true, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
+                    false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
+                    ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res), ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, int.Parse(ResultadosE2[2].Res));
                 Thread.Sleep(500);
                 Estacion2.Abort();
 
             }
             else
             {
+
+                db.Guardar(serial2, modelo, DateTime.Now, true, true, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
+                    false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
+                    ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res), ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, int.Parse(ResultadosE2[2].Res));
+                EsperarTaponE2.WaitOne();
                 Com.E2_3Pass(true);
-                //MensajeE1.Text = MensajeEstacion(2);
                 EsperarTaponE2.WaitOne();
             }
 
@@ -421,10 +427,8 @@ namespace Final_Inspection_Machine_v3._0
 
             if (Fail[1])
             {
-                //MensajeE1.Text = MensajeEstacion(6);
                 db.Guardar(serial2, modelo, DateTime.Now, false);
                 Thread.Sleep(500);
-                //Com.Terminar();
                 Estacion2.Abort();
             }
             else
@@ -454,9 +458,10 @@ namespace Final_Inspection_Machine_v3._0
             #endregion
 
         }
-        private async void TaskO2()
+        private async Task TaskO2()
         {
-            if ((await Orifice21.PruebaOrifice()).OKNG)
+            ResultadosOrifice2 = await Orifice21.PruebaOrifice();
+            if (ResultadosOrifice1.OKNG)
             {
                 Dispatcher.Invoke(() => OrificeBI2.OK(true));
             }
