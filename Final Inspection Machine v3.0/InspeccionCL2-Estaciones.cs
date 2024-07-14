@@ -186,15 +186,21 @@ namespace Final_Inspection_Machine_v3._0
 
             await Orifice1;
 
+            serial1 = GenerarSerial(modelo, 1, Contador1);
+
             if (Fail[0])
             {
-                db.Guardar(serial1, modelo, DateTime.Now, false);
+                db.Guardar(serial1, modelo, DateTime.Now, false, true, ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion,
+                    false, -1, -1, false, ResultadosE1[5].OKNG, ResultadosE1[5].Calificacion, ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
+                    ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res), ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res ));
                 Thread.Sleep(500);
                 Estacion1.Abort();
             }
             else
             {
-                Com.E1_3Pass(true);
+                db.Guardar(serial1, modelo, DateTime.Now, true, true, ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion,
+                    false, -1, -1, false, ResultadosE1[5].OKNG, ResultadosE1[5].Calificacion, ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
+                    ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res), ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res));
                 EsperarTaponE1.WaitOne();
             }
 
@@ -207,9 +213,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 Dispatcher.Invoke(() => TaponBI1.OK(true));
                 Com.E1_TAPON_COLOCADO(true);
-                serial1 = GenerarSerial(modelo, 1, Contador1);
                 etiquetadora.GenerarEtiqueta(serial1);
-                db.Guardar(serial1, modelo, DateTime.Now, true);
             }
             else
             {
@@ -217,11 +221,13 @@ namespace Final_Inspection_Machine_v3._0
                 Fail[0] = true;
             }
 
+
+            db.Guardar(serial1, DateTime.Now, ResultadosE1[3].OKNG, true, ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
+
             #endregion
 
             if (Fail[0])
             {
-                db.Guardar(serial1, modelo, DateTime.Now, false);
                 Thread.Sleep(500);
                 Estacion1.Abort();
             }
@@ -247,6 +253,9 @@ namespace Final_Inspection_Machine_v3._0
                 Fail[0] = true;
             }
             #endregion
+
+
+            db.Guardar(serial1, DateTime.Now, Pass[0], Fail[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, ResultadosE1[4].OKNG, ResultadosE1[4].Calificacion);
 
 
         }

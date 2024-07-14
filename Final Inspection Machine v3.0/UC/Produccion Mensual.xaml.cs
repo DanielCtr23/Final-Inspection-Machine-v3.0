@@ -95,7 +95,7 @@ namespace Final_Inspection_Machine_v3._0.UC
             Plot.Plot.Axes.Rules.Add(bottom);
 
             ScottPlot.AxisRules.MaximumBoundary boundary = 
-                new ScottPlot.AxisRules.MaximumBoundary(Plot.Plot.Axes.Bottom, Plot.Plot.Axes.Left, limits: new AxisLimits(-0.5, Produccion.Rows.Count-0.5, 0, 6000));
+                new ScottPlot.AxisRules.MaximumBoundary(Plot.Plot.Axes.Bottom, Plot.Plot.Axes.Left, limits: new AxisLimits(-0.5, Produccion.Rows.Count-0.5, 0, 5000));
 
             Plot.Plot.Axes.Rules.Add(boundary);
         }

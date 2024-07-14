@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.UC"
+             xmlns:UC="clr-namespace:Final_Inspection_Machine_v3._0.UC"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -507,20 +508,18 @@
             
         </Style>
 
-
-
     </UserControl.Resources>
     <Grid Background="#181818">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="1.8*"/>
+            <RowDefinition Height=".2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="55*"/>
-            <ColumnDefinition Width="1.5*"/>
-            <ColumnDefinition Width="13.5*"/>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="15*"/>
         </Grid.ColumnDefinitions>
         <Grid>
             <Grid.RowDefinitions>
@@ -562,6 +561,6 @@
             </DataGrid.Resources>
         </DataGrid>
         <TextBlock x:Name="MensajeTB" Foreground="White" FontSize="14" Grid.Row="3" Grid.Column="0"/>
-        <TextBlock x:Name="DetalleTB" Text="AS48378B240622151985" Foreground="White" FontSize="18" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <local:Detalle x:Name="Detalle" Grid.Column="2" Grid.Row="0" Grid.RowSpan="4"/>
     </Grid>
 </UserControl>

@@ -210,11 +210,10 @@ namespace Final_Inspection_Machine_v3._0.UC
                 try
                 {
                     string valor1 = valor.Row[0].ToString();
-                    DetalleTB.Text = valor1;
+                    Detalle.CargarDetalle(valor1);
                 }
                 catch (Exception)
                 {
-                    DetalleTB.Text = "";
                 }
             }
         }

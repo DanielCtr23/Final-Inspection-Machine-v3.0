@@ -175,7 +175,7 @@
                 </TabItem.Header>
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                     <Viewbox Stretch="Fill" StretchDirection="DownOnly" Height="Auto">
-                        <Grid Width="1920" Height="1050">
+                        <Grid Width="1920" Height="1450">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="11.2*"/>
                                 <ColumnDefinition Width="8*"/>
@@ -198,7 +198,7 @@
 
                             <UC:Grafico_Diario Height="490" Width="1100" Grid.Row="1" Grid.Column="0" Margin="15"/>
                             <UC:Grafico_Semanal Height="490" Width="770" Grid.Row="1" Grid.Column="1" Margin="15"/>
-                            <UC:Produccion_Mensual Height="530" Width="1890" Margin="15,5,15,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+                            <UC:Produccion_Mensual Height="930" Width="1890" Margin="15,5,15,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
                         </Grid>
                     </Viewbox>
                 </ScrollViewer>
@@ -211,8 +211,8 @@
                     </StackPanel>
                 </TabItem.Header>
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                    <Viewbox Stretch="UniformToFill" StretchDirection="Both">
-                        <UC:DetallePruebas Width="1080" Height="800" Margin="15"/>
+                    <Viewbox Stretch="Uniform" StretchDirection="Both">
+                        <UC:DetallePruebas Width="1080" Height="575" Margin="15"/>
                     </Viewbox>
                 </ScrollViewer>
             </TabItem>

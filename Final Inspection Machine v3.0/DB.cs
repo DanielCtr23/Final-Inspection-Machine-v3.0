@@ -50,10 +50,7 @@ namespace Final_Inspection_Machine_v3._0
                 con.Open();
             }
         }
-
-        //Guardado del 3 Pass---
-        public void Guardar(string Serial, string Modelo, DateTime Fecha, bool Pass, bool Fail, bool RoscaPass, int RoscaCal, bool CrackPass, int CrackD, int CrackT,
-            bool LargoPass, int LargoCal, bool SentidoPass, int SentidoCal, int SentidoTipo, bool NutPass, int NutCal, int NutTipo)
+        public void Guardar(string Serial, string Modelo, DateTime Fecha, bool Pass)
         {
             try
             {
@@ -62,21 +59,45 @@ namespace Final_Inspection_Machine_v3._0
                 cmd.Parameters.AddWithValue("@S", Serial);
                 cmd.Parameters.AddWithValue("@Modelo", BuscarModelo(Modelo));
                 cmd.Parameters.AddWithValue("@PASS", Pass);
+                cmd.Parameters.AddWithValue("@Fecha", Fecha);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        //Guardado del 3 Pass---
+        public void Guardar(string Serial, string Modelo, DateTime Fecha, bool Pass, bool Fail, bool RoscaPass, int RoscaCal, bool CrackPass, int CrackD, int CrackT, bool ResortePass, bool PilotBracketPass, int PilotBracketTipo,
+            bool LargoPass, int LargoCal, bool SentidoPass, int SentidoCal, int SentidoTipo, bool NutPass, int NutCal, int NutTipo)
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("GuardarPrueba", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@S", Serial);
+                cmd.Parameters.AddWithValue("@Modelo", BuscarModelo(Modelo));
+                cmd.Parameters.AddWithValue("@PASS", Pass);
                 cmd.Parameters.AddWithValue("@Fail", Fail);
                 cmd.Parameters.AddWithValue("@Fecha", Fecha);
-                cmd.Parameters.AddWithValue("@Rosca_Pass", RoscaPass);
-                cmd.Parameters.AddWithValue("@Rosca_Cal", RoscaCal);
-                cmd.Parameters.AddWithValue("@Crack_Pass", CrackPass);
-                cmd.Parameters.AddWithValue("@Crack_D", CrackD);
-                cmd.Parameters.AddWithValue("@Crack_T", CrackT);
-                cmd.Parameters.AddWithValue("@Largo_Pass", LargoPass);
-                cmd.Parameters.AddWithValue("@Largo_Cal", LargoCal);
-                cmd.Parameters.AddWithValue("@Sentido_Pass", SentidoPass);
-                cmd.Parameters.AddWithValue("@Sentido_Cal", SentidoCal);
-                cmd.Parameters.AddWithValue("@Sentido_Tipo", SentidoTipo);
-                cmd.Parameters.AddWithValue("@Nut_Pass", NutPass);
-                cmd.Parameters.AddWithValue("@Nut_Cal", NutCal);
-                cmd.Parameters.AddWithValue("@Nut_Tipo", NutTipo);
+                cmd.Parameters.AddWithValue("@RoscaPass", RoscaPass);
+                cmd.Parameters.AddWithValue("@RoscaCal", RoscaCal);
+                cmd.Parameters.AddWithValue("@CrackPass", CrackPass);
+                cmd.Parameters.AddWithValue("@CrackD", CrackD);
+                cmd.Parameters.AddWithValue("@CrackT", CrackT);
+                cmd.Parameters.AddWithValue("@ResortePass", ResortePass);
+                cmd.Parameters.AddWithValue("@PilotBracketPass", PilotBracketPass);
+                cmd.Parameters.AddWithValue("@PilotBracketTipo", PilotBracketTipo);
+                cmd.Parameters.AddWithValue("@LargoPass", LargoPass);
+                cmd.Parameters.AddWithValue("@LargoCal", LargoCal);
+                cmd.Parameters.AddWithValue("@SentidoPass", SentidoPass);
+                cmd.Parameters.AddWithValue("@SentidoCal", SentidoCal);
+                cmd.Parameters.AddWithValue("@SentidoTipo", SentidoTipo);
+                cmd.Parameters.AddWithValue("@NutPass", NutPass);
+                cmd.Parameters.AddWithValue("@NutCal", NutCal);
+                cmd.Parameters.AddWithValue("@NutTipo", NutTipo);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)
@@ -87,16 +108,21 @@ namespace Final_Inspection_Machine_v3._0
         }
 
         //Seria un Update
-        public void Guardar(string Serial, DateTime Fecha, bool Pass, bool TaponPass, 
-            int TaponCal, bool EtiquetaPass)
+        public void Guardar(string Serial, DateTime Fecha, bool Pass, bool Fail, bool TaponPass, 
+            int TaponCal, bool EtiquetaPass, int EtiquetaCal)
         {
             try
             {
-                MySqlCommand cmd = new MySqlCommand("GuardarCompleto", con);
+                MySqlCommand cmd = new MySqlCommand("ActualizarPrueba", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@S", Serial);
                 cmd.Parameters.AddWithValue("@PASS", Pass);
+                cmd.Parameters.AddWithValue("@Fail", Fail);
                 cmd.Parameters.AddWithValue("@Fecha", Fecha);
+                cmd.Parameters.AddWithValue("@TaponPass", TaponPass);
+                cmd.Parameters.AddWithValue("@TaponCal", TaponCal);
+                cmd.Parameters.AddWithValue("@EtiquetaPass", EtiquetaPass);
+                cmd.Parameters.AddWithValue("@EtiquetaCal", EtiquetaCal);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)
@@ -123,6 +149,7 @@ namespace Final_Inspection_Machine_v3._0
             }
 
         }
+
 
         public int ObtenerMalas()
         {
@@ -221,6 +248,18 @@ namespace Final_Inspection_Machine_v3._0
             produccion.Load(cmd.ExecuteReader());
 
             return produccion;
+        }
+
+        public DataTable Detalle(string Serial)
+        {
+            DataTable detalle = new DataTable();
+
+            MySqlCommand cmd;
+            cmd = new MySqlCommand("Detalle", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@S", Serial);
+            detalle.Load(cmd.ExecuteReader());
+            return detalle;
         }
 
         public DataTable ProduccionSemanal()

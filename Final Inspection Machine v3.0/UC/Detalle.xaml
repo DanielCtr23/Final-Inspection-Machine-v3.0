@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="Final_Inspection_Machine_v3._0.UC.Detalle"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.UC"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="250">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="SerialTB" Text="AS48378B240716121999" Foreground="White" Grid.ColumnSpan="2" TextAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+        <TextBlock x:Name="PassTB" Text="PASS" Foreground="Green" Grid.Row="1" FontWeight="Black" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="FechaTB" Text="07/10/2024 16:54:54" Foreground="White" Grid.Row="1" Grid.Column="1" FontWeight="Medium" FontSize="12" TextAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Text="Rosca:" Foreground="White" Grid.Row="2" Grid.Column="0" TextAlignment="Right" VerticalAlignment="Center" FontSize="15" FontWeight="SemiBold"/>
+        <TextBlock Text="Craqueadura:" Foreground="White" Grid.Row="3" Grid.Column="0" TextAlignment="Right" VerticalAlignment="Center" FontSize="15" FontWeight="SemiBold"/>
+        <TextBlock Text="Resorte:" Foreground="White" Grid.Row="4" Grid.Column="0" TextAlignment="Right" VerticalAlignment="Center" FontSize="15" FontWeight="SemiBold"/>
+        <TextBlock Text="Pilot Bracket:" Foreground="White" Grid.Row="5" Grid.Column="0" TextAlignment="Right" VerticalAlignment="Center" FontSize="14" FontWeight="SemiBold"/>
+        <TextBlock Text="Largo:" Foreground="White" Grid.Row="6" Grid.Column="0" TextAlignment="Right" VerticalAlignment="Center" FontSize="15" FontWeight="SemiBold"/>
+        <TextBlock Text="Sentido:" Foreground="White" Grid.Row="7" Grid.Column="0" TextAlignment="Right" VerticalAlignment="Center" FontSize="15" FontWeight="SemiBold"/>
+        <TextBlock Text="Nut:" Foreground="White" Grid.Row="8" Grid.Column="0" TextAlignment="Right" VerticalAlignment="Center" FontSize="15" FontWeight="SemiBold"/>
+        <TextBlock Text="Tapón:" Foreground="White" Grid.Row="9" Grid.Column="0" TextAlignment="Right" VerticalAlignment="Center" FontSize="15" FontWeight="SemiBold"/>
+        <TextBlock Text="Etiqueta:" Foreground="White" Grid.Row="10" Grid.Column="0" TextAlignment="Right" VerticalAlignment="Center" FontSize="15" FontWeight="SemiBold"/>
+
+
+        <TextBlock x:Name="RoscaTB" Text="PASS / 99" Foreground="Green" Grid.Row="2" Grid.Column="1" FontWeight="Black" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="CrackTB" Text="PASS / D:99 / T:99" Foreground="Green" Grid.Row="3" Grid.Column="1" FontWeight="Black" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="ResorteTB" Text="PASS" Foreground="Green" Grid.Row="4" Grid.Column="1" FontWeight="Black" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="PilotBracketTB" Text="PASS / 19911B" Foreground="Green" Grid.Row="5" Grid.Column="1" FontWeight="Black" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="LargoTB" Text="PASS / 100" Foreground="Green" Grid.Row="6" Grid.Column="1" FontWeight="Black" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="SentidoTB" Text="PASS / I:100" Foreground="Green" Grid.Row="7" Grid.Column="1" FontWeight="Black" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="NutTB" Text="PASS / A:100" Foreground="Green" Grid.Row="8" Grid.Column="1" FontWeight="Black" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="TaponTB" Text="PASS / 100" Foreground="Green" Grid.Row="9" Grid.Column="1" FontWeight="Black" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="EtiquetaTB" Text="PASS / 100" Foreground="Green" Grid.Row="10" Grid.Column="1" FontWeight="Black" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+
+    </Grid>
+</UserControl>

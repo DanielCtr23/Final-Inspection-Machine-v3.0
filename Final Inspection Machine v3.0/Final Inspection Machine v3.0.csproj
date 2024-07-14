@@ -196,6 +196,9 @@
     <Compile Include="UC\Chart270UC.xaml.cs">
       <DependentUpon>Chart270UC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UC\Detalle.xaml.cs">
+      <DependentUpon>Detalle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UC\DetallePruebas.xaml.cs">
       <DependentUpon>DetallePruebas.xaml</DependentUpon>
     </Compile>
@@ -310,6 +313,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UC\Chart270UC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\Detalle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
