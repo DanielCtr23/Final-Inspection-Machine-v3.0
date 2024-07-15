@@ -27,14 +27,14 @@ namespace Final_Inspection_Machine_v3._0
         public InspeccionCL2()
         {
             InitializeComponent();
-            //InicializarPLC();
-            //InicializarCamaras();
+            InicializarPLC();
+            InicializarCamaras();
             Thread.Sleep(1000);
             etiquetadora = new Etiquetadora();
             Segundero.Interval = TimeSpan.FromSeconds(1);
             Segundero.Tick += Segundero_Tick;
             Segundero.Start();
-            //CargarContadores();
+            CargarContadores();
             OcultarPilotBracket(false);
             OcultarResorte(true);
 
@@ -115,7 +115,7 @@ namespace Final_Inspection_Machine_v3._0
 
         }
 
-        private string MensajeEstacion(int op)
+        /*private string MensajeEstacion(int op)
         {
             string mensaje;
             if (op == 0)
@@ -152,7 +152,7 @@ namespace Final_Inspection_Machine_v3._0
             }
 
             return mensaje;
-        }
+        }*/
 
         private void ResetBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -164,7 +164,6 @@ namespace Final_Inspection_Machine_v3._0
         {
             form form = new form(Com.Com);
             form.ShowDialog();
-
         }
 
         private void RegresarBtn_Click(object sender, RoutedEventArgs e)

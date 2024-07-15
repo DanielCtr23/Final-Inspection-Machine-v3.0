@@ -18,8 +18,8 @@ namespace Final_Inspection_Machine_v3._0
 
         Estructuras.ResultadosCorrugado[] ResultadosE1 = new ResultadosCorrugado[8];
         Estructuras.ResultadosCorrugado[] ResultadosE2 = new ResultadosCorrugado[8];
-        Estructuras.Orifice ResultadosOrifice1 = new Orifice();
-        Estructuras.Orifice ResultadosOrifice2 = new Orifice();
+        Estructuras.ResultadosCorrugado ResultadosOrifice1 = new ResultadosCorrugado();
+        Estructuras.ResultadosCorrugado ResultadosOrifice2 = new ResultadosCorrugado();
         IV3 Corrugado1, Corrugado2, Orifice11, Orifice12, Orifice21, Orifice22;
         bool[] Fail = new bool[2];
         bool[] Pass = new bool[2];
@@ -45,8 +45,6 @@ namespace Final_Inspection_Machine_v3._0
             Pass[1] = false;
             Dispatcher.Invoke(new Action(() => HabilitarBotones(false)));
 
-            //ModeloBtn.IsEnabled = false;
-            //RegresarBtn.IsEnabled = false;
             EsperarEtiquetaE1 = new ManualResetEvent(false);
             EsperarEtiquetaE2 = new ManualResetEvent(false);
             EsperarTaponE1 = new ManualResetEvent(false);
@@ -59,11 +57,6 @@ namespace Final_Inspection_Machine_v3._0
             sinsentido = Com.SinSentido();
             resorte = Com.Resorte();
 
-            //Dispatcher.Invoke(new Action(() => OcultarPilotBracket(pilotbracket)));
-            //Dispatcher.Invoke(new Action(() => OcultarResorte(resorte)));
-            //OcultarPilotBracket(pilotbracket);
-            //OcultarResorte(resorte);
-
             Estacion1 = new Thread(TaskE1);
             Estacion2 = new Thread(TaskE2);
             Estacion1.Start();
@@ -72,8 +65,7 @@ namespace Final_Inspection_Machine_v3._0
             Estacion2.Join();
             Com.Terminar();
             Thread.Sleep(2500);
-            //ModeloBtn.IsEnabled = true;
-            //RegresarBtn.IsEnabled = true;
+
             Dispatcher.Invoke(new Action(() => HabilitarBotones(true)));
             Dispatcher.Invoke(LimpiarPantalla);
             Dispatcher.Invoke(CargarContadores);
@@ -193,7 +185,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 db.Guardar(serial1, modelo, DateTime.Now, false, true, ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion,
                     false, -1, -1, false, ResultadosE1[5].OKNG, ResultadosE1[5].Calificacion, ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
-                    ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res), ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res ));
+                    ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, -1, ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, -1);
                 Thread.Sleep(500);
                 Estacion1.Abort();
             }
@@ -202,6 +194,7 @@ namespace Final_Inspection_Machine_v3._0
                 db.Guardar(serial1, modelo, DateTime.Now, true, true, ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion,
                     false, -1, -1, false, ResultadosE1[5].OKNG, ResultadosE1[5].Calificacion, ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
                     ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res), ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res));
+                Com.E1_3Pass(true);
                 EsperarTaponE1.WaitOne();
             }
 
@@ -221,7 +214,6 @@ namespace Final_Inspection_Machine_v3._0
                 Dispatcher.Invoke(() => TaponBI1.OK(false));
                 Fail[0] = true;
             }
-
 
             db.Guardar(serial1, DateTime.Now, ResultadosE1[3].OKNG, true, ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
 
@@ -252,17 +244,17 @@ namespace Final_Inspection_Machine_v3._0
                 Dispatcher.Invoke(() => EtiquetaBI1.OK(false));
                 db.Guardar(serial1, modelo, DateTime.Now, false);
                 Fail[0] = true;
+                Pass[0] = false;
             }
             #endregion
 
-
-            db.Guardar(serial1, DateTime.Now, Pass[0], Fail[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, ResultadosE1[4].OKNG, ResultadosE1[4].Calificacion);
+            db.Guardar(serial1, DateTime.Now, Pass[0], !Pass[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, ResultadosE1[4].OKNG, ResultadosE1[4].Calificacion);
 
 
         }
         private async Task TaskO1()
         {
-            ResultadosOrifice1 = await Orifice11.PruebaOrifice();
+            ResultadosOrifice1 = await Orifice11.PruebaAsync(ResultadosOrifice1);
             if (ResultadosOrifice1.OKNG)
             {
                 Dispatcher.Invoke(() => OrificeBI1.OK(true));
@@ -277,7 +269,6 @@ namespace Final_Inspection_Machine_v3._0
         {
             await Corrugado2.CambioProgramaAsync(0);
             serial2 = 2.ToString();
-
             Task Orifice2 = TaskO2();
 
             //Largo de Corrugado
@@ -362,6 +353,7 @@ namespace Final_Inspection_Machine_v3._0
                 if (Com.PilotBracket2())
                 {
                     Dispatcher.Invoke(() => PilotBracketBI2.OK(true));
+                    ResultadosE2[5].OKNG = true;
                 }
                 else
                 {
@@ -372,7 +364,17 @@ namespace Final_Inspection_Machine_v3._0
             }
             else
             {
-                ResultadosE2[5].OKNG = true;
+                if (Com.PilotBracket2())
+                {
+                    Dispatcher.Invoke(() => PilotBracketBI2.OK(false));
+                    ResultadosE2[5].OKNG = false;
+                    Fail[1] = true;
+                }
+                else
+                {
+                    Dispatcher.Invoke(() => PilotBracketBI2.OK(true));
+                    ResultadosE2[5].OKNG = true;
+                }
                 ResultadosE2[5].Res = "SinNut";
             }
             #endregion
@@ -383,9 +385,10 @@ namespace Final_Inspection_Machine_v3._0
 
             if (Fail[1])
             {
+                Thread.Sleep(100);
                 db.Guardar(serial2, modelo, DateTime.Now, false, true, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
                     false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
-                    ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res), ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, int.Parse(ResultadosE2[2].Res));
+                    ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res), ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, -1);
                 Thread.Sleep(500);
                 Estacion2.Abort();
 
@@ -393,10 +396,11 @@ namespace Final_Inspection_Machine_v3._0
             else
             {
 
+                Thread.Sleep(100);
                 db.Guardar(serial2, modelo, DateTime.Now, true, true, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
                     false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
                     ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res), ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, int.Parse(ResultadosE2[2].Res));
-                EsperarTaponE2.WaitOne();
+                
                 Com.E2_3Pass(true);
                 EsperarTaponE2.WaitOne();
             }
@@ -410,30 +414,29 @@ namespace Final_Inspection_Machine_v3._0
             {
                 Dispatcher.Invoke(() => TaponBI2.OK(true));
                 Com.E2_TAPON_COLOCADO(true);
-                //MensajeE1.Text = MensajeEstacion(3);
-                serial2 = GenerarSerial(modelo, 2, Contador2);
                 Thread.Sleep(500);
                 etiquetadora.GenerarEtiqueta(serial2);
-                db.Guardar(serial2, modelo, DateTime.Now, true);
-                //Contador1++;
             }
             else
             {
                 Dispatcher.Invoke(() => TaponBI2.OK(false));
                 Fail[1] = true;
+                ResultadosE2[3].Calificacion = 0;
             }
+
+            //Arreglar
+            Thread.Sleep(100);
+            db.Guardar(serial2, DateTime.Now, ResultadosE2[3].OKNG, true, ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, false, -1);
 
             #endregion
 
             if (Fail[1])
             {
-                db.Guardar(serial2, modelo, DateTime.Now, false);
                 Thread.Sleep(500);
                 Estacion2.Abort();
             }
             else
             {
-                //MensajeE1.Text = MensajeEstacion(4);
                 EsperarEtiquetaE2.WaitOne();
             }
 
@@ -444,24 +447,26 @@ namespace Final_Inspection_Machine_v3._0
             ResultadosE2[4] = await Corrugado2.PruebaAsync(ResultadosE2[4]);
             if (ResultadosE2[4].OKNG)
             {
-                //MensajeE1.Text = MensajeEstacion(5);
                 Dispatcher.Invoke(() => EtiquetaBI2.OK(true));
                 Pass[1] = true;
+                
             }
             else
             {
-                //MensajeE1.Text = MensajeEstacion(6);
                 Dispatcher.Invoke(() => EtiquetaBI2.OK(false));
                 db.Guardar(serial2, modelo, DateTime.Now, false);
                 Fail[1] = true;
+                Pass[1] = false;
             }
             #endregion
+            Thread.Sleep(100);
+            db.Guardar(serial2, DateTime.Now, Pass[1], !Pass[1], ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, ResultadosE2[4].OKNG, ResultadosE2[4].Calificacion);
 
         }
         private async Task TaskO2()
         {
-            ResultadosOrifice2 = await Orifice21.PruebaOrifice();
-            if (ResultadosOrifice1.OKNG)
+            ResultadosOrifice2 = await Orifice21.PruebaAsync(ResultadosOrifice2);
+            if (ResultadosOrifice2.OKNG)
             {
                 Dispatcher.Invoke(() => OrificeBI2.OK(true));
             }

@@ -36,6 +36,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.BI_CORRUGADOF_V = new AdvancedHMIControls.BasicIndicator();
+            this.ethernetIPforCLXCom1 = new AdvancedHMIDrivers.EthernetIPforCLXCom(this.components);
             this.BI_CORRUGADOE_V = new AdvancedHMIControls.BasicIndicator();
             this.BI_CORRUGADOD_V = new AdvancedHMIControls.BasicIndicator();
             this.BI_CORRUGADOC_V = new AdvancedHMIControls.BasicIndicator();
@@ -57,14 +58,13 @@
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.timer4 = new System.Windows.Forms.Timer(this.components);
-            this.ethernetIPforCLXCom1 = new AdvancedHMIDrivers.EthernetIPforCLXCom(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ethernetIPforCLXCom1)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ethernetIPforCLXCom1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -111,6 +111,7 @@
             this.label15.BackColor = System.Drawing.Color.Transparent;
             this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 60F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label15.Location = new System.Drawing.Point(3, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(1180, 146);
@@ -185,6 +186,20 @@
             this.BI_CORRUGADOF_V.Size = new System.Drawing.Size(70, 76);
             this.BI_CORRUGADOF_V.TabIndex = 4;
             this.BI_CORRUGADOF_V.Text = "F";
+            // 
+            // ethernetIPforCLXCom1
+            // 
+            this.ethernetIPforCLXCom1.CIPConnectionSize = 508;
+            this.ethernetIPforCLXCom1.DisableMultiServiceRequest = false;
+            this.ethernetIPforCLXCom1.DisableSubscriptions = false;
+            this.ethernetIPforCLXCom1.IniFileName = "";
+            this.ethernetIPforCLXCom1.IniFileSection = null;
+            this.ethernetIPforCLXCom1.IPAddress = "192.168.0.10";
+            this.ethernetIPforCLXCom1.PollRateOverride = 500;
+            this.ethernetIPforCLXCom1.Port = 44818;
+            this.ethernetIPforCLXCom1.ProcessorSlot = 0;
+            this.ethernetIPforCLXCom1.RoutePath = null;
+            this.ethernetIPforCLXCom1.Timeout = 4000;
             // 
             // BI_CORRUGADOE_V
             // 
@@ -418,6 +433,7 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(615, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(546, 37);
@@ -431,6 +447,7 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(23, 10);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(546, 37);
@@ -462,9 +479,12 @@
             // comboBox1
             // 
             this.comboBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            this.comboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(54)))), ((int)(((byte)(54)))));
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.ForeColor = System.Drawing.Color.White;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.IntegralHeight = false;
             this.comboBox1.Location = new System.Drawing.Point(335, 3);
@@ -476,12 +496,19 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Location = new System.Drawing.Point(875, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(175, 49);
             this.button1.TabIndex = 3;
             this.button1.Text = "ACEPTAR MODELO";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // label3
             // 
@@ -518,26 +545,13 @@
             this.timer4.Interval = 500;
             this.timer4.Tick += new System.EventHandler(this.timer4_Tick);
             // 
-            // ethernetIPforCLXCom1
-            // 
-            this.ethernetIPforCLXCom1.CIPConnectionSize = 508;
-            this.ethernetIPforCLXCom1.DisableMultiServiceRequest = false;
-            this.ethernetIPforCLXCom1.DisableSubscriptions = false;
-            this.ethernetIPforCLXCom1.IniFileName = "";
-            this.ethernetIPforCLXCom1.IniFileSection = null;
-            this.ethernetIPforCLXCom1.IPAddress = "192.168.0.10";
-            this.ethernetIPforCLXCom1.PollRateOverride = 500;
-            this.ethernetIPforCLXCom1.Port = 44818;
-            this.ethernetIPforCLXCom1.ProcessorSlot = 0;
-            this.ethernetIPforCLXCom1.RoutePath = null;
-            this.ethernetIPforCLXCom1.Timeout = 4000;
-            // 
             // form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1232, 586);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "form";
             this.Text = "form";
             this.Load += new System.EventHandler(this.form_Load);
@@ -547,10 +561,10 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ethernetIPforCLXCom1)).EndInit();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ethernetIPforCLXCom1)).EndInit();
             this.ResumeLayout(false);
 
         }

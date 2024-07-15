@@ -57,7 +57,7 @@ namespace Final_Inspection_Machine_v3._0
                 MySqlCommand cmd = new MySqlCommand("Guardar", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@S", Serial);
-                cmd.Parameters.AddWithValue("@Modelo", BuscarModelo(Modelo));
+                cmd.Parameters.AddWithValue("@Modelo", Modelo);
                 cmd.Parameters.AddWithValue("@PASS", Pass);
                 cmd.Parameters.AddWithValue("@Fecha", Fecha);
                 cmd.ExecuteNonQuery();
@@ -78,7 +78,7 @@ namespace Final_Inspection_Machine_v3._0
                 MySqlCommand cmd = new MySqlCommand("GuardarPrueba", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@S", Serial);
-                cmd.Parameters.AddWithValue("@Modelo", BuscarModelo(Modelo));
+                cmd.Parameters.AddWithValue("@Modelo", (Modelo));
                 cmd.Parameters.AddWithValue("@PASS", Pass);
                 cmd.Parameters.AddWithValue("@Fail", Fail);
                 cmd.Parameters.AddWithValue("@Fecha", Fecha);
@@ -103,7 +103,6 @@ namespace Final_Inspection_Machine_v3._0
             catch (Exception)
             {
 
-                throw;
             }
         }
 

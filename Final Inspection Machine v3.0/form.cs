@@ -244,31 +244,20 @@ namespace Final_Inspection_Machine_v3._0
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //if (bool.Parse(PLCCOM.Read("MODELO_ACEPTADO")))
-            //{
-            //    timer2.Start();
-            //}
-            //else
-            //{
-            //    label3.Text = "No corresponde el modelo seleccionado con la posición actual";
-            //    label3.ForeColor = Color.Red;
-            //    label3.BackColor = Color.Yellow;
-            //    timer1.Start();
-            //}
-            if (permiso)
-            {
-                this.Close();
-            }
-
-        }
 
         private void timer4_Tick(object sender, EventArgs e)
         {
             //comboBox1.SelectedText = Micro800.Read("MODELO_SELECCIONADO");
             listo = true;
             timer4.Stop();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            if (permiso)
+            {
+                this.Close();
+            }
         }
     }
 }
