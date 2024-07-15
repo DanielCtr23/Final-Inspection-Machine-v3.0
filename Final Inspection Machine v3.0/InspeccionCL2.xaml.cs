@@ -102,58 +102,10 @@ namespace Final_Inspection_Machine_v3._0
         //Pruebas
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //if (ProcesoGrid.RowDefinitions[3].Height.Value == 0)
-            //{
-            //    ProcesoGrid.RowDefinitions[3].Height = new GridLength(1, GridUnitType.Star);
-            //    OrificeBI1.OK(false);
-            //}
-            //else
-            //{
-            //    ProcesoGrid.RowDefinitions[3].Height = new GridLength(0);
-            //    OrificeBI1.OK(true);
-            //}
 
         }
 
-        /*private string MensajeEstacion(int op)
-        {
-            string mensaje;
-            if (op == 0)
-            {
-                mensaje = "INICIANDO PRUEBA";
-            }
-            else if(op == 1)
-            {
-                mensaje = "REALIZANDO PRUEBA";
-            }
-            else if(op == 2)
-            {
-                mensaje = "ESPERANDO COLOCACIÓN DE TAPÓN";
-            }
-            else if (op == 3)
-            {
-                mensaje = "IMPRIMIENDO ETIQUETA";
-            }
-            else if(op == 4)
-            {
-                mensaje = "ESPERANDO COLOCACIÓN DE ETIQUETA";
-            }
-            else if (op == 5)
-            {
-                mensaje = "PIEZA OK";
-            }
-            else if (op==6)
-            {
-                mensaje = "PIEZA NOK";
-            }
-            else
-            {
-                mensaje = "";
-            }
-
-            return mensaje;
-        }*/
-
+        
         private void ResetBtn_Click(object sender, RoutedEventArgs e)
         {
             db.ResetContadores();

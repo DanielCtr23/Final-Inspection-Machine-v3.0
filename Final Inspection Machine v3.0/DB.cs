@@ -103,7 +103,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                //MessageBox.Show(e.Message);
             }
         }
 
@@ -127,7 +127,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                //MessageBox.Show(e.Message);
             }
         }
 
