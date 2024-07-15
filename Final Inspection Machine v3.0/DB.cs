@@ -19,6 +19,8 @@ namespace Final_Inspection_Machine_v3._0
         private string uid;
         private string password;
 
+        private static readonly object lockObject = new object();
+
         public DB()
         {
             Inicializar();
@@ -74,36 +76,44 @@ namespace Final_Inspection_Machine_v3._0
         public void Guardar(string Serial, string Modelo, DateTime Fecha, bool Pass, bool Fail, bool RoscaPass, int RoscaCal, bool CrackPass, int CrackD, int CrackT, bool ResortePass, bool PilotBracketPass, int PilotBracketTipo,
             bool LargoPass, int LargoCal, bool SentidoPass, int SentidoCal, int SentidoTipo, bool NutPass, int NutCal, int NutTipo)
         {
-            try
+            lock (lockObject) // Bloquear el método
             {
-                MySqlCommand cmd = new MySqlCommand("GuardarPrueba", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@S", Serial);
-                cmd.Parameters.AddWithValue("@Modelo", (Modelo));
-                cmd.Parameters.AddWithValue("@PASS", Pass);
-                cmd.Parameters.AddWithValue("@Fail", Fail);
-                cmd.Parameters.AddWithValue("@Fecha", Fecha);
-                cmd.Parameters.AddWithValue("@RoscaPass", RoscaPass);
-                cmd.Parameters.AddWithValue("@RoscaCal", RoscaCal);
-                cmd.Parameters.AddWithValue("@CrackPass", CrackPass);
-                cmd.Parameters.AddWithValue("@CrackD", CrackD);
-                cmd.Parameters.AddWithValue("@CrackT", CrackT);
-                cmd.Parameters.AddWithValue("@ResortePass", ResortePass);
-                cmd.Parameters.AddWithValue("@PilotBracketPass", PilotBracketPass);
-                cmd.Parameters.AddWithValue("@PilotBracketTipo", PilotBracketTipo);
-                cmd.Parameters.AddWithValue("@LargoPass", LargoPass);
-                cmd.Parameters.AddWithValue("@LargoCal", LargoCal);
-                cmd.Parameters.AddWithValue("@SentidoPass", SentidoPass);
-                cmd.Parameters.AddWithValue("@SentidoCal", SentidoCal);
-                cmd.Parameters.AddWithValue("@SentidoTipo", SentidoTipo);
-                cmd.Parameters.AddWithValue("@NutPass", NutPass);
-                cmd.Parameters.AddWithValue("@NutCal", NutCal);
-                cmd.Parameters.AddWithValue("@NutTipo", NutTipo);
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception e)
-            {
-                //MessageBox.Show(e.Message);
+                try
+                {
+                    using (MySqlCommand cmd = new MySqlCommand("GuardarPrueba", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@S", Serial);
+                        cmd.Parameters.AddWithValue("@Modelo", Modelo);
+                        cmd.Parameters.AddWithValue("@PASS", Pass);
+                        cmd.Parameters.AddWithValue("@Fail", Fail);
+                        cmd.Parameters.AddWithValue("@Fecha", Fecha);
+                        cmd.Parameters.AddWithValue("@RoscaPass", RoscaPass);
+                        cmd.Parameters.AddWithValue("@RoscaCal", RoscaCal);
+                        cmd.Parameters.AddWithValue("@CrackPass", CrackPass);
+                        cmd.Parameters.AddWithValue("@CrackD", CrackD);
+                        cmd.Parameters.AddWithValue("@CrackT", CrackT);
+                        cmd.Parameters.AddWithValue("@ResortePass", ResortePass);
+                        cmd.Parameters.AddWithValue("@PilotBracketPass", PilotBracketPass);
+                        cmd.Parameters.AddWithValue("@PilotBracketTipo", PilotBracketTipo);
+                        cmd.Parameters.AddWithValue("@LargoPass", LargoPass);
+                        cmd.Parameters.AddWithValue("@LargoCal", LargoCal);
+                        cmd.Parameters.AddWithValue("@SentidoPass", SentidoPass);
+                        cmd.Parameters.AddWithValue("@SentidoCal", SentidoCal);
+                        cmd.Parameters.AddWithValue("@SentidoTipo", SentidoTipo);
+                        cmd.Parameters.AddWithValue("@NutPass", NutPass);
+                        cmd.Parameters.AddWithValue("@NutCal", NutCal);
+                        cmd.Parameters.AddWithValue("@NutTipo", NutTipo);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception e)
+                {
+                    // Manejo de errores
+                    Console.WriteLine(e.Message);
+                    throw;
+                }
             }
         }
 
@@ -111,19 +121,23 @@ namespace Final_Inspection_Machine_v3._0
         public void Guardar(string Serial, DateTime Fecha, bool Pass, bool Fail, bool TaponPass, 
             int TaponCal, bool EtiquetaPass, int EtiquetaCal)
         {
+            lock (lockObject) // Bloquear el método
             try
             {
-                MySqlCommand cmd = new MySqlCommand("ActualizarPrueba", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@S", Serial);
-                cmd.Parameters.AddWithValue("@PASS", Pass);
-                cmd.Parameters.AddWithValue("@Fail", Fail);
-                cmd.Parameters.AddWithValue("@Fecha", Fecha);
-                cmd.Parameters.AddWithValue("@TaponPass", TaponPass);
-                cmd.Parameters.AddWithValue("@TaponCal", TaponCal);
-                cmd.Parameters.AddWithValue("@EtiquetaPass", EtiquetaPass);
-                cmd.Parameters.AddWithValue("@EtiquetaCal", EtiquetaCal);
-                cmd.ExecuteNonQuery();
+                using (MySqlCommand cmd = new MySqlCommand("ActualizarPrueba", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@S", Serial);
+                    cmd.Parameters.AddWithValue("@PASS", Pass);
+                    cmd.Parameters.AddWithValue("@Fail", Fail);
+                    cmd.Parameters.AddWithValue("@Fecha", Fecha);
+                    cmd.Parameters.AddWithValue("@TaponPass", TaponPass);
+                    cmd.Parameters.AddWithValue("@TaponCal", TaponCal);
+                    cmd.Parameters.AddWithValue("@EtiquetaPass", EtiquetaPass);
+                    cmd.Parameters.AddWithValue("@EtiquetaCal", EtiquetaCal);
+                    cmd.ExecuteNonQuery();
+                }
+               
             }
             catch (Exception e)
             {
