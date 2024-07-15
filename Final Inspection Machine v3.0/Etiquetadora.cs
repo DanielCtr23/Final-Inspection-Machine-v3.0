@@ -50,6 +50,8 @@ namespace Final_Inspection_Machine_v3._0
             }
         }
 
+        private readonly object printerLock = new object();
+
         public void GenerarEtiqueta(string Serial)
         {
             //Connection cnZebra = new UsbConnection("USB001:");

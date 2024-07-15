@@ -168,7 +168,7 @@ namespace Final_Inspection_Machine_v3._0
                 {
                     Dispatcher.Invoke(() => PilotBracketBI1.OK(false));
                     ResultadosE1[5].OKNG = false;
-                    Fail[0] = true;
+                    //Fail[0] = true;
                 }
             }
             else
@@ -177,7 +177,7 @@ namespace Final_Inspection_Machine_v3._0
                 {
                     Dispatcher.Invoke(() => PilotBracketBI1.OK(false));
                     ResultadosE1[5].OKNG = false;
-                    Fail[0] = true;
+                    //Fail[0] = true;
                 }
                 else
                 {
@@ -202,7 +202,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             else
             {
-                db.Guardar(serial1, modelo, DateTime.Now, true, true, ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion,
+                db.Guardar(serial1, modelo, DateTime.Now, false, false, ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion,
                     false, -1, -1, false, ResultadosE1[5].OKNG, ResultadosE1[5].Calificacion, ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
                     ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res), ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res));
                 Com.E1_3Pass(true);
@@ -227,7 +227,7 @@ namespace Final_Inspection_Machine_v3._0
                 ResultadosE1[3].Calificacion = 0;
             }
 
-            db.Guardar(serial1, DateTime.Now, ResultadosE1[3].OKNG, true, ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
+            db.Guardar(serial1, DateTime.Now, false, !ResultadosE1[3].OKNG, ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
 
             #endregion
 
@@ -254,7 +254,7 @@ namespace Final_Inspection_Machine_v3._0
             else
             {
                 Dispatcher.Invoke(() => EtiquetaBI1.OK(false));
-                db.Guardar(serial1, modelo, DateTime.Now, false);
+                //db.Guardar(serial1, modelo, DateTime.Now, false);
                 Fail[0] = true;
                 Pass[0] = false;
             }
@@ -371,7 +371,7 @@ namespace Final_Inspection_Machine_v3._0
                 {
                     Dispatcher.Invoke(() => PilotBracketBI2.OK(false));
                     ResultadosE2[5].OKNG = false;
-                    Fail[1] = true;
+                    //Fail[1] = true;
                 }
             }
             else
@@ -380,7 +380,7 @@ namespace Final_Inspection_Machine_v3._0
                 {
                     Dispatcher.Invoke(() => PilotBracketBI2.OK(false));
                     ResultadosE2[5].OKNG = false;
-                    Fail[1] = true;
+                    //Fail[1] = true;
                 }
                 else
                 {
@@ -397,7 +397,6 @@ namespace Final_Inspection_Machine_v3._0
 
             if (Fail[1])
             {
-                Thread.Sleep(100);
                 db.Guardar(serial2, modelo, DateTime.Now, false, true, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
                     false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
                     ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion,-1, ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, -1);
@@ -407,12 +406,9 @@ namespace Final_Inspection_Machine_v3._0
             }
             else
             {
-
-                Thread.Sleep(100);
-                db.Guardar(serial2, modelo, DateTime.Now, true, true, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
+                db.Guardar(serial2, modelo, DateTime.Now, false, false, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
                     false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
                     ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res), ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, int.Parse(ResultadosE2[2].Res));
-                
                 Com.E2_3Pass(true);
                 EsperarTaponE2.WaitOne();
             }
@@ -426,7 +422,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 Dispatcher.Invoke(() => TaponBI2.OK(true));
                 Com.E2_TAPON_COLOCADO(true);
-                Thread.Sleep(200);
+                Thread.Sleep(350);
                 etiquetadora.GenerarEtiqueta(serial2);
             }
             else
@@ -438,7 +434,7 @@ namespace Final_Inspection_Machine_v3._0
 
             //Arreglar
             Thread.Sleep(100);
-            db.Guardar(serial2, DateTime.Now, ResultadosE2[3].OKNG, true, ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, false, -1);
+            db.Guardar(serial2, DateTime.Now, false, !ResultadosE2[3].OKNG, ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, false, -1);
 
             #endregion
 
@@ -466,7 +462,7 @@ namespace Final_Inspection_Machine_v3._0
             else
             {
                 Dispatcher.Invoke(() => EtiquetaBI2.OK(false));
-                db.Guardar(serial2, modelo, DateTime.Now, false);
+                //db.Guardar(serial2, modelo, DateTime.Now, false);
                 Fail[1] = true;
                 Pass[1] = false;
             }

@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Final_Inspection_Machine_v3._0
 {
@@ -33,7 +34,7 @@ namespace Final_Inspection_Machine_v3._0
                 password = "Rheem";
                 string connectionString;
                 connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-                database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+                database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";" ;
                 con = new MySqlConnection(connectionString);
                 con.Open();
             }
@@ -100,9 +101,9 @@ namespace Final_Inspection_Machine_v3._0
                 cmd.Parameters.AddWithValue("@NutTipo", NutTipo);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                MessageBox.Show(e.Message);
             }
         }
 
@@ -124,10 +125,9 @@ namespace Final_Inspection_Machine_v3._0
                 cmd.Parameters.AddWithValue("@EtiquetaCal", EtiquetaCal);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                MessageBox.Show(e.Message);
             }
         }
 

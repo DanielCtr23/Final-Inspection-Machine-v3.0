@@ -15,7 +15,8 @@ namespace Final_Inspection_Machine_v3._0
 
         private void InicializarPLC()
         {
-            Com = new CompactLogix(1);
+            Com = new CompactLogix();
+            Com.Terminar();
             Com.CambioModelo += Com_CambioModelo;
             Com.IniciarCiclo += Com_IniciarCiclo;
             Com.InspeccionarEtiqueta += Com_InspeccionarEtiqueta;
@@ -141,8 +142,8 @@ namespace Final_Inspection_Machine_v3._0
                 ModeloBtn.Background = new SolidColorBrush(Colors.Red);
             }
             pilotbracket = Com.PilotBracket();
-            OcultarPilotBracket(pilotbracket);
-            OcultarResorte(resorte);
+            OcultarPilotBracket(true);
+            OcultarResorte(false);
         }
     }
 }

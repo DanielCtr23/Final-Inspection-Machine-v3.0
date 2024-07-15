@@ -35,8 +35,8 @@ namespace Final_Inspection_Machine_v3._0
             Segundero.Tick += Segundero_Tick;
             Segundero.Start();
             CargarContadores();
-            OcultarPilotBracket(false);
-            OcultarResorte(true);
+            OcultarPilotBracket(true);
+            OcultarResorte(false);
 
         }
 

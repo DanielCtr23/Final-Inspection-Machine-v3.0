@@ -15,7 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>E:\V3\</PublishUrl>
+    <PublishUrl>D:\V3\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -25,7 +25,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>9</ApplicationRevision>
+    <ApplicationRevision>16</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -159,9 +159,6 @@
     <Compile Include="InspeccionForms.Designer.cs">
       <DependentUpon>InspeccionForms.cs</DependentUpon>
     </Compile>
-    <Compile Include="InspeccionM.xaml.cs">
-      <DependentUpon>InspeccionM.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Logica-CompactLogix.cs" />
     <Compile Include="Pages\BarraAlta.xaml.cs">
       <DependentUpon>BarraAlta.xaml</DependentUpon>
@@ -249,10 +246,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InspeccionCL2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="InspeccionM.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
