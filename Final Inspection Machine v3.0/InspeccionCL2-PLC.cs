@@ -15,7 +15,7 @@ namespace Final_Inspection_Machine_v3._0
 
         private void InicializarPLC()
         {
-            Com = new CompactLogix();
+            Com = new CompactLogix(1);
             Com.CambioModelo += Com_CambioModelo;
             Com.IniciarCiclo += Com_IniciarCiclo;
             Com.InspeccionarEtiqueta += Com_InspeccionarEtiqueta;
@@ -29,18 +29,32 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
-                Estacion1.Abort();
-                Estacion2.Abort();
+                if (Estacion1 != null && Estacion1.IsAlive)
+                {
+                    Estacion1.Abort();
+                }
+
+                if (Estacion2 != null && Estacion2.IsAlive)
+                {
+                    Estacion2.Abort();
+                }
             }
-            catch (Exception)
+            catch (ThreadAbortException)
             {
 
             }
-            Com.Terminar();
-            Thread.Sleep(800);
-            ModeloBtn.IsEnabled = true;
-            RegresarBtn.IsEnabled = true;
-            LimpiarPantalla();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Com.Terminar();
+                Thread.Sleep(800);
+                ModeloBtn.IsEnabled = true;
+                RegresarBtn.IsEnabled = true;
+                LimpiarPantalla();
+            }
         }
 
         private void Com_MensajeRecibido(object sender, int e)

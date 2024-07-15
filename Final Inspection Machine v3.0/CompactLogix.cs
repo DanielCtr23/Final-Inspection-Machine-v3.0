@@ -9,12 +9,14 @@ using AdvancedHMIDrivers;
 using MfgControl.AdvancedHMI.Drivers;
 using MfgControl.AdvancedHMI.Drivers.Common;
 
+
 namespace Final_Inspection_Machine_v3._0
 {
 
     public class CompactLogix
     {
-        public EthernetIPforCLXCom Com;
+        public object Com { get; private set; }
+        dynamic comDynamic;
         DataSubscriber CicloEnCurso, InspTapon, InspEtiqueta, Estop, Modelo, Mensaje;
 
         public event EventHandler IniciarCiclo;
@@ -24,44 +26,55 @@ namespace Final_Inspection_Machine_v3._0
         public event EventHandler<bool> CambioModelo;
         public event EventHandler<int> MensajeRecibido;
 
-        public CompactLogix()
+        public CompactLogix(int op)
         {
-            Com = new EthernetIPforCLXCom();
-            Com.IPAddress = "192.168.1.1";
-            Com.Timeout = 1000;
-            Com.PollRateOverride = 500;
+            if (op == 1)
+            {
+                Com = new EthernetIPforCLXCom();
+            }
+            else if (op == 2)
+            {
+                Com = new EthernetIPforMicro800();
+            }
 
-            CicloEnCurso = new DataSubscriber();
-            InspTapon = new DataSubscriber();
-            InspEtiqueta = new DataSubscriber();
-            Estop = new DataSubscriber();
-            Modelo = new DataSubscriber();
-            Mensaje = new DataSubscriber();
+            if (Com != null)
+            {
+                comDynamic = Com; // Uso de dynamic para acceder a las propiedades específicas
+                comDynamic.IPAddress = "192.168.1.1";
+                comDynamic.Timeout = 1000;
+                comDynamic.PollRateOverride = 500;
 
-            CicloEnCurso.ComComponent = Com;
-            CicloEnCurso.PLCAddressValue = new PLCAddressItem("CICLO_EN_CURSO");
-            CicloEnCurso.DataChanged += CicloEnCurso_DataChanged;
+                CicloEnCurso = new DataSubscriber();
+                InspTapon = new DataSubscriber();
+                InspEtiqueta = new DataSubscriber();
+                Estop = new DataSubscriber();
+                Modelo = new DataSubscriber();
+                Mensaje = new DataSubscriber();
 
-            InspTapon.ComComponent = Com;
-            InspTapon.PLCAddressValue = new PLCAddressItem("INSP_TAPON");
-            InspTapon.DataChanged += InspTapon_DataChanged;
+                CicloEnCurso.ComComponent = comDynamic;
+                CicloEnCurso.PLCAddressValue = new PLCAddressItem("CICLO_EN_CURSO");
+                CicloEnCurso.DataChanged += CicloEnCurso_DataChanged;
 
-            InspEtiqueta.ComComponent = Com;
-            InspEtiqueta.PLCAddressValue = new PLCAddressItem("INSP_ETIQUETA");
-            InspEtiqueta.DataChanged += InspEtiqueta_DataChanged;
+                InspTapon.ComComponent = comDynamic;
+                InspTapon.PLCAddressValue = new PLCAddressItem("INSP_TAPON");
+                InspTapon.DataChanged += InspTapon_DataChanged;
 
-            Estop.ComComponent = Com;
-            Estop.PLCAddressValue = new PLCAddressItem("E_STOP");
-            Estop.DataChanged += Estop_DataChanged;
+                InspEtiqueta.ComComponent = comDynamic;
+                InspEtiqueta.PLCAddressValue = new PLCAddressItem("INSP_ETIQUETA");
+                InspEtiqueta.DataChanged += InspEtiqueta_DataChanged;
 
-            Modelo.ComComponent = Com;
-            Modelo.PLCAddressValue = new PLCAddressItem("MODELO_ACEPTADO");
-            Modelo.DataChanged += Modelo_DataChanged;
+                Estop.ComComponent = comDynamic;
+                Estop.PLCAddressValue = new PLCAddressItem("E_STOP");
+                Estop.DataChanged += Estop_DataChanged;
 
-            Mensaje.ComComponent = Com;
-            Mensaje.PLCAddressValue = new PLCAddressItem("MENSAJE");
-            Mensaje.DataChanged += Mensaje_DataChanged;
+                Modelo.ComComponent = comDynamic;
+                Modelo.PLCAddressValue = new PLCAddressItem("MODELO_ACEPTADO");
+                Modelo.DataChanged += Modelo_DataChanged;
 
+                Mensaje.ComComponent = comDynamic;
+                Mensaje.PLCAddressValue = new PLCAddressItem("MENSAJE");
+                Mensaje.DataChanged += Mensaje_DataChanged;
+            }
         }
 
         //Eventos
@@ -109,64 +122,65 @@ namespace Final_Inspection_Machine_v3._0
         //Lecturas en ciclo
         public bool PilotBracket1()
         {
-            return bool.Parse(Com.Read("PB_E1_OK"));
+            return bool.Parse(comDynamic.Read("PB_E1_OK"));
+            
         }
         public bool PilotBracket2()
         {
-            return bool.Parse(Com.Read("PB_E2_OK"));
+            return bool.Parse(comDynamic.Read("PB_E2_OK"));
         }
 
         //Lecturas 
         public string ModeloSeleccionado()
         {
-            return Com.Read("MODELO_SELECCIONADO");
+            return comDynamic.Read("MODELO_SELECCIONADO");
         }
         public bool Resorte()
         {
-            return bool.Parse(Com.Read("RESORTE"));
+            return bool.Parse(comDynamic.Read("RESORTE"));
         }
         public bool PilotBracket()
         {
-            return bool.Parse(Com.Read("PILOT_BRACKET"));
+            return bool.Parse(comDynamic.Read("PILOT_BRACKET"));
         }
         public bool NutRojo()
         {
-            return bool.Parse(Com.Read("NUT_ROJO"));
+            return bool.Parse(comDynamic.Read("NUT_ROJO"));
         }
         public bool SinSentido()
         {
-            return bool.Parse(Com.Read("SINSENTIDO"));
+            return bool.Parse(comDynamic.Read("SINSENTIDO"));
         }
 
         //Escritura
         public void E1_3Pass(bool y)
         {
-            Com.Write("E1_3PASS", Convert.ToInt32(y));
+            comDynamic.Write("E1_3PASS", Convert.ToInt32(y));
         }
         public void E2_3Pass(bool y)
         {
-            Com.Write("E2_3PASS", Convert.ToInt32(y));
+            comDynamic.Write("E2_3PASS", Convert.ToInt32(y));
         }
         public void E1_TAPON_COLOCADO(bool y)
         {
-            Com.Write("E1_TAPON_COLOCADO", Convert.ToInt32(y));
+            comDynamic.Write("E1_TAPON_COLOCADO", Convert.ToInt32(y));
         }
         public void E2_TAPON_COLOCADO(bool y)
         {
-            Com.Write("E2_TAPON_COLOCADO", Convert.ToInt32(y));
+            comDynamic.Write("E2_TAPON_COLOCADO", Convert.ToInt32(y));
         }
 
         //Metodos
 
         public void Terminar()
         {
-            Com.Write("E2_TERMINADO", 1);
-            Com.Write("E1_TERMINADO", 1);
+            comDynamic.Write("E2_TERMINADO", 1);
+            comDynamic.Write("E1_TERMINADO", 1);
         }
 
         public void Cerrar()
         {
-            Com.CloseConnection();
+            comDynamic.CloseConnection();
         }
 
     }

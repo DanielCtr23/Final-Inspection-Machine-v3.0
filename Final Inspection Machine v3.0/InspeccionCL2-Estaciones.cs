@@ -162,6 +162,7 @@ namespace Final_Inspection_Machine_v3._0
                 if (Com.PilotBracket1())
                 {
                     Dispatcher.Invoke(() => PilotBracketBI1.OK(true));
+                    ResultadosE1[5].OKNG = true;
                 }
                 else
                 {
@@ -172,8 +173,18 @@ namespace Final_Inspection_Machine_v3._0
             }
             else
             {
-                ResultadosE1[5].OKNG = true;
-                ResultadosE1[5].Res = "SinNut";
+                if (Com.PilotBracket1())
+                {
+                    Dispatcher.Invoke(() => PilotBracketBI1.OK(false));
+                    ResultadosE1[5].OKNG = false;
+                    Fail[0] = true;
+                }
+                else
+                {
+                    Dispatcher.Invoke(() => PilotBracketBI1.OK(true));
+                    ResultadosE1[5].OKNG = true;
+                }
+                ResultadosE1[5].Res = "SinPB";
             }
             #endregion
 
@@ -213,6 +224,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 Dispatcher.Invoke(() => TaponBI1.OK(false));
                 Fail[0] = true;
+                ResultadosE1[3].Calificacion = 0;
             }
 
             db.Guardar(serial1, DateTime.Now, ResultadosE1[3].OKNG, true, ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
@@ -375,7 +387,7 @@ namespace Final_Inspection_Machine_v3._0
                     Dispatcher.Invoke(() => PilotBracketBI2.OK(true));
                     ResultadosE2[5].OKNG = true;
                 }
-                ResultadosE2[5].Res = "SinNut";
+                ResultadosE2[5].Res = "SinPB";
             }
             #endregion
 
@@ -388,7 +400,7 @@ namespace Final_Inspection_Machine_v3._0
                 Thread.Sleep(100);
                 db.Guardar(serial2, modelo, DateTime.Now, false, true, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
                     false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
-                    ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res), ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, -1);
+                    ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion,-1, ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, -1);
                 Thread.Sleep(500);
                 Estacion2.Abort();
 
@@ -414,7 +426,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 Dispatcher.Invoke(() => TaponBI2.OK(true));
                 Com.E2_TAPON_COLOCADO(true);
-                Thread.Sleep(500);
+                Thread.Sleep(200);
                 etiquetadora.GenerarEtiqueta(serial2);
             }
             else
