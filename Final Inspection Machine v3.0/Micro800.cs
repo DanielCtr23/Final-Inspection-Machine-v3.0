@@ -1,7 +1,7 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using AdvancedHMIControls;
@@ -11,10 +11,9 @@ using MfgControl.AdvancedHMI.Drivers.Common;
 
 namespace Final_Inspection_Machine_v3._0
 {
-
-    public class CompactLogix
+    public class Micro800
     {
-        public EthernetIPforCLXCom Com;
+        public EthernetIPforMicro800Com Com;
         DataSubscriber CicloEnCurso, InspTapon, InspEtiqueta, Estop, Modelo, Mensaje;
 
         public event EventHandler IniciarCiclo;
@@ -24,36 +23,13 @@ namespace Final_Inspection_Machine_v3._0
         public event EventHandler<bool> CambioModelo;
         public event EventHandler<int> MensajeRecibido;
 
-        public CompactLogix(bool op)
+        public Micro800()
         {
-            Com = new EthernetIPforCLXCom();
+            Com = new EthernetIPforMicro800Com();
             Com.IPAddress = "192.168.1.1";
             Com.Timeout = 1000;
             Com.PollRateOverride = 500;
 
-            if (!op)
-            {
-                Inicializar();
-            }
-        }
-
-        public bool Conexion()
-        {
-            try
-            {
-                Com.Read("MODELO_ACEPTADO");
-                Com.CloseConnection();
-                return true;
-            }
-            catch (Exception)
-            {
-                Com.CloseConnection();
-                return false;
-            }
-        }
-
-        private void Inicializar()
-        {
             CicloEnCurso = new DataSubscriber();
             InspTapon = new DataSubscriber();
             InspEtiqueta = new DataSubscriber();
@@ -84,6 +60,7 @@ namespace Final_Inspection_Machine_v3._0
             Mensaje.ComComponent = Com;
             Mensaje.PLCAddressValue = new PLCAddressItem("MENSAJE");
             Mensaje.DataChanged += Mensaje_DataChanged;
+
         }
 
         //Eventos
@@ -190,6 +167,5 @@ namespace Final_Inspection_Machine_v3._0
         {
             Com.CloseConnection();
         }
-
     }
 }

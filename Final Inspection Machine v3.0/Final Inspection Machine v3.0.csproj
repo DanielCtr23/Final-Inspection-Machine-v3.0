@@ -124,17 +124,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CompactLogix.cs" />
-    <Compile Include="Contador.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Contador.settings</DependentUpon>
-    </Compile>
     <Compile Include="DashboardTab.xaml.cs">
       <DependentUpon>DashboardTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="DB.cs" />
-    <Compile Include="Estacion1-CL.cs" />
-    <Compile Include="Estacion2-CL.cs" />
     <Compile Include="Etiquetadora.cs" />
     <Compile Include="form.cs">
       <SubType>Form</SubType>
@@ -142,50 +135,25 @@
     <Compile Include="form.Designer.cs">
       <DependentUpon>form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Inspeccion-CL.xaml.cs">
-      <DependentUpon>Inspeccion-CL.xaml</DependentUpon>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Inspeccion-CompactLogix.xaml.cs">
-      <DependentUpon>Inspeccion-CompactLogix.xaml</DependentUpon>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="InspeccionCL2-Estaciones.cs" />
     <Compile Include="InspeccionCL2-PLC.cs" />
     <Compile Include="InspeccionCL2.xaml.cs">
       <DependentUpon>InspeccionCL2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InspeccionForms.cs">
-      <SubType>Form</SubType>
+    <Compile Include="InspeccionMicro800-Estaciones.cs" />
+    <Compile Include="InspeccionMicro800-PLC.cs" />
+    <Compile Include="InspeccionMicro800.xaml.cs">
+      <DependentUpon>InspeccionMicro800.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InspeccionForms.Designer.cs">
-      <DependentUpon>InspeccionForms.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Logica-CompactLogix.cs" />
-    <Compile Include="Pages\BarraAlta.xaml.cs">
-      <DependentUpon>BarraAlta.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\BarraBaja.xaml.cs">
-      <DependentUpon>BarraBaja.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\DobleEstacion.xaml.cs">
-      <DependentUpon>DobleEstacion.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Estacion1.xaml.cs">
-      <DependentUpon>Estacion1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Estacion2.xaml.cs">
-      <DependentUpon>Estacion2.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SeleccionCorrugado.xaml.cs">
-      <DependentUpon>SeleccionCorrugado.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SeleccionRigido.xaml.cs">
-      <DependentUpon>SeleccionRigido.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Micro800.cs" />
     <Compile Include="Principal.xaml.cs">
       <DependentUpon>Principal.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Seleccion.xaml.cs">
-      <DependentUpon>Seleccion.xaml</DependentUpon>
     </Compile>
     <Compile Include="UC\BuenasActualGauge.xaml.cs">
       <DependentUpon>BuenasActualGauge.xaml</DependentUpon>
@@ -226,22 +194,10 @@
     <Compile Include="UC\TiemposTurno.xaml.cs">
       <DependentUpon>TiemposTurno.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ventana de prueba.xaml.cs">
-      <DependentUpon>ventana de prueba.xaml</DependentUpon>
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
-    <Page Include="Dashboard.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="DashboardTab.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Inspeccion-CL.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Inspeccion-CompactLogix.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -249,58 +205,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Dashboard.xaml.cs">
-      <DependentUpon>Dashboard.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Pages\BarraAlta.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\BarraBaja.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\DobleEstacion.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Estacion1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Estacion2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Inicio.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\SeleccionCorrugado.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\SeleccionRigido.xaml">
+    <Page Include="InspeccionMicro800.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Principal.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Seleccion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -356,15 +269,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ventana de prueba.xaml">
+    <Page Include="Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pages\Inicio.xaml.cs">
-      <DependentUpon>Inicio.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -381,17 +291,13 @@
     <EmbeddedResource Include="form.resx">
       <DependentUpon>form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InspeccionForms.resx">
-      <DependentUpon>InspeccionForms.cs</DependentUpon>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Contador.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Contador.Designer.cs</LastGenOutput>
-    </None>
     <None Include="Final Inspection Machine v3.0_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -1,17 +1,15 @@
 ﻿using IV3_Keyence;
-using ScottPlot.Plottables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using static IV3_Keyence.Estructuras;
 
 namespace Final_Inspection_Machine_v3._0
 {
-    public partial class InspeccionCL2
+    public partial class InspeccionMicro800
     {
         Thread HiloPrincipal;
         Thread Estacion1, Estacion2;
@@ -36,7 +34,7 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Ejecucion()
         {
-            ResultadosE1 = new ResultadosCorrugado[8]; 
+            ResultadosE1 = new ResultadosCorrugado[8];
             ResultadosE2 = new ResultadosCorrugado[8];
 
             Fail[0] = false;
@@ -78,7 +76,7 @@ namespace Final_Inspection_Machine_v3._0
         private async void TaskE1()
         {
             await Corrugado1.CambioProgramaAsync(0);
-            serial1 = 3.ToString();
+            serial1 = 1.ToString();
             Task Orifice1 = TaskO1();
 
             //Largo de Corrugado
@@ -104,7 +102,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 if (sinsentido)
                 {
-                    Dispatcher.Invoke(() =>SentidoBI1.OK(true));
+                    Dispatcher.Invoke(() => SentidoBI1.OK(true));
                 }
                 else
                 {
@@ -190,7 +188,7 @@ namespace Final_Inspection_Machine_v3._0
 
             await Orifice1;
 
-            serial1 = GenerarSerial(modelo, 3, Contador1);
+            serial1 = GenerarSerial(modelo, 1, Contador1);
 
             if (Fail[0])
             {
@@ -280,7 +278,7 @@ namespace Final_Inspection_Machine_v3._0
         private async void TaskE2()
         {
             await Corrugado2.CambioProgramaAsync(0);
-            serial2 = 4.ToString();
+            serial2 = 2.ToString();
             Task Orifice2 = TaskO2();
 
             //Largo de Corrugado
@@ -393,13 +391,13 @@ namespace Final_Inspection_Machine_v3._0
 
             await Orifice2;
 
-            serial2 = GenerarSerial(modelo, 4, Contador2);
+            serial2 = GenerarSerial(modelo, 2, Contador2);
 
             if (Fail[1])
             {
                 db.Guardar(serial2, modelo, DateTime.Now, false, true, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
                     false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
-                    ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion,-1, ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, -1);
+                    ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, -1, ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, -1);
                 Thread.Sleep(500);
                 Estacion2.Abort();
 
@@ -457,7 +455,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 Dispatcher.Invoke(() => EtiquetaBI2.OK(true));
                 Pass[1] = true;
-                
+
             }
             else
             {

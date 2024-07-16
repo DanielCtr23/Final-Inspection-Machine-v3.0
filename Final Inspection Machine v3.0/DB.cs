@@ -1,4 +1,4 @@
-﻿using Final_Inspection_Machine_v3._0.Pages;
+﻿
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;

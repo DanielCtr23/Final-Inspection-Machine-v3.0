@@ -8,14 +8,13 @@ using System.Windows.Media;
 
 namespace Final_Inspection_Machine_v3._0
 {
-    public partial class InspeccionCL2
+    public partial class InspeccionMicro800
     {
-
-        CompactLogix Com;
+        Micro800 Com;
 
         private void InicializarPLC()
         {
-            Com = new CompactLogix(false);
+            Com = new Micro800();
             Com.Terminar();
             Com.CambioModelo += Com_CambioModelo;
             Com.IniciarCiclo += Com_IniciarCiclo;
@@ -23,7 +22,7 @@ namespace Final_Inspection_Machine_v3._0
             Com.InspeccionarTapon += Com_InspeccionarTapon;
             Com.MensajeRecibido += Com_MensajeRecibido;
             Com.DetenerCiclo += Com_DetenerCiclo;
-            
+
         }
 
         private void Com_DetenerCiclo(object sender, EventArgs e)
@@ -60,31 +59,31 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Com_MensajeRecibido(object sender, int e)
         {
-            if (e==0)
+            if (e == 0)
             {
                 MensajeProceso.Text = "MAQUINA LISTA";
                 MensajeProceso.Foreground = Brushes.Green;
                 MensajeProceso.Background = Brushes.Transparent;
             }
-            else if (e==1)
+            else if (e == 1)
             {
                 MensajeProceso.Text = "PARO DE EMERGENCIA PRESIONADO";
                 MensajeProceso.Foreground = Brushes.Red;
                 MensajeProceso.Background = Brushes.Yellow;
             }
-            else if (e==2)
+            else if (e == 2)
             {
                 MensajeProceso.Text = "CORTINAS OBSTRUIDAS";
                 MensajeProceso.Foreground = Brushes.Red;
                 MensajeProceso.Background = Brushes.Transparent;
             }
-            else if (e==3)
+            else if (e == 3)
             {
                 MensajeProceso.Text = "CICLO EN CURSO";
                 MensajeProceso.Foreground = Brushes.Green;
                 MensajeProceso.Background = Brushes.Transparent;
             }
-            else if (e==4)
+            else if (e == 4)
             {
                 MensajeProceso.Text = "CICLO PAUSADO: ESPERANDO TAPÓN";
                 MensajeProceso.Foreground = Brushes.Green;
