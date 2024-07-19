@@ -121,10 +121,11 @@ namespace Final_Inspection_Machine_v3._0
         private void RegresarBtn_Click(object sender, RoutedEventArgs e)
         {
             Com.Cerrar();
-            Corrugado1.Dispose();
-            Corrugado2.Dispose();
-            Orifice21.Dispose();
-            Orifice11.Dispose();
+            Corrugado1.Cerrar();
+            Corrugado2.Cerrar();
+            Orifice21.Cerrar();
+            Orifice11.Cerrar();
+            
             this.Close();
         }
     }

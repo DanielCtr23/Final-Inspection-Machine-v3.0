@@ -39,6 +39,11 @@ namespace Final_Inspection_Machine_v3._0
                 {
                     Estacion2.Abort();
                 }
+
+                if (HiloPrincipal != null && HiloPrincipal.IsAlive)
+                {
+                    HiloPrincipal.Abort();
+                }
             }
             catch (ThreadAbortException)
             {
@@ -124,10 +129,18 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Com_IniciarCiclo(object sender, EventArgs e)
         {
-            nutrojo = Com.NutRojo();
-            sinsentido = Com.SinSentido();
-            HiloPrincipal = new Thread(Ejecucion);
-            HiloPrincipal.Start();
+            try
+            {
+                nutrojo = Com.NutRojo();
+                sinsentido = Com.SinSentido();
+                HiloPrincipal = new Thread(Ejecucion);
+                HiloPrincipal.IsBackground = true;
+                HiloPrincipal.Start();
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void Com_CambioModelo(object sender, bool e)

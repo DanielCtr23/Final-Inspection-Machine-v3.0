@@ -25,21 +25,27 @@ namespace Final_Inspection_Machine_v3._0
         public Principal()
         {
             InitializeComponent();
+            inspeccion_CL2 = new InspeccionCL2();
+            inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
         }
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            inspeccion_CL2 = new InspeccionCL2();
-            inspeccion_CL2.Closed += Inspeccion_CL2_Closed;
             inspeccion_CL2.Show();
             this.Hide();
+        }
+
+        private void Inspeccion_CL2_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            this.Show();
         }
 
         private void Inspeccion_CL2_Closed(object sender, System.EventArgs e)
         {
             try
             {
+                
                 this.Show();
             }
             catch (Exception)
@@ -66,7 +72,9 @@ namespace Final_Inspection_Machine_v3._0
 
         private void CerrarBtn_Click(object sender, RoutedEventArgs e)
         {
+            inspeccion_CL2.Close();
             App.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

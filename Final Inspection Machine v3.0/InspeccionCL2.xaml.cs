@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IV3_Keyence;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace Final_Inspection_Machine_v3._0
     public partial class InspeccionCL2 : Window
     {
         DispatcherTimer Segundero = new DispatcherTimer();
+        IV3 Corrugado1, Corrugado2, Orifice11, Orifice12, Orifice21, Orifice22;
         public InspeccionCL2()
         {
             InitializeComponent();
@@ -37,19 +39,34 @@ namespace Final_Inspection_Machine_v3._0
             CargarContadores();
             OcultarPilotBracket(true);
             OcultarResorte(false);
+            this.IsVisibleChanged += InspeccionCL2_IsVisibleChanged;
+
+        }
+
+        private void InspeccionCL2_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
 
         }
 
         private void InicializarCamaras()
         {
-            IPAddress C1IP = IPAddress.Parse("192.168.1.2");
-            Corrugado1 = new IV3_Keyence.IV3(C1IP, 8500);
-            IPAddress C2IP = IPAddress.Parse("192.168.1.3");
-            Corrugado2 = new IV3_Keyence.IV3(C2IP, 8500);
-            IPAddress O11IP = IPAddress.Parse("192.168.1.4");
-            Orifice11 = new IV3_Keyence.IV3(O11IP, 8500);
-            IPAddress O21IP = IPAddress.Parse("192.168.1.7");
-            Orifice21 = new IV3_Keyence.IV3(O21IP, 8500);
+            
+            try
+            {
+                IPAddress C1IP = IPAddress.Parse("192.168.1.2");
+                Corrugado1 = new IV3_Keyence.IV3(C1IP, 8500);
+                IPAddress C2IP = IPAddress.Parse("192.168.1.3");
+                Corrugado2 = new IV3_Keyence.IV3(C2IP, 8500);
+                IPAddress O11IP = IPAddress.Parse("192.168.1.4");
+                Orifice11 = new IV3_Keyence.IV3(O11IP, 8500);
+                IPAddress O21IP = IPAddress.Parse("192.168.1.7");
+                Orifice21 = new IV3_Keyence.IV3(O21IP, 8500);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                throw;
+            }
         }
 
         private void Segundero_Tick(object sender, EventArgs e)
@@ -120,12 +137,7 @@ namespace Final_Inspection_Machine_v3._0
 
         private void RegresarBtn_Click(object sender, RoutedEventArgs e)
         {
-            Com.Cerrar();
-            Corrugado1.Dispose();
-            Corrugado2.Dispose();
-            Orifice21.Dispose(); 
-            Orifice11.Dispose();
-            this.Close();
+            this.Hide();
         }
     }
 }

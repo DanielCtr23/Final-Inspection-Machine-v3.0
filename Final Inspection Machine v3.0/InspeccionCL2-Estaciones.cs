@@ -20,7 +20,6 @@ namespace Final_Inspection_Machine_v3._0
         Estructuras.ResultadosCorrugado[] ResultadosE2 = new ResultadosCorrugado[8];
         Estructuras.ResultadosCorrugado ResultadosOrifice1 = new ResultadosCorrugado();
         Estructuras.ResultadosCorrugado ResultadosOrifice2 = new ResultadosCorrugado();
-        IV3 Corrugado1, Corrugado2, Orifice11, Orifice12, Orifice21, Orifice22;
         bool[] Fail = new bool[2];
         bool[] Pass = new bool[2];
 
@@ -59,6 +58,8 @@ namespace Final_Inspection_Machine_v3._0
 
             Estacion1 = new Thread(TaskE1);
             Estacion2 = new Thread(TaskE2);
+            Estacion1.IsBackground = true;
+            Estacion2.IsBackground = true;
             Estacion1.Start();
             Estacion2.Start();
             Estacion1.Join();
@@ -77,8 +78,9 @@ namespace Final_Inspection_Machine_v3._0
         }
         private async void TaskE1()
         {
+
             await Corrugado1.CambioProgramaAsync(0);
-            serial1 = 3.ToString();
+            serial1 = 1.ToString();
             Task Orifice1 = TaskO1();
 
             //Largo de Corrugado
@@ -190,7 +192,7 @@ namespace Final_Inspection_Machine_v3._0
 
             await Orifice1;
 
-            serial1 = GenerarSerial(modelo, 3, Contador1);
+            serial1 = GenerarSerial(modelo, 1, Contador1);
 
             if (Fail[0])
             {
@@ -280,7 +282,7 @@ namespace Final_Inspection_Machine_v3._0
         private async void TaskE2()
         {
             await Corrugado2.CambioProgramaAsync(0);
-            serial2 = 4.ToString();
+            serial2 = 2.ToString();
             Task Orifice2 = TaskO2();
 
             //Largo de Corrugado
@@ -385,6 +387,7 @@ namespace Final_Inspection_Machine_v3._0
                 else
                 {
                     Dispatcher.Invoke(() => PilotBracketBI2.OK(true));
+                    //Dispatcher.Invoke(() => PilotBracketBI2.IndicatorText.Text = "NA");
                     ResultadosE2[5].OKNG = true;
                 }
                 ResultadosE2[5].Res = "SinPB";
@@ -393,7 +396,7 @@ namespace Final_Inspection_Machine_v3._0
 
             await Orifice2;
 
-            serial2 = GenerarSerial(modelo, 4, Contador2);
+            serial2 = GenerarSerial(modelo, 2, Contador2);
 
             if (Fail[1])
             {
