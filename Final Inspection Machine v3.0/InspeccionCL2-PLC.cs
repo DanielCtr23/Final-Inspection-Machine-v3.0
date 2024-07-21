@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Xceed.Wpf.Toolkit;
 
 namespace Final_Inspection_Machine_v3._0
 {
@@ -16,13 +17,20 @@ namespace Final_Inspection_Machine_v3._0
         private void InicializarPLC()
         {
             Com = new CompactLogix(false);
-            Com.Terminar();
-            Com.CambioModelo += Com_CambioModelo;
-            Com.IniciarCiclo += Com_IniciarCiclo;
-            Com.InspeccionarEtiqueta += Com_InspeccionarEtiqueta;
-            Com.InspeccionarTapon += Com_InspeccionarTapon;
-            Com.MensajeRecibido += Com_MensajeRecibido;
-            Com.DetenerCiclo += Com_DetenerCiclo;
+            if (Com.Conexion())
+            {
+                Com.Terminar();
+                Com.CambioModelo += Com_CambioModelo;
+                Com.IniciarCiclo += Com_IniciarCiclo;
+                Com.InspeccionarEtiqueta += Com_InspeccionarEtiqueta;
+                Com.InspeccionarTapon += Com_InspeccionarTapon;
+                Com.MensajeRecibido += Com_MensajeRecibido;
+                Com.DetenerCiclo += Com_DetenerCiclo;
+            }
+            else
+            {
+                MessageBox.Show("No se pudo conectar con el PLC");
+            }
             
         }
 

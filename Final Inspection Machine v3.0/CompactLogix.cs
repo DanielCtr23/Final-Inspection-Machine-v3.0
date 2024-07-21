@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using AdvancedHMIControls;
 using AdvancedHMIDrivers;
 using MfgControl.AdvancedHMI.Drivers;
@@ -42,18 +43,17 @@ namespace Final_Inspection_Machine_v3._0
             try
             {
                 Com.Read("MODELO_ACEPTADO");
-                Com.CloseConnection();
                 return true;
             }
             catch (Exception)
             {
-                Com.CloseConnection();
                 return false;
             }
         }
 
         private void Inicializar()
         {
+            
             CicloEnCurso = new DataSubscriber();
             InspTapon = new DataSubscriber();
             InspEtiqueta = new DataSubscriber();
@@ -182,8 +182,15 @@ namespace Final_Inspection_Machine_v3._0
 
         public void Terminar()
         {
-            Com.Write("E2_TERMINADO", 1);
-            Com.Write("E1_TERMINADO", 1);
+            try
+            {
+                Com.Write("E2_TERMINADO", 1);
+                Com.Write("E1_TERMINADO", 1);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
         public void Cerrar()

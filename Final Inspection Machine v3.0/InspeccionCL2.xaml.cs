@@ -29,7 +29,14 @@ namespace Final_Inspection_Machine_v3._0
         public InspeccionCL2()
         {
             InitializeComponent();
-            InicializarPLC();
+            try
+            {
+                InicializarPLC();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("No se puedo conectar con el PLC: \n"+e.Message);
+            }
             InicializarCamaras();
             Thread.Sleep(1000);
             etiquetadora = new Etiquetadora();

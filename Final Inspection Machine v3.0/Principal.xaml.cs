@@ -25,15 +25,39 @@ namespace Final_Inspection_Machine_v3._0
         public Principal()
         {
             InitializeComponent();
-            inspeccion_CL2 = new InspeccionCL2();
-            inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
+            try
+            {
+                inspeccion_CL2 = new InspeccionCL2();
+                inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("No se pudo instanciar al ventana de inspección,  revisar conexión de PLC o Tipo de PLC");
+            }
         }
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            inspeccion_CL2.Show();
-            this.Hide();
+            if (inspeccion_CL2 != null)
+            {
+                inspeccion_CL2.Show();
+                this.Hide();
+            }
+            else
+            {
+                try
+                {
+                    inspeccion_CL2 = new InspeccionCL2();
+                    inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
+                    inspeccion_CL2.Show();
+                    this.Hide();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("No se pudo instanciar al ventana de inspección,  revisar conexión de PLC o Tipo de PLC");
+                }
+            }
         }
 
         private void Inspeccion_CL2_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -72,7 +96,18 @@ namespace Final_Inspection_Machine_v3._0
 
         private void CerrarBtn_Click(object sender, RoutedEventArgs e)
         {
-            inspeccion_CL2.Close();
+            try
+            {
+                if (inspeccion_CL2 != null)
+                {
+                    inspeccion_CL2.Close();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             App.Current.Shutdown();
             Application.Current.Shutdown();
         }

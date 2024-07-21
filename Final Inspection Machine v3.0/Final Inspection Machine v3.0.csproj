@@ -89,7 +89,7 @@
   <ItemGroup>
     <Reference Include="IV3-Keyence, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\IV3-Keyence\bin\Release\IV3-Keyence.dll</HintPath>
+      <HintPath>..\..\..\..\OneDrive\Documents\IV3-Keyence.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
