@@ -36,7 +36,6 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.BI_CORRUGADOF_V = new AdvancedHMIControls.BasicIndicator();
-            this.ethernetIPforCLXCom1 = new AdvancedHMIDrivers.EthernetIPforCLXCom(this.components);
             this.BI_CORRUGADOE_V = new AdvancedHMIControls.BasicIndicator();
             this.BI_CORRUGADOD_V = new AdvancedHMIControls.BasicIndicator();
             this.BI_CORRUGADOC_V = new AdvancedHMIControls.BasicIndicator();
@@ -62,7 +61,6 @@
             this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ethernetIPforCLXCom1)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
@@ -172,7 +170,7 @@
             this.BI_CORRUGADOF_V.Color1 = System.Drawing.Color.DarkGray;
             this.BI_CORRUGADOF_V.Color2 = System.Drawing.Color.Yellow;
             this.BI_CORRUGADOF_V.Color3 = System.Drawing.Color.Red;
-            this.BI_CORRUGADOF_V.ComComponent = this.ethernetIPforCLXCom1;
+            this.BI_CORRUGADOF_V.ComComponent = null;
             this.BI_CORRUGADOF_V.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BI_CORRUGADOF_V.Location = new System.Drawing.Point(410, 10);
             this.BI_CORRUGADOF_V.Margin = new System.Windows.Forms.Padding(10);
@@ -187,26 +185,12 @@
             this.BI_CORRUGADOF_V.TabIndex = 4;
             this.BI_CORRUGADOF_V.Text = "F";
             // 
-            // ethernetIPforCLXCom1
-            // 
-            this.ethernetIPforCLXCom1.CIPConnectionSize = 508;
-            this.ethernetIPforCLXCom1.DisableMultiServiceRequest = false;
-            this.ethernetIPforCLXCom1.DisableSubscriptions = false;
-            this.ethernetIPforCLXCom1.IniFileName = "";
-            this.ethernetIPforCLXCom1.IniFileSection = null;
-            this.ethernetIPforCLXCom1.IPAddress = "192.168.0.10";
-            this.ethernetIPforCLXCom1.PollRateOverride = 500;
-            this.ethernetIPforCLXCom1.Port = 44818;
-            this.ethernetIPforCLXCom1.ProcessorSlot = 0;
-            this.ethernetIPforCLXCom1.RoutePath = null;
-            this.ethernetIPforCLXCom1.Timeout = 4000;
-            // 
             // BI_CORRUGADOE_V
             // 
             this.BI_CORRUGADOE_V.Color1 = System.Drawing.Color.DarkGray;
             this.BI_CORRUGADOE_V.Color2 = System.Drawing.Color.Yellow;
             this.BI_CORRUGADOE_V.Color3 = System.Drawing.Color.Red;
-            this.BI_CORRUGADOE_V.ComComponent = this.ethernetIPforCLXCom1;
+            this.BI_CORRUGADOE_V.ComComponent = null;
             this.BI_CORRUGADOE_V.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BI_CORRUGADOE_V.Location = new System.Drawing.Point(321, 10);
             this.BI_CORRUGADOE_V.Margin = new System.Windows.Forms.Padding(10);
@@ -226,7 +210,7 @@
             this.BI_CORRUGADOD_V.Color1 = System.Drawing.Color.DarkGray;
             this.BI_CORRUGADOD_V.Color2 = System.Drawing.Color.Yellow;
             this.BI_CORRUGADOD_V.Color3 = System.Drawing.Color.Red;
-            this.BI_CORRUGADOD_V.ComComponent = this.ethernetIPforCLXCom1;
+            this.BI_CORRUGADOD_V.ComComponent = null;
             this.BI_CORRUGADOD_V.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BI_CORRUGADOD_V.Location = new System.Drawing.Point(232, 10);
             this.BI_CORRUGADOD_V.Margin = new System.Windows.Forms.Padding(10);
@@ -246,7 +230,7 @@
             this.BI_CORRUGADOC_V.Color1 = System.Drawing.Color.DarkGray;
             this.BI_CORRUGADOC_V.Color2 = System.Drawing.Color.Yellow;
             this.BI_CORRUGADOC_V.Color3 = System.Drawing.Color.Red;
-            this.BI_CORRUGADOC_V.ComComponent = this.ethernetIPforCLXCom1;
+            this.BI_CORRUGADOC_V.ComComponent = null;
             this.BI_CORRUGADOC_V.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BI_CORRUGADOC_V.Location = new System.Drawing.Point(143, 10);
             this.BI_CORRUGADOC_V.Margin = new System.Windows.Forms.Padding(10);
@@ -266,7 +250,7 @@
             this.BI_CORRUGADOB_V.Color1 = System.Drawing.Color.DarkGray;
             this.BI_CORRUGADOB_V.Color2 = System.Drawing.Color.Yellow;
             this.BI_CORRUGADOB_V.Color3 = System.Drawing.Color.Red;
-            this.BI_CORRUGADOB_V.ComComponent = this.ethernetIPforCLXCom1;
+            this.BI_CORRUGADOB_V.ComComponent = null;
             this.BI_CORRUGADOB_V.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BI_CORRUGADOB_V.Location = new System.Drawing.Point(54, 10);
             this.BI_CORRUGADOB_V.Margin = new System.Windows.Forms.Padding(10);
@@ -311,7 +295,7 @@
             this.BI_RIGIDOG_V.Color1 = System.Drawing.Color.DarkGray;
             this.BI_RIGIDOG_V.Color2 = System.Drawing.Color.Yellow;
             this.BI_RIGIDOG_V.Color3 = System.Drawing.Color.Red;
-            this.BI_RIGIDOG_V.ComComponent = this.ethernetIPforCLXCom1;
+            this.BI_RIGIDOG_V.ComComponent = null;
             this.BI_RIGIDOG_V.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BI_RIGIDOG_V.Location = new System.Drawing.Point(10, 10);
             this.BI_RIGIDOG_V.Margin = new System.Windows.Forms.Padding(10);
@@ -332,7 +316,7 @@
             this.BI_RIGIDOF_V.Color1 = System.Drawing.Color.DarkGray;
             this.BI_RIGIDOF_V.Color2 = System.Drawing.Color.Yellow;
             this.BI_RIGIDOF_V.Color3 = System.Drawing.Color.Red;
-            this.BI_RIGIDOF_V.ComComponent = this.ethernetIPforCLXCom1;
+            this.BI_RIGIDOF_V.ComComponent = null;
             this.BI_RIGIDOF_V.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BI_RIGIDOF_V.Location = new System.Drawing.Point(99, 10);
             this.BI_RIGIDOF_V.Margin = new System.Windows.Forms.Padding(10);
@@ -352,7 +336,7 @@
             this.BI_RIGIDOE_V.Color1 = System.Drawing.Color.DarkGray;
             this.BI_RIGIDOE_V.Color2 = System.Drawing.Color.Yellow;
             this.BI_RIGIDOE_V.Color3 = System.Drawing.Color.Red;
-            this.BI_RIGIDOE_V.ComComponent = this.ethernetIPforCLXCom1;
+            this.BI_RIGIDOE_V.ComComponent = null;
             this.BI_RIGIDOE_V.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BI_RIGIDOE_V.Location = new System.Drawing.Point(188, 10);
             this.BI_RIGIDOE_V.Margin = new System.Windows.Forms.Padding(10);
@@ -372,7 +356,7 @@
             this.BI_RIGIDOD_V.Color1 = System.Drawing.Color.DarkGray;
             this.BI_RIGIDOD_V.Color2 = System.Drawing.Color.Yellow;
             this.BI_RIGIDOD_V.Color3 = System.Drawing.Color.Red;
-            this.BI_RIGIDOD_V.ComComponent = this.ethernetIPforCLXCom1;
+            this.BI_RIGIDOD_V.ComComponent = null;
             this.BI_RIGIDOD_V.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BI_RIGIDOD_V.Location = new System.Drawing.Point(277, 10);
             this.BI_RIGIDOD_V.Margin = new System.Windows.Forms.Padding(10);
@@ -392,7 +376,7 @@
             this.BI_RIGIDOC_V.Color1 = System.Drawing.Color.DarkGray;
             this.BI_RIGIDOC_V.Color2 = System.Drawing.Color.Yellow;
             this.BI_RIGIDOC_V.Color3 = System.Drawing.Color.Red;
-            this.BI_RIGIDOC_V.ComComponent = this.ethernetIPforCLXCom1;
+            this.BI_RIGIDOC_V.ComComponent = null;
             this.BI_RIGIDOC_V.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BI_RIGIDOC_V.Location = new System.Drawing.Point(366, 10);
             this.BI_RIGIDOC_V.Margin = new System.Windows.Forms.Padding(10);
@@ -412,7 +396,7 @@
             this.BI_RIGIDOB_V.Color1 = System.Drawing.Color.DarkGray;
             this.BI_RIGIDOB_V.Color2 = System.Drawing.Color.Yellow;
             this.BI_RIGIDOB_V.Color3 = System.Drawing.Color.Red;
-            this.BI_RIGIDOB_V.ComComponent = this.ethernetIPforCLXCom1;
+            this.BI_RIGIDOB_V.ComComponent = null;
             this.BI_RIGIDOB_V.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BI_RIGIDOB_V.Location = new System.Drawing.Point(455, 10);
             this.BI_RIGIDOB_V.Margin = new System.Windows.Forms.Padding(10);
@@ -420,6 +404,7 @@
             this.BI_RIGIDOB_V.OutlineColor = System.Drawing.Color.Transparent;
             this.BI_RIGIDOB_V.OutlineWidth = 1;
             this.BI_RIGIDOB_V.OutputType = MfgControl.AdvancedHMI.Controls.OutputType.MomentarySet;
+            this.BI_RIGIDOB_V.PLCAddressSelectColor2 = "\"_IO_EM_DI_04\"";
             this.BI_RIGIDOB_V.SelectColor2 = false;
             this.BI_RIGIDOB_V.SelectColor3 = false;
             this.BI_RIGIDOB_V.Shape = MfgControl.AdvancedHMI.Controls.Indicator.ShapeTypes.Round;
@@ -492,6 +477,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(507, 45);
             this.comboBox1.TabIndex = 4;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // button1
             // 
@@ -507,6 +493,7 @@
             this.button1.TabIndex = 3;
             this.button1.Text = "ACEPTAR MODELO";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // label3
             // 
@@ -525,19 +512,23 @@
             // timer1
             // 
             this.timer1.Interval = 15000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // timer2
             // 
             this.timer2.Interval = 5000;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // timer3
             // 
             this.timer3.Enabled = true;
             this.timer3.Interval = 1000;
+            this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
             // 
             // timer4
             // 
             this.timer4.Interval = 500;
+            this.timer4.Tick += new System.EventHandler(this.timer4_Tick);
             // 
             // Form1
             // 
@@ -548,13 +539,13 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.form_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ethernetIPforCLXCom1)).EndInit();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
@@ -570,7 +561,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private AdvancedHMIControls.BasicIndicator BI_CORRUGADOF_V;
-        private AdvancedHMIDrivers.EthernetIPforCLXCom ethernetIPforCLXCom1;
         private AdvancedHMIControls.BasicIndicator BI_CORRUGADOE_V;
         private AdvancedHMIControls.BasicIndicator BI_CORRUGADOD_V;
         private AdvancedHMIControls.BasicIndicator BI_CORRUGADOC_V;

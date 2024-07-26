@@ -20,19 +20,19 @@ namespace Final_Inspection_Machine_v3._0
     /// </summary>
     public partial class Principal : Window
     {
-        InspeccionCL2 inspeccion_CL2;
+        InspeccionMicro800 inspeccion_CL2;
         DashboardTab DashboardTab;
         public Principal()
         {
             InitializeComponent();
             try
             {
-                inspeccion_CL2 = new InspeccionCL2();
+                inspeccion_CL2 = new InspeccionMicro800();
                 inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                MessageBox.Show("No se pudo instanciar al ventana de inspección,  revisar conexión de PLC o Tipo de PLC");
+                MessageBox.Show(e.Message);
             }
         }
 
@@ -48,7 +48,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 try
                 {
-                    inspeccion_CL2 = new InspeccionCL2();
+                    inspeccion_CL2 = new InspeccionMicro800();
                     inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
                     inspeccion_CL2.Show();
                     this.Hide();

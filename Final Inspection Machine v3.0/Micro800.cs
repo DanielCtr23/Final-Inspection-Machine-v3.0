@@ -14,21 +14,29 @@ namespace Final_Inspection_Machine_v3._0
     public class Micro800
     {
         public EthernetIPforMicro800Com Com;
-        DataSubscriber CicloEnCurso, InspTapon, InspEtiqueta, Estop, Modelo, Mensaje;
+        DataSubscriber CicloEnCurso, InspTapon, InspEtiqueta, Estop, Modelo, Mensaje, Seleccionado;
 
         public event EventHandler IniciarCiclo;
         public event EventHandler InspeccionarTapon;
         public event EventHandler InspeccionarEtiqueta;
         public event EventHandler DetenerCiclo;
         public event EventHandler<bool> CambioModelo;
+        public event EventHandler<string> CambioSeleccionado;
         public event EventHandler<int> MensajeRecibido;
 
         public Micro800()
         {
             Com = new EthernetIPforMicro800Com();
             Com.IPAddress = "192.168.1.1";
-            Com.Timeout = 1000;
+            Com.ProcessorSlot = 0;
             Com.PollRateOverride = 500;
+            Com.CIPConnectionSize = 508;
+            Com.Port = 44818;
+            Com.Timeout = 50000;
+
+
+            //Com.Timeout = 1000;
+            //Com.PollRateOverride = 500;
 
             CicloEnCurso = new DataSubscriber();
             InspTapon = new DataSubscriber();
@@ -57,10 +65,20 @@ namespace Final_Inspection_Machine_v3._0
             Modelo.PLCAddressValue = new PLCAddressItem("MODELO_ACEPTADO");
             Modelo.DataChanged += Modelo_DataChanged;
 
+            Seleccionado.ComComponent = Com;
+            Seleccionado.PLCAddressValue = new PLCAddressItem("MODELO_SELECCIONADO");
+            Seleccionado.DataChanged += Seleccionado_DataChanged;
+
+
             Mensaje.ComComponent = Com;
             Mensaje.PLCAddressValue = new PLCAddressItem("MENSAJE");
             Mensaje.DataChanged += Mensaje_DataChanged;
 
+        }
+
+        private void Seleccionado_DataChanged(object sender, PlcComEventArgs e)
+        {
+            CambioSeleccionado?.Invoke(this, e.Values[0]);
         }
 
         //Eventos

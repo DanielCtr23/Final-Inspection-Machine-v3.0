@@ -277,10 +277,14 @@ namespace Final_Inspection_Machine_v3._0
 
         public DataTable ProduccionSemanal()
         {
-
             DataTable produccion = new DataTable();
             MySqlCommand cmd;
-            cmd = new MySqlCommand("ProduccionSemanal", con);
+            cmd = new MySqlCommand("new_procedure", con);
+            DateTime Lunes = DateTime.Today.AddDays(-((int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday) );
+            cmd.Parameters.AddWithValue("Inicio", Lunes);
+            cmd.Parameters.AddWithValue("Fin", (Lunes.AddDays(7)));
+            cmd.Parameters.AddWithValue("Formato", "S");
+            //MessageBox.Show(Lunes.ToString());
             cmd.CommandType = CommandType.StoredProcedure;
             produccion.Load(cmd.ExecuteReader());
 

@@ -26,7 +26,7 @@ namespace Final_Inspection_Machine_v3._0.UC
         public Grafico_Semanal()
         {
             InitializeComponent();
-            //Actualizar();
+            Actualizar();
         }
         public void Actualizar()
         {
@@ -38,21 +38,25 @@ namespace Final_Inspection_Machine_v3._0.UC
 
             for (int i = 0; i < 7; i++)
             {
-                barBuenas[i] = new Bar() { Position = i, Value = int.Parse(Produccion.Rows[i]["Buenas"].ToString()), FillColor = ScottPlot.Colors.Green };
+                barBuenas[i] = new Bar() { Position = i, Value = int.Parse(Produccion.Rows[i]["OK"].ToString()), FillColor = ScottPlot.Colors.Green };
                 barBuenas[i].Label = barBuenas[i].Value.ToString();
                 barBuenas[i].LabelOffset = -20;
-                barMalas[i] = new Bar() { Position = i, Value = int.Parse(Produccion.Rows[i]["Malas"].ToString()), FillColor = ScottPlot.Colors.Red };
+                barMalas[i] = new Bar() { Position = i, Value = int.Parse(Produccion.Rows[i]["NOK"].ToString()), FillColor = ScottPlot.Colors.Red };
                 barMalas[i].Label = barMalas[i].Value.ToString();
                 barMalas[i].LabelOffset = -20;
                 barMalas[i].Value = barMalas[i].Value + barBuenas[i].Value;
 
-                ticks[i] = new Tick(i, Produccion.Rows[i]["Dia"].ToString());
+                ticks[i] = new Tick(i, Produccion.Rows[i]["fecha_formateada"].ToString());
             }
 
             var Barplot = Plot.Plot.Add.Bars(barMalas);
-            Plot.Plot.Add.Bars(barBuenas);
+            var BarPlot2 = Plot.Plot.Add.Bars(barBuenas);
+            //Plot.Plot.Add.Bars(barBuenas);
             Plot.Plot.HideGrid();
+            
             Barplot.ValueLabelStyle.ForeColor = ScottPlot.Colors.White;
+            BarPlot2.ValueLabelStyle.ForeColor= ScottPlot.Colors.White;
+           
             Plot.Plot.Add.Palette = new ScottPlot.Palettes.Penumbra();
             Plot.Plot.FigureBackground.Color = ScottPlot.Color.FromHex("#181818");
             Plot.Plot.Axes.Color(ScottPlot.Color.FromHex("#d7d7d7"));
@@ -72,9 +76,9 @@ namespace Final_Inspection_Machine_v3._0.UC
 
             Plot.Plot.Axes.SetLimits(-0.5, 6.5, 0, 6000);
 
-            ScottPlot.Control.Interaction interaction = new ScottPlot.Control.Interaction(Plot);
-            interaction.Disable();
-            Plot.Interaction = interaction;
+            //ScottPlot.Control.Interaction interaction = new ScottPlot.Control.Interaction(Plot);
+            //interaction.Disable();
+            //Plot.Interaction = interaction;
 
         }
     }

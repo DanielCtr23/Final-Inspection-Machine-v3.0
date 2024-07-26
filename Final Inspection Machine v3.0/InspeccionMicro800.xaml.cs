@@ -43,12 +43,12 @@ namespace Final_Inspection_Machine_v3._0
         private void InicializarCamaras()
         {
             IPAddress C1IP = IPAddress.Parse("192.168.1.2");
-            Corrugado1 = new IV3_Keyence.IV3(C1IP, 8500);
+            Corrugado1 = new IV3_Keyence.IV3(C1IP, 1024);
             IPAddress C2IP = IPAddress.Parse("192.168.1.3");
             Corrugado2 = new IV3_Keyence.IV3(C2IP, 8500);
             IPAddress O11IP = IPAddress.Parse("192.168.1.4");
             Orifice11 = new IV3_Keyence.IV3(O11IP, 8500);
-            IPAddress O21IP = IPAddress.Parse("192.168.1.7");
+            IPAddress O21IP = IPAddress.Parse("192.168.1.6");
             Orifice21 = new IV3_Keyence.IV3(O21IP, 8500);
         }
 
@@ -126,7 +126,7 @@ namespace Final_Inspection_Machine_v3._0
             Orifice21.Cerrar();
             Orifice11.Cerrar();
             
-            this.Close();
+            this.Hide();
         }
     }
 }

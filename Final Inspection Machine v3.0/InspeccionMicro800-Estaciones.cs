@@ -76,7 +76,7 @@ namespace Final_Inspection_Machine_v3._0
         private async void TaskE1()
         {
             await Corrugado1.CambioProgramaAsync(0);
-            serial1 = 1.ToString();
+            serial1 = 3.ToString();
             Task Orifice1 = TaskO1();
 
             //Largo de Corrugado
@@ -188,7 +188,7 @@ namespace Final_Inspection_Machine_v3._0
 
             await Orifice1;
 
-            serial1 = GenerarSerial(modelo, 1, Contador1);
+            serial1 = GenerarSerial(modelo, 3, Contador1);
 
             if (Fail[0])
             {
@@ -278,7 +278,7 @@ namespace Final_Inspection_Machine_v3._0
         private async void TaskE2()
         {
             await Corrugado2.CambioProgramaAsync(0);
-            serial2 = 2.ToString();
+            serial2 = 4.ToString();
             Task Orifice2 = TaskO2();
 
             //Largo de Corrugado
@@ -391,7 +391,7 @@ namespace Final_Inspection_Machine_v3._0
 
             await Orifice2;
 
-            serial2 = GenerarSerial(modelo, 2, Contador2);
+            serial2 = GenerarSerial(modelo, 4, Contador2);
 
             if (Fail[1])
             {

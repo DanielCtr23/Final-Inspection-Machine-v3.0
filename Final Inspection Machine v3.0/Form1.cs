@@ -31,6 +31,7 @@ namespace Final_Inspection_Machine_v3._0
 
         private void form_Load(object sender, EventArgs e)
         {
+
             BI_CORRUGADOB_V.ComComponent = Com;
             BI_CORRUGADOC_V.ComComponent = Com;
             BI_CORRUGADOD_V.ComComponent = Com;
@@ -69,6 +70,8 @@ namespace Final_Inspection_Machine_v3._0
             BI_RIGIDOE_V.PLCAddressSelectColor2 = "POSICION_RIGIDO_E";
             BI_RIGIDOF_V.PLCAddressSelectColor2 = "POSICION_RIGIDO_F";
             BI_RIGIDOG_V.PLCAddressSelectColor2 = "POSICION_RIGIDO_G";
+
+
             timer4.Start();
 
             if (bool.Parse(Com.Read("MODELO_ACEPTADO")))
@@ -256,6 +259,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             if (permiso)
             {
+                timer3.Stop();
                 this.Close();
             }
         }

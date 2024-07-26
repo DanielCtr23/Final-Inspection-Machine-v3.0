@@ -498,5 +498,7 @@ namespace Final_Inspection_Machine_v3._0
             ContadorBuenas.Text = "PIEZAS BUENAS: " + db.ObtenerBuenas().ToString("D3");
             ContadorMalas.Text = "PIEZAS MALAS:  " + db.ObtenerMalas().ToString("D3");
         }
+
+        
     }
 }
