@@ -29,7 +29,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             else
             {
-                MessageBox.Show("No se pudo conectar con el PLC");
+
             }
             
         }

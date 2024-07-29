@@ -89,7 +89,7 @@
   <ItemGroup>
     <Reference Include="IV3-Keyence, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\OneDrive\Documents\IV3-Keyence.dll</HintPath>
+      <HintPath>E:\danie\source\Repos\IV3-Keyence\bin\Release\IV3-Keyence.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
@@ -153,6 +153,9 @@
     <Compile Include="InspeccionMicro800.xaml.cs">
       <DependentUpon>InspeccionMicro800.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LoadingForm.xaml.cs">
+      <DependentUpon>LoadingForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Micro800.cs" />
     <Compile Include="MySql_Conector.cs" />
     <Compile Include="Principal.xaml.cs">
@@ -213,6 +216,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="InspeccionMicro800.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoadingForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

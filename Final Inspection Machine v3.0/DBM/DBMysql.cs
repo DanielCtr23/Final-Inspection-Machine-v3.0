@@ -431,6 +431,7 @@ namespace Final_Inspection_Machine_v3._0.DBM
                 con.Open();
                 using (MySqlCommand cmd = new MySqlCommand("ResetContadores", con))
                 {
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.ExecuteNonQuery();
                 }
                 con.Close();
