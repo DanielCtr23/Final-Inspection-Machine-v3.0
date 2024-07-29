@@ -81,6 +81,31 @@ namespace Final_Inspection_Machine_v3._0.DBM
 
         //READ
 
+        public int TipoPLC()
+        {
+            int PLC = 0;
+            try
+            {
+                con.Open();
+
+                using (cmd = new MySqlCommand("PLC", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    PLC = int.Parse(cmd.ExecuteScalar().ToString());
+                }
+
+                con.Close();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return PLC;
+        }
+
+
         //Contador de Buenas y Malas
         public DataTable Contador()
         {

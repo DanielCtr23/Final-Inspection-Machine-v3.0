@@ -39,6 +39,23 @@ namespace Final_Inspection_Machine_v3._0
 
         //READ
 
+        public int TipoPLC()
+        {
+            int PLC;
+
+            try
+            {
+                PLC = dBMysql.TipoPLC();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return PLC;
+        }
+
         public DataTable Contador()
         {
             DataTable dt = new DataTable();
