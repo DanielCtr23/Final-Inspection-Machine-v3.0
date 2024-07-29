@@ -108,7 +108,7 @@ namespace Final_Inspection_Machine_v3._0
 
         private void ResetBtn_Click(object sender, RoutedEventArgs e)
         {
-            db.ResetContadores();
+            DM.ResetContadores();
             CargarContadores();
         }
 

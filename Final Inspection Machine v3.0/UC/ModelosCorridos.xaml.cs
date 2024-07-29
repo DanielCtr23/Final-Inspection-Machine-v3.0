@@ -24,13 +24,12 @@ namespace Final_Inspection_Machine_v3._0.UC
     /// </summary>
     public partial class ModelosCorridos : System.Windows.Controls.UserControl
     {
-        DB db = new DB();
+        DataManager DM = new DataManager();
         public ModelosCorridos()
         {
 
             InitializeComponent();
-            DG.ItemsSource = db.ModelosProducidos(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 0, 0),
-                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 59, 59)).Tables[0].DefaultView;
+            Refresh(false);
             
         }
 
@@ -38,51 +37,15 @@ namespace Final_Inspection_Machine_v3._0.UC
         {
             if (TE)
             {
-                TiempoExtra();
+                DG.ItemsSource = DM.ProduccionModelos("TE").DefaultView;
             }
             else
             {
-                TiempoNormal();
+                DG.ItemsSource = DM.ProduccionModelos("TN").DefaultView;
             }
         }
 
-        private void TiempoNormal()
-        {
-            if ((DateTime.Now.Hour >= 7 && DateTime.Now.Hour < 16) || (DateTime.Now.Hour == 16 && DateTime.Now.Minute < 37))
-            {
-                DG.ItemsSource = db.ModelosProducidos(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 0, 0),
-                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 16, 36, 59)).Tables[0].DefaultView;
-            }
-            else if ((DateTime.Now.Hour >= 5 && DateTime.Now.Hour <= 23) || (DateTime.Now.Hour == 16 && DateTime.Now.Minute >= 37))
-            {
-                DG.ItemsSource = db.ModelosProducidos(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 16, 37, 0),
-                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day+1, 01, 00, 00)).Tables[0].DefaultView;
-            }
-            else
-            {
-                DG.ItemsSource = db.ModelosProducidos(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day-1, 16, 37, 0),
-                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 01, 00, 00)).Tables[0].DefaultView;
-            }
-        }
-
-        private void TiempoExtra()
-        {
-            if ((DateTime.Now.Hour >= 7 && DateTime.Now.Hour < 19))
-            {
-                DG.ItemsSource = db.ModelosProducidos(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 0, 0),
-                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 59, 59)).Tables[0].DefaultView;
-            }
-            else if ((DateTime.Now.Hour >= 19 && DateTime.Now.Hour < 24))
-            {
-                DG.ItemsSource = db.ModelosProducidos(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 19, 0, 0),
-                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day+1, 6, 59, 59)).Tables[0].DefaultView;
-            }
-            else
-            {
-                DG.ItemsSource = db.ModelosProducidos(new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day-1, 19, 0, 0),
-                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 59, 59)).Tables[0].DefaultView;
-            }
-        }
+        
 
         
     }

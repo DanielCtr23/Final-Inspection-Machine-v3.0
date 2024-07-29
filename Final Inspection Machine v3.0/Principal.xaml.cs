@@ -20,14 +20,14 @@ namespace Final_Inspection_Machine_v3._0
     /// </summary>
     public partial class Principal : Window
     {
-        InspeccionMicro800 inspeccion_CL2;
+        InspeccionCL2 inspeccion_CL2;
         DashboardTab DashboardTab;
         public Principal()
         {
             InitializeComponent();
             try
             {
-                inspeccion_CL2 = new InspeccionMicro800();
+                inspeccion_CL2 = new InspeccionCL2();
                 inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
             }
             catch (Exception e)
@@ -48,7 +48,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 try
                 {
-                    inspeccion_CL2 = new InspeccionMicro800();
+                    inspeccion_CL2 = new InspeccionCL2();
                     inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
                     inspeccion_CL2.Show();
                     this.Hide();

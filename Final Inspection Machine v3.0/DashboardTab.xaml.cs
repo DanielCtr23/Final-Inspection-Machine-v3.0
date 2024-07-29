@@ -29,6 +29,7 @@ namespace Final_Inspection_Machine_v3._0
     public partial class DashboardTab : Window
     {
         bool TE = false;
+        bool OKNOK = true;
         DispatcherTimer Segundero = new DispatcherTimer();
         public DashboardTab()
         {
@@ -76,12 +77,27 @@ namespace Final_Inspection_Machine_v3._0
             ModelosTurno.Refresh(TE);
             GraficaTurno.Refresh(TE);
             TiemposTurno.Refresh(TE);
+            GraficoDiario.Actualizar(OKNOK);
+            GraficoSemanal.Actualizar(OKNOK);
+            GraficoMensual.Actualizar(OKNOK);
             
         }
 
         private void CerrarBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void ToggleButtonProduccion_Checked(object sender, RoutedEventArgs e)
+        {
+            OKNOK = false;
+            Refresh();
+        }
+
+        private void ToggleButtonProduccion_Unchecked(object sender, RoutedEventArgs e)
+        {
+            OKNOK = true;
+            Refresh();
         }
     }
 

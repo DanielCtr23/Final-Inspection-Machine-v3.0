@@ -24,7 +24,7 @@ namespace Final_Inspection_Machine_v3._0.UC
     /// </summary>
     public partial class DetallePruebas : UserControl
     {
-        DB db = new DB();
+        DataManager DM = new DataManager();
         private DispatcherTimer BusquedaTmr;
         public DetallePruebas()
         {
@@ -32,8 +32,8 @@ namespace Final_Inspection_Machine_v3._0.UC
             BusquedaTmr = new DispatcherTimer();
             BusquedaTmr.Interval = TimeSpan.FromSeconds(10);
             BusquedaTmr.Tick += BusquedaTmr_Tick;
-            PruebasDG.ItemsSource = db.DetallePruebas(null, null, null, null, null, true, true).DefaultView;
-            ModelosCB.ItemsSource = db.ObtenerModelos().DefaultView;
+            PruebasDG.ItemsSource = DM.Detalles(null, null, null, null, null, true, true).DefaultView;
+            ModelosCB.ItemsSource = DM.ObtenerModelos().DefaultView;
             ModelosCB.DisplayMemberPath = "PN";
             ModelosCB.SelectedValuePath = "idmodelos";
 
@@ -129,7 +129,7 @@ namespace Final_Inspection_Machine_v3._0.UC
             {
                 estacion = int.Parse(EstacionCB.SelectedValue.ToString());
             }
-            PruebasDG.ItemsSource = db.DetallePruebas(BuscadorTB.Text, modelo, estacion,
+            PruebasDG.ItemsSource = DM.Detalles(BuscadorTB.Text, modelo, estacion,
                 InicioDTB.SelectedDate, FinDTB.SelectedDate, PassCB.IsChecked, FailCB.IsChecked).DefaultView;
             MensajeTB.Text = DateTime.Now.ToString() + " : " + PruebasDG.Items.Count.ToString() + " Registros Cargados (Límite 1000)";
         }
@@ -209,7 +209,7 @@ namespace Final_Inspection_Machine_v3._0.UC
             {
                 try
                 {
-                    string valor1 = valor.Row[0].ToString();
+                    int valor1 = int.Parse(valor.Row[0].ToString());
                     Detalle.CargarDetalle(valor1);
                 }
                 catch (Exception)

@@ -2,6 +2,7 @@
 using ScottPlot.Plottables;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -24,7 +25,7 @@ namespace Final_Inspection_Machine_v3._0
         bool[] Pass = new bool[2];
 
         ManualResetEvent EsperarTaponE1, EsperarTaponE2, EsperarEtiquetaE1, EsperarEtiquetaE2;
-        DB db = new DB();
+        DataManager DM = new DataManager();
         Etiquetadora etiquetadora;
 
         bool nutrojo, sinsentido, pilotbracket, resorte;
@@ -48,8 +49,8 @@ namespace Final_Inspection_Machine_v3._0
             EsperarEtiquetaE2 = new ManualResetEvent(false);
             EsperarTaponE1 = new ManualResetEvent(false);
             EsperarTaponE2 = new ManualResetEvent(false);
-            Contador1 = db.ObtenerContador1();
-            Contador2 = db.ObtenerContador2();
+            Contador1 = DM.ContadorSerial(1);
+            Contador2 = DM.ContadorSerial(2);
             modelo = Com.ModeloSeleccionado();
             nutrojo = Com.NutRojo();
             pilotbracket = Com.PilotBracket();
@@ -196,7 +197,7 @@ namespace Final_Inspection_Machine_v3._0
 
             if (Fail[0])
             {
-                db.Guardar(serial1, modelo, DateTime.Now, false, true, ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion,
+                DM.Guardar(serial1, modelo, DateTime.Now, false, true, ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion,
                     false, -1, -1, false, ResultadosE1[5].OKNG, ResultadosE1[5].Calificacion, ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
                     ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, -1, ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, -1);
                 Thread.Sleep(500);
@@ -204,7 +205,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             else
             {
-                db.Guardar(serial1, modelo, DateTime.Now, false, false, ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion,
+                DM.Guardar(serial1, modelo, DateTime.Now, false, false, ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion,
                     false, -1, -1, false, ResultadosE1[5].OKNG, ResultadosE1[5].Calificacion, ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
                     ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res), ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res));
                 Com.E1_3Pass(true);
@@ -229,7 +230,7 @@ namespace Final_Inspection_Machine_v3._0
                 ResultadosE1[3].Calificacion = 0;
             }
 
-            db.Guardar(serial1, DateTime.Now, false, !ResultadosE1[3].OKNG, ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
+            DM.Guardar(serial1, DateTime.Now, false, !ResultadosE1[3].OKNG, ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
 
             #endregion
 
@@ -262,7 +263,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             #endregion
 
-            db.Guardar(serial1, DateTime.Now, Pass[0], !Pass[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, ResultadosE1[4].OKNG, ResultadosE1[4].Calificacion);
+            DM.Guardar(serial1, DateTime.Now, Pass[0], !Pass[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, ResultadosE1[4].OKNG, ResultadosE1[4].Calificacion);
 
 
         }
@@ -400,7 +401,7 @@ namespace Final_Inspection_Machine_v3._0
 
             if (Fail[1])
             {
-                db.Guardar(serial2, modelo, DateTime.Now, false, true, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
+                DM.Guardar(serial2, modelo, DateTime.Now, false, true, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
                     false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
                     ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion,-1, ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, -1);
                 Thread.Sleep(500);
@@ -409,7 +410,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             else
             {
-                db.Guardar(serial2, modelo, DateTime.Now, false, false, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
+                DM.Guardar(serial2, modelo, DateTime.Now, false, false, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
                     false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
                     ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res), ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, int.Parse(ResultadosE2[2].Res));
                 Com.E2_3Pass(true);
@@ -437,7 +438,7 @@ namespace Final_Inspection_Machine_v3._0
 
             //Arreglar
             Thread.Sleep(100);
-            db.Guardar(serial2, DateTime.Now, false, !ResultadosE2[3].OKNG, ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, false, -1);
+            DM.Guardar(serial2, DateTime.Now, false, !ResultadosE2[3].OKNG, ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, false, -1);
 
             #endregion
 
@@ -471,7 +472,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             #endregion
             Thread.Sleep(100);
-            db.Guardar(serial2, DateTime.Now, Pass[1], !Pass[1], ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, ResultadosE2[4].OKNG, ResultadosE2[4].Calificacion);
+            DM.Guardar(serial2, DateTime.Now, Pass[1], !Pass[1], ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, ResultadosE2[4].OKNG, ResultadosE2[4].Calificacion);
 
         }
         private async Task TaskO2()
@@ -495,8 +496,9 @@ namespace Final_Inspection_Machine_v3._0
         }
         private void CargarContadores()
         {
-            ContadorBuenas.Text = "PIEZAS BUENAS: " + db.ObtenerBuenas().ToString("D3");
-            ContadorMalas.Text = "PIEZAS MALAS:  " + db.ObtenerMalas().ToString("D3");
+            DataTable dt = DM.Contador();
+            ContadorBuenas.Text = "PIEZAS BUENAS: " + int.Parse(dt.Rows[0]["Valor"].ToString()).ToString("D3");
+            ContadorMalas.Text = "PIEZAS MALAS:  " + int.Parse(dt.Rows[0]["Valor"].ToString()).ToString("D3");
         }
 
         

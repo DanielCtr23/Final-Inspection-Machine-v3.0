@@ -22,35 +22,16 @@ namespace Final_Inspection_Machine_v3._0.UC
     /// </summary>
     public partial class Detalle : UserControl
     {
-        DB db = new DB();
+        DataManager DM = new DataManager();
         public Detalle()
         {
             InitializeComponent();
         }
 
-        public void CargarDetalle(string Serial)
+        public void CargarDetalle(int id)
         {
             DataTable detalle = new DataTable();
-            detalle = db.Detalle(Serial);
-
-            //if (bool.Parse(detalle.Rows[0]["Pass"].ToString()) && !bool.Parse(detalle.Rows[0]["Fail"].ToString()))
-            //{
-            //    MessageBox.Show(4.ToString());
-            //    PassTB.Text = "PASS";
-            //    PassTB.Foreground = Brushes.Green;
-            //}
-            //else if (!bool.Parse(detalle.Rows[0]["Pass"].ToString()) && bool.Parse(detalle.Rows[0]["Fail"].ToString()))
-            //{
-            //    MessageBox.Show(2.ToString());
-            //    PassTB.Text = "FAIL";
-            //    PassTB.Foreground = Brushes.Red;
-            //}
-            //else
-            //{
-            //    MessageBox.Show(3.ToString());
-            //    PassTB.Text = "ABORTADA";
-            //    PassTB.Foreground = Brushes.Yellow;
-            //}
+            detalle = DM.Detalle(id);
 
             SerialTB.Text = detalle.Rows[0]["Serial"].ToString();
             FechaTB.Text = detalle.Rows[0]["Fecha"].ToString();

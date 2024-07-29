@@ -128,7 +128,9 @@
     <Compile Include="DashboardTab.xaml.cs">
       <DependentUpon>DashboardTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataManager.cs" />
     <Compile Include="DB.cs" />
+    <Compile Include="DBM\DBMysql.cs" />
     <Compile Include="Etiquetadora.cs" />
     <Compile Include="form.cs">
       <SubType>Form</SubType>
@@ -359,5 +361,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

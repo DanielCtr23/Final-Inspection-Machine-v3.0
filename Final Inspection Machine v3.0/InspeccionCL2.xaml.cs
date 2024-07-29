@@ -37,7 +37,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 MessageBox.Show("No se puedo conectar con el PLC: \n"+e.Message);
             }
-            InicializarCamaras();
+            //InicializarCamaras();
             Thread.Sleep(1000);
             etiquetadora = new Etiquetadora();
             Segundero.Interval = TimeSpan.FromSeconds(1);
@@ -132,7 +132,7 @@ namespace Final_Inspection_Machine_v3._0
         
         private void ResetBtn_Click(object sender, RoutedEventArgs e)
         {
-            db.ResetContadores();
+            DM.ResetContadores();
             CargarContadores();
         }
 

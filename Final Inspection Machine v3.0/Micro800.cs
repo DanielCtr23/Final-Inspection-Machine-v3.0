@@ -65,9 +65,9 @@ namespace Final_Inspection_Machine_v3._0
             Modelo.PLCAddressValue = new PLCAddressItem("MODELO_ACEPTADO");
             Modelo.DataChanged += Modelo_DataChanged;
 
-            Seleccionado.ComComponent = Com;
-            Seleccionado.PLCAddressValue = new PLCAddressItem("MODELO_SELECCIONADO");
-            Seleccionado.DataChanged += Seleccionado_DataChanged;
+            //Seleccionado.ComComponent = Com;
+            //Seleccionado.PLCAddressValue = new PLCAddressItem("MODELO_SELECCIONADO");
+            //Seleccionado.DataChanged += Seleccionado_DataChanged;
 
 
             Mensaje.ComComponent = Com;
