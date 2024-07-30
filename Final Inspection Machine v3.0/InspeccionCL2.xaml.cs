@@ -27,7 +27,10 @@ namespace Final_Inspection_Machine_v3._0
     {
         DispatcherTimer Segundero = new DispatcherTimer();
         //LoadingForm Loading = new LoadingForm();
-        IV3 Corrugado1, Corrugado2, Orifice11, Orifice12, Orifice21, Orifice22;
+        IV3 Corrugado1 = new IV3();
+        IV3 Corrugado2 = new IV3();
+        IV3 Orifice11 = new IV3();
+        IV3 Orifice21 = new IV3();
 
         string[] Camara = new string[4];
         string[] IPCamara = new string[4];
@@ -35,6 +38,14 @@ namespace Final_Inspection_Machine_v3._0
         public InspeccionCL2()
         {
             InitializeComponent();
+            try
+            {
+                InicializarPLC();
+            }
+            catch (Exception)
+            {
+
+            }
             ShowLoadingAndInitializeAsync();
 
 
@@ -49,13 +60,19 @@ namespace Final_Inspection_Machine_v3._0
             {
                 await Task.Run(() =>
                 {
-                    InicializarPLC();
 
                     // Suponiendo que Loading.Carga1 puede ser llamado desde cualquier hilo
                     // Si no es así, debes invocarlo en el hilo de la interfaz de usuario
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        loading.Carga1("CompactLogix", Com.Com.IPAddress, "FIM 3 CL", Com.Conexion());
+                        if (Com.Conexion())
+                        {
+                            loading.Carga1("CompactLogix", Com.Com.IPAddress, "FIM 3 CL", true);
+                        }
+                        else
+                        {
+                            loading.Carga1("CompactLogix", Com.Com.IPAddress, "FIM 3 CL", false);
+                        }
                     });
 
 
@@ -109,7 +126,7 @@ namespace Final_Inspection_Machine_v3._0
                     loading.Close();
                 });
 
-                if (!IV3op || Com.Conexion())
+                if (!IV3op || !Com.Conexion())
                 {
                     this.Close();
                 }
@@ -138,7 +155,7 @@ namespace Final_Inspection_Machine_v3._0
             try
             {
                 IPAddress C1IP = IPAddress.Parse("192.168.1.2");
-                Corrugado1 = new IV3_Keyence.IV3(C1IP, 8500);
+                Corrugado1.AbrirConexion(C1IP, 8500);
                 IPCamara[0] = C1IP.ToString();
             }
             catch (Exception)
@@ -149,7 +166,7 @@ namespace Final_Inspection_Machine_v3._0
             try
             {
                 IPAddress C2IP = IPAddress.Parse("192.168.1.3");
-                Corrugado2 = new IV3_Keyence.IV3(C2IP, 8500);
+                Corrugado2.AbrirConexion(C2IP, 8500);
                 IPCamara[1] = C2IP.ToString();
             }
             catch (Exception)
@@ -160,7 +177,7 @@ namespace Final_Inspection_Machine_v3._0
             try
             {
                 IPAddress O11IP = IPAddress.Parse("192.168.1.4");
-                Orifice11 = new IV3_Keyence.IV3(O11IP, 8500);
+                Orifice11.AbrirConexion(O11IP, 8500);
                 IPCamara[2] = O11IP.ToString();
             }
             catch (Exception)
@@ -171,7 +188,7 @@ namespace Final_Inspection_Machine_v3._0
             try
             {
                 IPAddress O21IP = IPAddress.Parse("192.168.1.7");
-                Orifice21 = new IV3_Keyence.IV3(O21IP, 8500);
+                Orifice21.AbrirConexion(O21IP, 8500);
                 IPCamara[3] = O21IP.ToString();
             }
             catch (Exception)
@@ -185,17 +202,10 @@ namespace Final_Inspection_Machine_v3._0
 
         private void CerrarCamaras()
         {
-            try
-            {
-                Corrugado1.Cerrar();
-                Corrugado2.Cerrar();
-                Orifice11.Cerrar();
-                Orifice21.Cerrar();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            Corrugado1.Cerrar();
+            Corrugado2.Cerrar();
+            Orifice11.Cerrar();
+            Orifice21.Cerrar();
         }
 
 
@@ -226,6 +236,12 @@ namespace Final_Inspection_Machine_v3._0
                 ProcesoGrid.RowDefinitions[4].Height = new GridLength(1, GridUnitType.Star);
             }
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+
+        }
+
         private void LimpiarPantalla()
         {
             OrificeBI1.Reset();
@@ -267,8 +283,7 @@ namespace Final_Inspection_Machine_v3._0
 
         private void RegresarBtn_Click(object sender, RoutedEventArgs e)
         {
-            CerrarCamaras();
-            this.Close();
+            this.Hide();
         }
     }
 }

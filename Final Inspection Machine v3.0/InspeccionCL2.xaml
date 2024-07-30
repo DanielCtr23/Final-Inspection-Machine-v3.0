@@ -7,7 +7,7 @@
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:UC="clr-namespace:Final_Inspection_Machine_v3._0.UC"
         mc:Ignorable="d"
-        Title="InspeccionCL2" Height="450" Width="800" WindowStyle="None" WindowState="Maximized">
+        Title="InspeccionCL2" Height="450" Width="800" WindowStyle="None" WindowState="Maximized" Closed="Window_Closed">
     <Window.Background>
         <ImageBrush ImageSource="/image (1).png" Stretch="Fill" TileMode="Tile"/>
     </Window.Background>

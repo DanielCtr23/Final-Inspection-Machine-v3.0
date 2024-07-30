@@ -498,7 +498,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             DataTable dt = DM.Contador();
             ContadorBuenas.Text = "PIEZAS BUENAS: " + int.Parse(dt.Rows[0]["Valor"].ToString()).ToString("D3");
-            ContadorMalas.Text = "PIEZAS MALAS:  " + int.Parse(dt.Rows[0]["Valor"].ToString()).ToString("D3");
+            ContadorMalas.Text = "PIEZAS MALAS:  " + int.Parse(dt.Rows[1]["Valor"].ToString()).ToString("D3");
         }
 
         

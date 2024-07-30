@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Zebra.Sdk.Comm;
 using Zebra.Sdk.Printer;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -15,6 +16,9 @@ namespace Final_Inspection_Machine_v3._0
         Zebra.Sdk.Comm.Connection Impresora;
         public Thread Conexion;
         bool status = false;
+        
+        object locko = new object();
+
         public Etiquetadora()
         {
             Inicializar();
@@ -54,31 +58,36 @@ namespace Final_Inspection_Machine_v3._0
 
         public void GenerarEtiqueta(string Serial)
         {
-            //Connection cnZebra = new UsbConnection("USB001:");
-            try
+            lock(locko)
             {
-                Impresora.Open();
-                ZebraPrinter genericPrinter = ZebraPrinterFactory.GetInstance(Impresora);
-                ZebraPrinterLinkOs linkOsPrinter = ZebraPrinterFactory.CreateLinkOsPrinter(genericPrinter);
-
-                if (linkOsPrinter != null)
+                //Connection cnZebra = new UsbConnection("USB001:");
+                try
                 {
-                    Dictionary<int, string> vars = new Dictionary<int, string> {
+                    Impresora.Open();
+                    ZebraPrinter genericPrinter = ZebraPrinterFactory.GetInstance(Impresora);
+                    ZebraPrinterLinkOs linkOsPrinter = ZebraPrinterFactory.CreateLinkOsPrinter(genericPrinter);
+
+                    if (linkOsPrinter != null)
+                    {
+                        Dictionary<int, string> vars = new Dictionary<int, string> {
                     { 1, Serial },
                 };
 
-                    linkOsPrinter.PrintStoredFormatWithVarGraphics("E:ETIQUETA.ZPL", vars);
+                        linkOsPrinter.PrintStoredFormatWithVarGraphics("E:ETIQUETA.ZPL", vars);
+                    }
                 }
-            }
-            catch (ConnectionException e)
-            {
-            }
-            catch (ZebraPrinterLanguageUnknownException e)
-            {
-            }
-            finally
-            {
-                Impresora.Close();
+                catch (ConnectionException e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                catch (ZebraPrinterLanguageUnknownException e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                finally
+                {
+                    Impresora.Close();
+                }
             }
 
         }

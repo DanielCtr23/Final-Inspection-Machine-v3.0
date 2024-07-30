@@ -16,7 +16,7 @@ namespace Final_Inspection_Machine_v3._0
 
         private void InicializarPLC()
         {
-            Com = new CompactLogix(false);
+            Com = new CompactLogix();
             if (Com.Conexion())
             {
                 Com.Terminar();
@@ -26,12 +26,18 @@ namespace Final_Inspection_Machine_v3._0
                 Com.InspeccionarTapon += Com_InspeccionarTapon;
                 Com.MensajeRecibido += Com_MensajeRecibido;
                 Com.DetenerCiclo += Com_DetenerCiclo;
+                Com.CambioSeleccionado += Com_CambioSeleccionado;
             }
             else
             {
 
             }
             
+        }
+
+        private void Com_CambioSeleccionado(object sender, string e)
+        {
+            ModeloBtn.Content = e;
         }
 
         private void Com_DetenerCiclo(object sender, EventArgs e)
@@ -153,7 +159,6 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Com_CambioModelo(object sender, bool e)
         {
-            ModeloBtn.Content = Com.ModeloSeleccionado();
             if (e)
             {
                 ModeloBtn.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(38, 38, 38));

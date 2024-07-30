@@ -15,14 +15,17 @@ namespace Final_Inspection_Machine_v3._0
         private void InicializarPLC()
         {
             Com = new Micro800();
-            Com.Terminar();
-            Com.CambioModelo += Com_CambioModelo;
-            Com.IniciarCiclo += Com_IniciarCiclo;
-            Com.InspeccionarEtiqueta += Com_InspeccionarEtiqueta;
-            Com.InspeccionarTapon += Com_InspeccionarTapon;
-            Com.MensajeRecibido += Com_MensajeRecibido;
-            Com.DetenerCiclo += Com_DetenerCiclo;
-            Com.CambioSeleccionado += Com_CambioSeleccionado;
+            if (Com.Conexion())
+            {
+                Com.Terminar();
+                Com.CambioModelo += Com_CambioModelo;
+                Com.IniciarCiclo += Com_IniciarCiclo;
+                Com.InspeccionarEtiqueta += Com_InspeccionarEtiqueta;
+                Com.InspeccionarTapon += Com_InspeccionarTapon;
+                Com.MensajeRecibido += Com_MensajeRecibido;
+                Com.DetenerCiclo += Com_DetenerCiclo;
+                Com.CambioSeleccionado += Com_CambioSeleccionado;
+            }
         }
 
         private void Com_CambioSeleccionado(object sender, string e)

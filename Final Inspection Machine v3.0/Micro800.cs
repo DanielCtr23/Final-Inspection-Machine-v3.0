@@ -33,17 +33,23 @@ namespace Final_Inspection_Machine_v3._0
             Com.CIPConnectionSize = 508;
             Com.Port = 44818;
             Com.Timeout = 50000;
-
+            Inicializar();
 
             //Com.Timeout = 1000;
             //Com.PollRateOverride = 500;
 
+            
+        }
+
+        private void Inicializar()
+        {
             CicloEnCurso = new DataSubscriber();
             InspTapon = new DataSubscriber();
             InspEtiqueta = new DataSubscriber();
             Estop = new DataSubscriber();
             Modelo = new DataSubscriber();
             Mensaje = new DataSubscriber();
+            Seleccionado = new DataSubscriber();
 
             CicloEnCurso.ComComponent = Com;
             CicloEnCurso.PLCAddressValue = new PLCAddressItem("CICLO_EN_CURSO");
@@ -65,15 +71,28 @@ namespace Final_Inspection_Machine_v3._0
             Modelo.PLCAddressValue = new PLCAddressItem("MODELO_ACEPTADO");
             Modelo.DataChanged += Modelo_DataChanged;
 
-            //Seleccionado.ComComponent = Com;
-            //Seleccionado.PLCAddressValue = new PLCAddressItem("MODELO_SELECCIONADO");
-            //Seleccionado.DataChanged += Seleccionado_DataChanged;
+            Seleccionado.ComComponent = Com;
+            Seleccionado.PLCAddressValue = new PLCAddressItem("MODELO_SELECCIONADO");
+            Seleccionado.DataChanged += Seleccionado_DataChanged;
 
 
             Mensaje.ComComponent = Com;
             Mensaje.PLCAddressValue = new PLCAddressItem("MENSAJE");
             Mensaje.DataChanged += Mensaje_DataChanged;
 
+        }
+
+        public bool Conexion()
+        {
+            try
+            {
+                Com.Read("MODELO_ACEPTADO");
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         private void Seleccionado_DataChanged(object sender, PlcComEventArgs e)

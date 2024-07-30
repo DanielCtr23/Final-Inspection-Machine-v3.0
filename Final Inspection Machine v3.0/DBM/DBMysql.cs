@@ -98,8 +98,7 @@ namespace Final_Inspection_Machine_v3._0.DBM
             }
             catch (Exception)
             {
-
-                throw;
+                PLC = 0;
             }
 
             return PLC;

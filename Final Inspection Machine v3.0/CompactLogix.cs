@@ -16,7 +16,7 @@ namespace Final_Inspection_Machine_v3._0
     public class CompactLogix
     {
         public EthernetIPforCLXCom Com;
-        DataSubscriber CicloEnCurso, InspTapon, InspEtiqueta, Estop, Modelo, Mensaje;
+        DataSubscriber CicloEnCurso, InspTapon, InspEtiqueta, Estop, Modelo, Mensaje, Seleccionado;
 
         public event EventHandler IniciarCiclo;
         public event EventHandler InspeccionarTapon;
@@ -24,18 +24,15 @@ namespace Final_Inspection_Machine_v3._0
         public event EventHandler DetenerCiclo;
         public event EventHandler<bool> CambioModelo;
         public event EventHandler<int> MensajeRecibido;
+        public event EventHandler<string> CambioSeleccionado;
 
-        public CompactLogix(bool op)
+        public CompactLogix()
         {
             Com = new EthernetIPforCLXCom();
             Com.IPAddress = "192.168.1.1";
             Com.Timeout = 1000;
             Com.PollRateOverride = 500;
-
-            if (!op)
-            {
-                Inicializar();
-            }
+            Inicializar();
         }
 
         public bool Conexion()
@@ -60,6 +57,7 @@ namespace Final_Inspection_Machine_v3._0
             Estop = new DataSubscriber();
             Modelo = new DataSubscriber();
             Mensaje = new DataSubscriber();
+            Seleccionado = new DataSubscriber();
 
             CicloEnCurso.ComComponent = Com;
             CicloEnCurso.PLCAddressValue = new PLCAddressItem("CICLO_EN_CURSO");
@@ -84,6 +82,16 @@ namespace Final_Inspection_Machine_v3._0
             Mensaje.ComComponent = Com;
             Mensaje.PLCAddressValue = new PLCAddressItem("MENSAJE");
             Mensaje.DataChanged += Mensaje_DataChanged;
+
+            Seleccionado.ComComponent = Com;
+            Seleccionado.PLCAddressValue = new PLCAddressItem("MODELO_SELECCIONADO");
+            Seleccionado.DataChanged += Seleccionado_DataChanged;
+
+        }
+
+        private void Seleccionado_DataChanged(object sender, PlcComEventArgs e)
+        {
+            CambioSeleccionado?.Invoke(this, e.Values[0]);
         }
 
         //Eventos
@@ -153,7 +161,15 @@ namespace Final_Inspection_Machine_v3._0
         }
         public bool NutRojo()
         {
-            return bool.Parse(Com.Read("NUT_ROJO"));
+            try
+            {
+                return bool.Parse(Com.Read("NUT_ROJO"));
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
         public bool SinSentido()
         {

@@ -19,7 +19,6 @@ namespace Final_Inspection_Machine_v3._0
         Estructuras.ResultadosCorrugado[] ResultadosE2 = new ResultadosCorrugado[8];
         Estructuras.ResultadosCorrugado ResultadosOrifice1 = new ResultadosCorrugado();
         Estructuras.ResultadosCorrugado ResultadosOrifice2 = new ResultadosCorrugado();
-        IV3 Corrugado1, Corrugado2, Orifice11, Orifice12, Orifice21, Orifice22;
         bool[] Fail = new bool[2];
         bool[] Pass = new bool[2];
 
@@ -48,8 +47,8 @@ namespace Final_Inspection_Machine_v3._0
             EsperarEtiquetaE2 = new ManualResetEvent(false);
             EsperarTaponE1 = new ManualResetEvent(false);
             EsperarTaponE2 = new ManualResetEvent(false);
-            Contador1 = DM.ContadorSerial(1);
-            Contador2 = DM.ContadorSerial(2);
+            Contador1 = DM.ContadorSerial(3);
+            Contador2 = DM.ContadorSerial(4);
             modelo = Com.ModeloSeleccionado();
             nutrojo = Com.NutRojo();
             pilotbracket = Com.PilotBracket();
@@ -132,11 +131,11 @@ namespace Final_Inspection_Machine_v3._0
             ResultadosE1[2] = await Corrugado1.PruebaAsync(ResultadosE1[2]);
             if (ResultadosE1[2].OKNG)
             {
-                if (!nutrojo && (ResultadosE1[2].Res == "01"))
+                if (!nutrojo && (ResultadosE1[2].Res == "00"))
                 {
                     Dispatcher.Invoke(() => NutBI1.OK(true));
                 }
-                else if (nutrojo && (ResultadosE1[2].Res == "00"))
+                else if (nutrojo && (ResultadosE1[2].Res == "01"))
                 {
                     Dispatcher.Invoke(() => NutBI1.OK(true));
                 }
@@ -421,7 +420,6 @@ namespace Final_Inspection_Machine_v3._0
             {
                 Dispatcher.Invoke(() => TaponBI2.OK(true));
                 Com.E2_TAPON_COLOCADO(true);
-                Thread.Sleep(350);
                 etiquetadora.GenerarEtiqueta(serial2);
             }
             else
@@ -493,7 +491,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             DataTable dt = DM.Contador();
             ContadorBuenas.Text = "PIEZAS BUENAS: " + int.Parse(dt.Rows[0]["Valor"].ToString()).ToString("D3");
-            ContadorMalas.Text = "PIEZAS MALAS:  " + int.Parse(dt.Rows[0]["Valor"].ToString()).ToString("D3");
+            ContadorMalas.Text = "PIEZAS MALAS:  " + int.Parse(dt.Rows[1]["Valor"].ToString()).ToString("D3");
         }
     }
 }

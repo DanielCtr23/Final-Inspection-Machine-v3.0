@@ -23,39 +23,41 @@ namespace Final_Inspection_Machine_v3._0
         InspeccionCL2 inspeccion_CL2;
         InspeccionMicro800 inspeccion_Micro800;
         DashboardTab DashboardTab;
+        int plc;
         DataManager DM = new DataManager();
         public Principal()
         {
-            InitializeComponent();
-        }
+            InitializeComponent(); 
+            try
+            {
+                plc = DM.TipoPLC();
+            }
+            catch (Exception)
+            {
 
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (DM.TipoPLC() == 0)
+                throw;
+            }
+            if (plc == 0)
             {
                 try
                 {
+
                     inspeccion_CL2 = new InspeccionCL2();
                     inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
                     inspeccion_CL2.Closed += Inspeccion_CL2_Closed;
-                    inspeccion_CL2.Show();
-                    this.Hide();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
-            else if(DM.TipoPLC() == 1)
+            else if (plc == 1)
             {
                 try
                 {
                     inspeccion_Micro800 = new InspeccionMicro800();
                     inspeccion_Micro800.IsVisibleChanged += Inspeccion_Micro800_IsVisibleChanged;
                     inspeccion_Micro800.Closed += Inspeccion_Micro800_Closed;
-                    inspeccion_Micro800.Show();
-                    this.Hide();
                 }
                 catch (Exception ex)
                 {
@@ -64,17 +66,39 @@ namespace Final_Inspection_Machine_v3._0
             }
         }
 
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (plc==0)
+            {
+                try
+                {
+                    inspeccion_CL2.Show();
+                    this.Hide();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else if(plc ==1)
+            {
+                try
+                {
+                    inspeccion_Micro800.Show();
+                    this.Hide();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+
         private void Inspeccion_Micro800_Closed(object sender, EventArgs e)
         {
-            try
-            {
-
-                this.Show();
-            }
-            catch (Exception)
-            {
-
-            }
         }
 
         private void Inspeccion_Micro800_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
