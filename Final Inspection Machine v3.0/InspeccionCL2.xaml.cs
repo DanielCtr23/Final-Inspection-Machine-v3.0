@@ -32,6 +32,8 @@ namespace Final_Inspection_Machine_v3._0
         IV3 Orifice11 = new IV3();
         IV3 Orifice21 = new IV3();
 
+        int E1, E2;
+
         string[] Camara = new string[4];
         string[] IPCamara = new string[4];
         bool IV3op;
@@ -48,6 +50,8 @@ namespace Final_Inspection_Machine_v3._0
             }
             ShowLoadingAndInitializeAsync();
 
+            E1 = DM.Estacion(1);
+            E2 = DM.Estacion(2);
 
         }
 

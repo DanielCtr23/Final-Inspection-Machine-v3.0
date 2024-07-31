@@ -6,10 +6,10 @@
              xmlns:SP="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
              xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.UC"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="830">
+             d:DesignHeight="550" d:DesignWidth="830">
     <StackPanel Background="#181818">
         <TextBlock Text="PRODUCCIÓN DIARIA" FontSize="48" Foreground="White" HorizontalAlignment="Center"/>
-        <SP:WpfPlot x:Name="Plot" Height="345" Margin="4"/>
+        <SP:WpfPlot x:Name="Plot" Height="445" Margin="4"/>
         <TextBlock x:Name="LapsoTB" Text="21/06/2024 7:00 - 22/06/2024 7:00" FontSize="24" Foreground="White" HorizontalAlignment="Center" />
     </StackPanel>
 </UserControl>

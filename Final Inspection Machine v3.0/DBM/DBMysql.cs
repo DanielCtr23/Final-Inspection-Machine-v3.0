@@ -105,6 +105,53 @@ namespace Final_Inspection_Machine_v3._0.DBM
         }
 
 
+        public int Estacion(int n)
+        {
+            int E = 0;
+            try
+            {
+                con.Open();
+
+                using (cmd = new MySqlCommand("NumeroEstacion", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@n", n);
+                    E = int.Parse(cmd.ExecuteScalar().ToString());
+                }
+
+                con.Close();
+            }
+            catch (Exception)
+            {
+
+            }
+            return E;
+        }
+
+        public string PilotBracketNombre(int n)
+        {
+            string Nombre = "";
+            try
+            {
+                con.Open();
+
+                using (cmd = new MySqlCommand("PilotBracket", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@n", n);
+                    Nombre = (cmd.ExecuteScalar().ToString());
+                }
+
+                con.Close();
+            }
+            catch (Exception)
+            {
+
+            }
+            return Nombre;
+        }
+
+
         //Contador de Buenas y Malas
         public DataTable Contador()
         {

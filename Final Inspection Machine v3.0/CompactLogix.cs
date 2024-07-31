@@ -146,6 +146,15 @@ namespace Final_Inspection_Machine_v3._0
             return bool.Parse(Com.Read("PB_E2_OK"));
         }
 
+        public int PilotBracketN1()
+        {
+            return int.Parse(Com.Read("PB1N"));
+        }
+        public int PilotBracketN2()
+        {
+            return int.Parse(Com.Read("PB2N"));
+        }
+
         //Lecturas 
         public string ModeloSeleccionado()
         {

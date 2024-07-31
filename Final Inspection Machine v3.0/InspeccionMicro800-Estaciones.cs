@@ -55,6 +55,17 @@ namespace Final_Inspection_Machine_v3._0
             sinsentido = Com.SinSentido();
             resorte = Com.Resorte();
 
+            if (pilotbracket)
+            {
+                Dispatcher.Invoke(() => PilotBracketBI1.IndicatorText.Text = "");
+                Dispatcher.Invoke(() => PilotBracketBI2.IndicatorText.Text = "");
+            }
+            else
+            {
+                Dispatcher.Invoke(() => PilotBracketBI1.IndicatorText.Text = "SinPB");
+                Dispatcher.Invoke(() => PilotBracketBI2.IndicatorText.Text = "SinPB");
+            }
+
             Estacion1 = new Thread(TaskE1);
             Estacion2 = new Thread(TaskE2);
             Estacion1.Start();

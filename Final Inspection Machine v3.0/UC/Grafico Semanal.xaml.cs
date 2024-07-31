@@ -25,6 +25,8 @@ namespace Final_Inspection_Machine_v3._0.UC
     public partial class Grafico_Semanal : UserControl
     {
         DataManager DM = new DataManager();
+        ScottPlot.Plottables.Text MyHighlightText;
+        string[] callout = new string[7];
         public Grafico_Semanal()
         {
             InitializeComponent();
@@ -41,7 +43,59 @@ namespace Final_Inspection_Machine_v3._0.UC
             {
                 Modelos();
             }
+            MyHighlightText = Plot.Plot.Add.Text("", 0, 0);
+            MyHighlightText.LabelAlignment = Alignment.LowerLeft;
+            MyHighlightText.LabelBold = true;
+            MyHighlightText.OffsetX = -10;
+            MyHighlightText.OffsetY = 0;
+            Plot.MouseMove += Plot_MouseMove;
         }
+
+
+        private void Plot_MouseMove(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                Pixel mousePixel = new Pixel(e.GetPosition(Plot).X, e.GetPosition(Plot).Y);
+                Coordinates mouseLocation = Plot.Plot.GetCoordinates(mousePixel);
+
+                DataPoint point = new DataPoint(mouseLocation.X, mouseLocation.Y, 0);
+
+                if ((mouseLocation.X - (int)mouseLocation.X) > -.2 && (int)mouseLocation.X < 23.3)
+                {
+                    MyHighlightText.IsVisible = true;
+                    MyHighlightText.Location = point.Coordinates;
+                    MyHighlightText.LabelText = callout[((int)(point.X + .5))];
+                    MyHighlightText.LabelFontColor = ScottPlot.Colors.White;
+                    MyHighlightText.LabelFontSize = 14;
+
+                    if (((int)(point.X + .5)) < 2)
+                    {
+                        MyHighlightText.LabelOffsetX = 5;
+                    }
+                    else if (((int)(point.X + .5)) > 5)
+                    {
+                        MyHighlightText.LabelOffsetX = -30;
+                    }
+
+                    Plot.Refresh();
+
+                }
+                else
+                {
+                    MyHighlightText.IsVisible = false;
+                    Plot.Refresh();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
+
+
+        }
+
 
         public void OKNOK()
         {
@@ -109,6 +163,11 @@ namespace Final_Inspection_Machine_v3._0.UC
                 }
 
                 ticks[i] = new Tick(i, spanishCulture.DateTimeFormat.GetDayName(s).ToUpper() + " " + Produccion.Rows[i]["fecha_formateada"].ToString());
+
+
+                callout[i] = ticks[i].Label.ToString() + "\n";
+                callout[i] = callout[i] + "Buenas:" + Produccion.Rows[i]["OK"].ToString() + "\n";
+                callout[i] = callout[i] + "Malas:" + Produccion.Rows[i]["NOK"].ToString() + "\n";
             }
 
 
@@ -214,6 +273,15 @@ namespace Final_Inspection_Machine_v3._0.UC
                     Cantidades[j][i].LabelOffset = -22;
                     acum[j] = (int)Cantidades[j][i].Value;
                     ticks[j] = new Tick(j, spanishCulture.DateTimeFormat.GetDayName(s).ToUpper() + " " + Produccion.Rows[j*modelos]["Fecha"].ToString());
+                }
+            }
+
+            for (int i = 0; i < 7; i++)
+            {
+                callout[i] = ticks[i].Label.ToString() + "\n";
+                for (int j = 0; j < modelos; j++)
+                {
+                    callout[i] = callout[i] + Produccion.Rows[j]["Modelo"].ToString() + ":" + Produccion.Rows[(i * modelos) + j]["OK"].ToString() + "\n";
                 }
             }
 

@@ -56,6 +56,32 @@ namespace Final_Inspection_Machine_v3._0
             return PLC;
         }
 
+        public int Estacion(int n)
+        {
+            try
+            {
+                return dBMysql.Estacion(n);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public string PilotBracketNombre(int n)
+        {
+            try
+            {
+                return dBMysql.PilotBracketNombre(n);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public DataTable Contador()
         {
             DataTable dt = new DataTable();

@@ -135,25 +135,6 @@ namespace Final_Inspection_Machine_v3._0.UC
                 barMalas[i].LabelOffset = -22;
                 barMalas[i].Value = barBuenas[i].Value + barMalas[i].Value;
 
-                if (barMalas[i].Value < 17)
-                {
-                    barMalas[i].LabelOffset = -22 + (17 - (float)(barMalas[i].Value));
-                }
-
-                if (barBuenas[i].Value < 17)
-                {
-                    barBuenas[i].LabelOffset = -22 + (17 - (float)(barBuenas[i].Value));
-                    if (barMalas[i].Value < 17)
-                    {
-                        barMalas[i].LabelOffset = barMalas[i].LabelOffset + 17;
-                    }
-                    else
-                    {
-                        barMalas[i].LabelOffset = barMalas[i].LabelOffset + 17 - 22;
-                    }
-
-                }
-
                 ticks[i] = new Tick(i, Produccion.Rows[i]["fecha_formateada"].ToString());
 
                 callout[i] = ticks[i].Label.ToString()+":00 \n";

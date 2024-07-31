@@ -3,6 +3,7 @@ using ScottPlot.Plottables;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -43,19 +44,31 @@ namespace Final_Inspection_Machine_v3._0
             Pass[0] = false;
             Fail[1] = false;
             Pass[1] = false;
-            Dispatcher.Invoke(new Action(() => HabilitarBotones(false)));
+            Dispatcher.BeginInvoke(new Action(() => HabilitarBotones(false)));
 
             EsperarEtiquetaE1 = new ManualResetEvent(false);
             EsperarEtiquetaE2 = new ManualResetEvent(false);
             EsperarTaponE1 = new ManualResetEvent(false);
             EsperarTaponE2 = new ManualResetEvent(false);
-            Contador1 = DM.ContadorSerial(1);
-            Contador2 = DM.ContadorSerial(2);
+            Contador1 = DM.ContadorSerial(E1);
+            Contador2 = DM.ContadorSerial(E2);
             modelo = Com.ModeloSeleccionado();
             nutrojo = Com.NutRojo();
             pilotbracket = Com.PilotBracket();
             sinsentido = Com.SinSentido();
             resorte = Com.Resorte();
+
+
+            if (pilotbracket)
+            {
+                Dispatcher.Invoke(() => PilotBracketTxB1.Text = "PILOT BRACKET");
+                Dispatcher.Invoke(() => PilotBracketTxB2.Text = "PILOT BRACKET");
+            }
+            else
+            {
+                Dispatcher.Invoke(() => PilotBracketTxB1.Text = "PILOT BRACKET N/A" );
+                Dispatcher.Invoke(() => PilotBracketTxB2.Text = "PILOT BRACKET N/A");
+            }
 
             Estacion1 = new Thread(TaskE1);
             Estacion2 = new Thread(TaskE2);
@@ -67,6 +80,9 @@ namespace Final_Inspection_Machine_v3._0
             Estacion2.Join();
             Com.Terminar();
             Thread.Sleep(2500);
+
+
+            //Dispatcher.InvokeAsync(new Task(() => MensajeE1.Text = ""));
 
             Dispatcher.Invoke(new Action(() => HabilitarBotones(true)));
             Dispatcher.Invoke(LimpiarPantalla);
@@ -81,7 +97,7 @@ namespace Final_Inspection_Machine_v3._0
         {
 
             await Corrugado1.CambioProgramaAsync(0);
-            serial1 = 1.ToString();
+            serial1 = E1.ToString();
             Task Orifice1 = TaskO1();
 
             //Largo de Corrugado
@@ -124,6 +140,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             else
             {
+                ResultadosE1[1].Res = "-1";
                 Dispatcher.Invoke(() => SentidoBI1.OK(false));
                 Fail[0] = true;
             }
@@ -139,13 +156,16 @@ namespace Final_Inspection_Machine_v3._0
                 if (!nutrojo && (ResultadosE1[2].Res == "01"))
                 {
                     Dispatcher.Invoke(() => NutBI1.OK(true));
+                    ResultadosE1[2].Res = "0";
                 }
                 else if (nutrojo && (ResultadosE1[2].Res == "00"))
                 {
                     Dispatcher.Invoke(() => NutBI1.OK(true));
+                    ResultadosE1[2].Res = "1";
                 }
                 else
                 {
+                    ResultadosE1[2].Res = "-1";
                     Dispatcher.Invoke(() => NutBI1.OK(false));
                     Fail[0] = true;
                     ResultadosE1[2].OKNG = false;
@@ -153,6 +173,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             else
             {
+                ResultadosE1[2].Res = "-1";
                 Dispatcher.Invoke(() => NutBI1.OK(false));
                 Fail[0] = true;
             }
@@ -160,54 +181,50 @@ namespace Final_Inspection_Machine_v3._0
 
             //PilotBracket
             #region
-            if (Com.PilotBracket())
+
+            ResultadosE1[5].Programa = Com.PilotBracketN1();
+            ResultadosE1[5].Res = DM.PilotBracketNombre(ResultadosE1[5].Programa);
+
+
+
+            if (Com.PilotBracket1())
             {
-                if (Com.PilotBracket1())
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI1.OK(true));
-                    ResultadosE1[5].OKNG = true;
-                }
-                else
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI1.OK(false));
-                    ResultadosE1[5].OKNG = false;
-                    //Fail[0] = true;
-                }
+                Dispatcher.Invoke(() => PilotBracketBI1.OK(true));
+                ResultadosE1[5].OKNG = true;
             }
             else
             {
-                if (Com.PilotBracket1())
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI1.OK(false));
-                    ResultadosE1[5].OKNG = false;
-                    //Fail[0] = true;
-                }
-                else
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI1.OK(true));
-                    ResultadosE1[5].OKNG = true;
-                }
-                ResultadosE1[5].Res = "SinPB";
+                Dispatcher.Invoke(() => PilotBracketBI1.OK(false));
+                ResultadosE1[5].OKNG = false;
+                //Fail[0] = true;
             }
             #endregion
 
             await Orifice1;
 
-            serial1 = GenerarSerial(modelo, 1, Contador1);
+            serial1 = GenerarSerial(modelo, E1, Contador1);
+
+            DM.Guardar(serial1, modelo, DateTime.Now, false, Fail[0],
+                /*Rosca*/ ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion, /*Crack*/ false, -1, -1,
+                /*Resorte*/ false,
+                /*PilotBracket*/ ResultadosE1[5].OKNG, ResultadosE1[5].Programa,
+                /*Largo*/  ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
+                /*Sentido*/ ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res),
+                /*NUT*/ ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res));
 
             if (Fail[0])
             {
-                DM.Guardar(serial1, modelo, DateTime.Now, false, true, ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion,
-                    false, -1, -1, false, ResultadosE1[5].OKNG, ResultadosE1[5].Calificacion, ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
-                    ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, -1, ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, -1);
+                //DM.Guardar(serial1, modelo, DateTime.Now, false, true, 
+                //    ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion, false, -1, -1, false, ResultadosE1[5].OKNG, ResultadosE1[5].Calificacion, ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
+                //    ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, -1, ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, -1);
                 Thread.Sleep(500);
                 Estacion1.Abort();
             }
             else
             {
-                DM.Guardar(serial1, modelo, DateTime.Now, false, false, ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion,
-                    false, -1, -1, false, ResultadosE1[5].OKNG, ResultadosE1[5].Calificacion, ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
-                    ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res), ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res));
+                //DM.Guardar(serial1, modelo, DateTime.Now, false, false, ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion,
+                //    false, -1, -1, false, ResultadosE1[5].OKNG, ResultadosE1[5].Calificacion, ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
+                //    ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res), ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res));
                 Com.E1_3Pass(true);
                 EsperarTaponE1.WaitOne();
             }
@@ -230,7 +247,7 @@ namespace Final_Inspection_Machine_v3._0
                 ResultadosE1[3].Calificacion = 0;
             }
 
-            DM.Guardar(serial1, DateTime.Now, false, !ResultadosE1[3].OKNG, ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
+            DM.Guardar(serial1, DateTime.Now, false, Fail[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
 
             #endregion
 
@@ -257,7 +274,6 @@ namespace Final_Inspection_Machine_v3._0
             else
             {
                 Dispatcher.Invoke(() => EtiquetaBI1.OK(false));
-                //db.Guardar(serial1, modelo, DateTime.Now, false);
                 Fail[0] = true;
                 Pass[0] = false;
             }
@@ -327,6 +343,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             else
             {
+                ResultadosE2[1].Res = "-1";
                 Dispatcher.Invoke(() => SentidoBI2.OK(false));
                 Fail[1] = true;
             }
@@ -349,6 +366,7 @@ namespace Final_Inspection_Machine_v3._0
                 }
                 else
                 {
+                    ResultadosE2[2].Res = "-1";
                     Dispatcher.Invoke(() => NutBI2.OK(false));
                     Fail[1] = true;
                     ResultadosE2[2].OKNG = false;
@@ -356,6 +374,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             else
             {
+                ResultadosE2[2].Res = "-1";
                 Dispatcher.Invoke(() => NutBI2.OK(false));
                 Fail[1] = true;
             }
@@ -363,56 +382,50 @@ namespace Final_Inspection_Machine_v3._0
 
             //PilotBracket
             #region
-            if (Com.PilotBracket())
+
+
+            ResultadosE2[5].Programa = Com.PilotBracketN2();
+            ResultadosE2[5].Res = DM.PilotBracketNombre(ResultadosE2[5].Programa);
+
+            if (Com.PilotBracket2())
             {
-                if (Com.PilotBracket2())
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI2.OK(true));
-                    ResultadosE2[5].OKNG = true;
-                }
-                else
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI2.OK(false));
-                    ResultadosE2[5].OKNG = false;
-                    //Fail[1] = true;
-                }
+                Dispatcher.Invoke(() => PilotBracketBI2.OK(true));
+                ResultadosE2[5].OKNG = true;
             }
             else
             {
-                if (Com.PilotBracket2())
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI2.OK(false));
-                    ResultadosE2[5].OKNG = false;
-                    //Fail[1] = true;
-                }
-                else
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI2.OK(true));
-                    //Dispatcher.Invoke(() => PilotBracketBI2.IndicatorText.Text = "NA");
-                    ResultadosE2[5].OKNG = true;
-                }
-                ResultadosE2[5].Res = "SinPB";
+                Dispatcher.Invoke(() => PilotBracketBI2.OK(false));
+                ResultadosE2[5].OKNG = false;
+                //Fail[1] = true;
             }
             #endregion
 
             await Orifice2;
 
-            serial2 = GenerarSerial(modelo, 2, Contador2);
+            serial2 = GenerarSerial(modelo, E2, Contador2);
+
+            DM.Guardar(serial2, modelo, DateTime.Now, false, Fail[1],
+                /*Rosca*/ ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion, /*Crack*/ false, -1, -1,
+                /*Resorte*/ false,
+                /*PilotBracket*/ ResultadosE2[5].OKNG, ResultadosE2[5].Programa,
+                /*Largo*/  ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
+                /*Sentido*/ ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res),
+                /*NUT*/ ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, int.Parse(ResultadosE2[2].Res));
 
             if (Fail[1])
             {
-                DM.Guardar(serial2, modelo, DateTime.Now, false, true, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
-                    false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
-                    ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion,-1, ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, -1);
+                //DM.Guardar(serial2, modelo, DateTime.Now, false, true, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
+                //    false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
+                //    ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion,-1, ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, -1);
                 Thread.Sleep(500);
                 Estacion2.Abort();
 
             }
             else
             {
-                DM.Guardar(serial2, modelo, DateTime.Now, false, false, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
-                    false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
-                    ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res), ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, int.Parse(ResultadosE2[2].Res));
+                //DM.Guardar(serial2, modelo, DateTime.Now, false, false, ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion,
+                //    false, -1, -1, false, ResultadosE2[5].OKNG, ResultadosE2[5].Calificacion, ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
+                //    ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res), ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, int.Parse(ResultadosE2[2].Res));
                 Com.E2_3Pass(true);
                 EsperarTaponE2.WaitOne();
             }
@@ -426,7 +439,6 @@ namespace Final_Inspection_Machine_v3._0
             {
                 Dispatcher.Invoke(() => TaponBI2.OK(true));
                 Com.E2_TAPON_COLOCADO(true);
-                Thread.Sleep(350);
                 etiquetadora.GenerarEtiqueta(serial2);
             }
             else
@@ -437,8 +449,9 @@ namespace Final_Inspection_Machine_v3._0
             }
 
             //Arreglar
-            Thread.Sleep(100);
-            DM.Guardar(serial2, DateTime.Now, false, !ResultadosE2[3].OKNG, ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, false, -1);
+            //Thread.Sleep(100);
+            //Creo que ya se arreglo
+            DM.Guardar(serial2, DateTime.Now, false, Fail[1], ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, false, -1);
 
             #endregion
 
@@ -466,7 +479,6 @@ namespace Final_Inspection_Machine_v3._0
             else
             {
                 Dispatcher.Invoke(() => EtiquetaBI2.OK(false));
-                //db.Guardar(serial2, modelo, DateTime.Now, false);
                 Fail[1] = true;
                 Pass[1] = false;
             }
