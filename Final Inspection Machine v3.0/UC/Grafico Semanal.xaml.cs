@@ -143,24 +143,24 @@ namespace Final_Inspection_Machine_v3._0.UC
                 barMalas[i].LabelOffset = -22;
                 barMalas[i].Value = barBuenas[i].Value + barMalas[i].Value;
 
-                if (barMalas[i].Value < 300)
-                {
-                    barMalas[i].LabelOffset = -22 + (17 - (float)(barMalas[i].Value/17));
-                }
+                //if (barMalas[i].Value < 300)
+                //{
+                //    barMalas[i].LabelOffset = -22 + (17 - (float)(barMalas[i].Value/17));
+                //}
 
-                if (barBuenas[i].Value < 300)
-                {
-                    barBuenas[i].LabelOffset = -22 + (17 - (float)(barBuenas[i].Value/17));
-                    if (barMalas[i].Value < 300)
-                    {
-                        barMalas[i].LabelOffset = (barMalas[i].LabelOffset/17) + 17;
-                    }
-                    else
-                    {
-                        barMalas[i].LabelOffset = (barMalas[i].LabelOffset/17) + 17 - 22;
-                    }
+                //if (barBuenas[i].Value < 300)
+                //{
+                //    barBuenas[i].LabelOffset = -22 + (17 - (float)(barBuenas[i].Value/17));
+                //    if (barMalas[i].Value < 300)
+                //    {
+                //        barMalas[i].LabelOffset = (barMalas[i].LabelOffset/17) + 17;
+                //    }
+                //    else
+                //    {
+                //        barMalas[i].LabelOffset = (barMalas[i].LabelOffset/17) + 17 - 22;
+                //    }
 
-                }
+                //}
 
                 ticks[i] = new Tick(i, spanishCulture.DateTimeFormat.GetDayName(s).ToUpper() + " " + Produccion.Rows[i]["fecha_formateada"].ToString());
 
@@ -197,6 +197,10 @@ namespace Final_Inspection_Machine_v3._0.UC
             line.LinePattern = LinePattern.Dashed;
             var line2 = Plot.Plot.Add.Line(-.5, 1750, 24.5, 1750);
             line2.LinePattern = LinePattern.Dashed;
+            var line3 = Plot.Plot.Add.Line(-.5, 4300, 24.5, 4300);
+            line3.LinePattern = LinePattern.Dashed;
+            var line4 = Plot.Plot.Add.Line(-.5, 3500, 24.5, 3500);
+            line4.LinePattern = LinePattern.Dashed;
 
 
             Plot.Plot.Axes.SetLimits(-0.5, 6.5, 0, 6000);
@@ -324,6 +328,10 @@ namespace Final_Inspection_Machine_v3._0.UC
             line.LinePattern = LinePattern.Dashed;
             var line2 = Plot.Plot.Add.Line(-.5, 1750, 24.5, 1750);
             line2.LinePattern = LinePattern.Dashed;
+            var line3 = Plot.Plot.Add.Line(-.5, 4300, 24.5, 4300);
+            line3.LinePattern = LinePattern.Dashed;
+            var line4 = Plot.Plot.Add.Line(-.5, 3500, 24.5, 3500);
+            line4.LinePattern = LinePattern.Dashed;
 
             Plot.Refresh();
 

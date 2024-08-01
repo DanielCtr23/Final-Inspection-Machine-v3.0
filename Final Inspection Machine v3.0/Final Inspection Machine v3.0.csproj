@@ -89,7 +89,7 @@
   <ItemGroup>
     <Reference Include="IV3-Keyence, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\IV3-Keyence1\bin\Release\IV3-Keyence.dll</HintPath>
+      <HintPath>E:\danie\source\Repos\IV3-Keyence\bin\Release\IV3-Keyence.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
@@ -182,6 +182,9 @@
     <Compile Include="UC\Grafico Semanal.xaml.cs">
       <DependentUpon>Grafico Semanal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UC\GraficoTabla.xaml.cs">
+      <DependentUpon>GraficoTabla.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UC\Indicador.xaml.cs">
       <DependentUpon>Indicador.xaml</DependentUpon>
     </Compile>
@@ -252,6 +255,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UC\Grafico Semanal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\GraficoTabla.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

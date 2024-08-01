@@ -43,6 +43,26 @@ namespace Final_Inspection_Machine_v3._0.UC
             {
                 Modelos();
             }
+
+            ScottPlot.AxisRules.MaximumSpan rule1 = new ScottPlot.AxisRules.MaximumSpan(
+            xAxis: Plot.Plot.Axes.Bottom,
+            yAxis: Plot.Plot.Axes.Left,
+            xSpan: 15,
+            ySpan: 7000);
+            Plot.Plot.Axes.Rules.Add(rule1);
+
+
+            ScottPlot.AxisRules.LockedBottom bottom = new ScottPlot.AxisRules.LockedBottom(Plot.Plot.Axes.Left, 0);
+            ScottPlot.AxisRules.LockedTop top = new ScottPlot.AxisRules.LockedTop(Plot.Plot.Axes.Left, 7000);
+            Plot.Plot.Axes.Rules.Add(bottom);
+            Plot.Plot.Axes.Rules.Add(top);
+
+            ScottPlot.AxisRules.MaximumBoundary boundary =
+                new ScottPlot.AxisRules.MaximumBoundary(Plot.Plot.Axes.Bottom, Plot.Plot.Axes.Left, limits: new AxisLimits(-0.5, dias - 0.5, 0, 7000));
+
+            Plot.Plot.Axes.Rules.Add(boundary);
+
+            Plot.Refresh();
         }
 
         //public void Actualizar()
@@ -190,29 +210,6 @@ namespace Final_Inspection_Machine_v3._0.UC
             var line = Plot.Plot.Add.Line(-.5, 200, 12.5, 200);
             line.LinePattern = LinePattern.Dashed;
 
-            ScottPlot.Control.Interaction interaction = new ScottPlot.Control.Interaction(Plot);
-            ScottPlot.AxisRules.MaximumSpan rule1 = new ScottPlot.AxisRules.MaximumSpan(
-            xAxis: Plot.Plot.Axes.Bottom,
-            yAxis: Plot.Plot.Axes.Left,
-            xSpan: 15,
-            ySpan: 7000);
-            Plot.Plot.Axes.Rules.Add(rule1);
-            ScottPlot.AxisRules.MinimumSpan rule2 = new ScottPlot.AxisRules.MinimumSpan(
-            xAxis: Plot.Plot.Axes.Bottom,
-            yAxis: Plot.Plot.Axes.Left,
-            xSpan: 10,
-            ySpan: 4000);
-            Plot.Plot.Axes.Rules.Add(rule2);
-
-            ScottPlot.AxisRules.LockedBottom bottom = new ScottPlot.AxisRules.LockedBottom(Plot.Plot.Axes.Left, 0);
-            Plot.Plot.Axes.Rules.Add(bottom);
-
-            ScottPlot.AxisRules.MaximumBoundary boundary =
-                new ScottPlot.AxisRules.MaximumBoundary(Plot.Plot.Axes.Bottom, Plot.Plot.Axes.Left, limits: new AxisLimits(-0.5, Produccion.Rows.Count - 0.5, 0, 5000));
-
-            Plot.Plot.Axes.Rules.Add(boundary);
-
-            Plot.Refresh();
         }
 
         public void Modelos()
@@ -295,30 +292,6 @@ namespace Final_Inspection_Machine_v3._0.UC
             Plot.Plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(ticks);
             Plot.Plot.Axes.Bottom.MajorTickStyle.Length = 0;
             Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
-
-            ScottPlot.Control.Interaction interaction = new ScottPlot.Control.Interaction(Plot);
-            ScottPlot.AxisRules.MaximumSpan rule1 = new ScottPlot.AxisRules.MaximumSpan(
-            xAxis: Plot.Plot.Axes.Bottom,
-            yAxis: Plot.Plot.Axes.Left,
-            xSpan: 20,
-            ySpan: 7000);
-            Plot.Plot.Axes.Rules.Add(rule1);
-            ScottPlot.AxisRules.MinimumSpan rule2 = new ScottPlot.AxisRules.MinimumSpan(
-            xAxis: Plot.Plot.Axes.Bottom,
-            yAxis: Plot.Plot.Axes.Left,
-            xSpan: 10,
-            ySpan: 2000);
-            Plot.Plot.Axes.Rules.Add(rule2);
-
-            ScottPlot.AxisRules.LockedBottom bottom = new ScottPlot.AxisRules.LockedBottom(Plot.Plot.Axes.Left, 0);
-            Plot.Plot.Axes.Rules.Add(bottom);
-
-            ScottPlot.AxisRules.MaximumBoundary boundary =
-                new ScottPlot.AxisRules.MaximumBoundary(Plot.Plot.Axes.Bottom, Plot.Plot.Axes.Left, limits: new AxisLimits(-0.5, dias - 0.5, 1, 7000));
-
-            Plot.Plot.Axes.Rules.Add(boundary);
-
-            Plot.Refresh();
         }
 
     }

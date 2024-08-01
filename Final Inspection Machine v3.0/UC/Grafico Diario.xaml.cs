@@ -166,6 +166,8 @@ namespace Final_Inspection_Machine_v3._0.UC
             Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
             var line = Plot.Plot.Add.Line(-.5, 200, 24.5, 200);
             line.LinePattern = LinePattern.Dashed;
+            var line2 = Plot.Plot.Add.Line(16.5, 0, 16.5, 500);
+            line2.LinePattern = LinePattern.Solid;
 
             Plot.Refresh();
 
@@ -279,6 +281,8 @@ namespace Final_Inspection_Machine_v3._0.UC
             Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
             var line = Plot.Plot.Add.Line(-.5, 200, 24.5, 200);
             line.LinePattern = LinePattern.Dashed;
+            var line2 = Plot.Plot.Add.Line(16.5, 0, 16.5, 500);
+            line2.LinePattern = LinePattern.Solid;
 
             Plot.Refresh();
 

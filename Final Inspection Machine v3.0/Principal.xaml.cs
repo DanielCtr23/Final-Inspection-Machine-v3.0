@@ -43,8 +43,6 @@ namespace Final_Inspection_Machine_v3._0
                 {
 
                     inspeccion_CL2 = new InspeccionCL2();
-                    inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
-                    inspeccion_CL2.Closed += Inspeccion_CL2_Closed;
                 }
                 catch (Exception ex)
                 {
@@ -56,8 +54,6 @@ namespace Final_Inspection_Machine_v3._0
                 try
                 {
                     inspeccion_Micro800 = new InspeccionMicro800();
-                    inspeccion_Micro800.IsVisibleChanged += Inspeccion_Micro800_IsVisibleChanged;
-                    inspeccion_Micro800.Closed += Inspeccion_Micro800_Closed;
                 }
                 catch (Exception ex)
                 {
@@ -73,6 +69,9 @@ namespace Final_Inspection_Machine_v3._0
             {
                 try
                 {
+                    inspeccion_CL2.Inicializar();
+                    inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
+                    inspeccion_CL2.Closed += Inspeccion_CL2_Closed;
                     inspeccion_CL2.Show();
                     this.Hide();
                 }
@@ -86,7 +85,10 @@ namespace Final_Inspection_Machine_v3._0
             {
                 try
                 {
+                    //inspeccion_Micro800.Inicializar();
                     inspeccion_Micro800.Show();
+                    inspeccion_Micro800.IsVisibleChanged += Inspeccion_Micro800_IsVisibleChanged;
+                    inspeccion_Micro800.Closed += Inspeccion_Micro800_Closed;
                     this.Hide();
                 }
                 catch (Exception)

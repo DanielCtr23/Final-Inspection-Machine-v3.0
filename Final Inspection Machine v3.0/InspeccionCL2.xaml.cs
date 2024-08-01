@@ -40,6 +40,11 @@ namespace Final_Inspection_Machine_v3._0
         public InspeccionCL2()
         {
             InitializeComponent();
+
+        }
+
+        public void Inicializar()
+        {
             try
             {
                 InicializarPLC();
@@ -52,8 +57,8 @@ namespace Final_Inspection_Machine_v3._0
 
             E1 = DM.Estacion(1);
             E2 = DM.Estacion(2);
-
         }
+
 
         private async void ShowLoadingAndInitializeAsync()
         {
