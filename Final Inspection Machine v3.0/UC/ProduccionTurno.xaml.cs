@@ -25,6 +25,11 @@ namespace Final_Inspection_Machine_v3._0.UC
         //DB db = new DB();
         //DataTable produccion;
         DataManager DM = new DataManager();
+        int Agregado = 0;
+        bool Ts;
+        double SinF = 0;
+        double SinI = 0;
+        bool T;
         public ProduccionTurno()
         {
             InitializeComponent();
@@ -41,13 +46,14 @@ namespace Final_Inspection_Machine_v3._0.UC
         {
             ProduccionPlot.Reset();
             DateTime Inicio, Fin;
-            
+            T = TE;
             if (TE)
             {
                 if (DateTime.Now.Hour >=7 && DateTime.Now.Hour < 19)
                 {
                     Inicio = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 0, 0);
                     Fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 59, 59);
+                    
                 }
                 else if (DateTime.Now.Hour >= 19)
                 {
@@ -59,6 +65,9 @@ namespace Final_Inspection_Machine_v3._0.UC
                     Inicio = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 19, 0, 0).AddDays(-1);
                     Fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 59, 59);
                 }
+
+                Inicio = Inicio.AddHours(Agregado);
+                Fin = Fin.AddHours(Agregado);
             }
             else
             {
@@ -70,14 +79,28 @@ namespace Final_Inspection_Machine_v3._0.UC
                 else if ((DateTime.Now.Hour == 16 && DateTime.Now.Minute >= 36) || DateTime.Now.Hour > 16)
                 {
                     Inicio = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 16, 36, 0);
-                    Fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 1, 30, 00).AddDays(1);
+                    Fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 1, 29, 59).AddDays(1);
                 }
                 else
                 {
                     Inicio = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 16, 36, 0).AddDays(-1);
-                    Fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 1, 30, 00);
+                    Fin = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 1, 29, 59);
                 }
+
+                Inicio = Inicio.AddHours(SinI);
+                Fin = Fin.AddHours(SinF);
+
             }
+
+            if (Inicio.Hour >= 7 && (Inicio.Hour<=15 || Inicio.Hour == 16 && Inicio.Minute <36) )
+            {
+                Ts = true;
+            }
+            else
+            {
+                Ts = false;
+            }
+
 
             DataTable dt = DM.Produccion(Inicio, Fin, "H");
             int Horas = dt.Rows.Count;
@@ -135,6 +158,90 @@ namespace Final_Inspection_Machine_v3._0.UC
             ScottPlot.Control.Interaction interaction = new ScottPlot.Control.Interaction(ProduccionPlot);
             interaction.Disable();
             ProduccionPlot.Interaction = interaction;
+            Fecha.Text = Inicio.ToString() + " - " + Fin.ToString();
+        }
+
+        private void AnteriorBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (T)
+            {
+                SinF = 0;
+                SinI = 0;
+                Agregado = Agregado - 12;
+                if (Agregado <= -36)
+                {
+                    AnteriorBtn.IsEnabled = false;
+                }
+                if(Agregado <= 24)
+                {
+                    SiguienteBtn.IsEnabled = true;
+                }
+            }
+            else
+            {
+                Agregado = Agregado - 7;
+                if (Agregado <= -21)
+                {
+                    AnteriorBtn.IsEnabled = false;
+                }
+                if (Agregado <= 14)
+                {
+                    SiguienteBtn.IsEnabled = true;
+                }
+                if (Ts)
+                {
+                    SinI = SinI -14.4;
+                    SinF = SinF -15.1;
+                }
+                else
+                {
+                    SinI = SinI-9.6;
+                    SinF = SinF-8.9;
+                }
+            }
+
+            Refresh(T);
+        }
+
+        private void SiguienteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (T)
+            {
+                SinF = 0;
+                SinI = 0;
+                Agregado = Agregado + 12;
+                if (Agregado >= 36)
+                {
+                    SiguienteBtn.IsEnabled = false;
+                }
+                if (Agregado >= -24)
+                {
+                    AnteriorBtn.IsEnabled = true;
+                }
+            }
+            else
+            {
+                Agregado = Agregado + 7;
+                if (Agregado >= 21)
+                {
+                    SiguienteBtn.IsEnabled = false;
+                }
+                if (Agregado >= -14)
+                {
+                    AnteriorBtn.IsEnabled = true;
+                }
+                if (Ts)
+                {
+                    SinI = SinI+9.6;
+                    SinF = SinF+8.9;
+                }
+                else
+                {
+                    SinI = SinI+14.4;
+                    SinF = SinF+15.1;
+                }
+            }
+            Refresh(T);
         }
     }
 }

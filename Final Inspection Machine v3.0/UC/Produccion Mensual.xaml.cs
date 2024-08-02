@@ -1,4 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
+using Mysqlx.Crud;
 using Org.BouncyCastle.Crypto.Engines;
 using ScottPlot;
 using ScottPlot.Plottables;
@@ -28,9 +29,13 @@ namespace Final_Inspection_Machine_v3._0.UC
     {
 
         DataManager DM = new DataManager();
-        ScottPlot.Plottables.Text MyHighlightText;
+        ScottPlot.Plottables.Text MyHighlightText = new Text();
         string[] callout = new string[31];
         int d;
+        int s; 
+        private double highlightX = double.NaN;
+        private double highlightY = double.NaN;
+
         public Produccion_Mensual()
         {
             InitializeComponent();
@@ -39,6 +44,15 @@ namespace Final_Inspection_Machine_v3._0.UC
 
         public void Actualizar(bool op)
         {
+            if (!double.IsNaN(MyHighlightText.Location.X) && !double.IsNaN(MyHighlightText.Location.Y))
+            {
+                highlightX = MyHighlightText.Location.X;
+                highlightY = MyHighlightText.Location.Y;
+            }
+            var left = Plot.Plot.Axes.Left.Min;
+            var right = Plot.Plot.Axes.Left.Max;
+            var b = Plot.Plot.Axes.Bottom.Min;
+            var t = Plot.Plot.Axes.Bottom.Max;
             if (op)
             {
                 try
@@ -70,51 +84,66 @@ namespace Final_Inspection_Machine_v3._0.UC
             yAxis: Plot.Plot.Axes.Left,
             xSpan: 15,
             ySpan: 7000);
-            Plot.Plot.Axes.Rules.Add(rule1);
 
 
             ScottPlot.AxisRules.LockedBottom bottom = new ScottPlot.AxisRules.LockedBottom(Plot.Plot.Axes.Left, 0);
             ScottPlot.AxisRules.LockedTop top = new ScottPlot.AxisRules.LockedTop(Plot.Plot.Axes.Left, 7000);
-            Plot.Plot.Axes.Rules.Add(bottom);
-            Plot.Plot.Axes.Rules.Add(top);
 
             ScottPlot.AxisRules.MaximumBoundary boundary =
-                new ScottPlot.AxisRules.MaximumBoundary(Plot.Plot.Axes.Bottom, Plot.Plot.Axes.Left, limits: new AxisLimits(-1, d, 0, 7000));
+                new ScottPlot.AxisRules.MaximumBoundary(Plot.Plot.Axes.Bottom, Plot.Plot.Axes.Left, limits: new AxisLimits(-.4, d-.6, 0, 7000));
 
+            Plot.Plot.Axes.Rules.Add(rule1);
+            Plot.Plot.Axes.Rules.Add(bottom);
+            Plot.Plot.Axes.Rules.Add(top);
             Plot.Plot.Axes.Rules.Add(boundary);
 
-            Plot.Refresh();
+            if (s != d)
+            {
+                s = d;
+
+            }
+
+
 
             MyHighlightText = Plot.Plot.Add.Text("", 0, 0);
             MyHighlightText.LabelAlignment = Alignment.LowerLeft;
             MyHighlightText.LabelBold = true;
             MyHighlightText.OffsetX = -10;
             MyHighlightText.OffsetY = 0;
-            Plot.MouseMove += Plot_MouseMove;
+
+            if (!double.IsNaN(highlightX) && !double.IsNaN(highlightY))
+            {
+                MyHighlightText.Location = new Coordinates(highlightX, highlightY);
+                MyHighlightText.IsVisible = true;
+                MyHighlightText.LabelText = GetCalloutText((int)highlightX);
+            }
+
+            Plot.MouseMove += Plot_MouseMove; 
+            //Plot.Plot.Axes.SetLimits(left ,right, b, t);
+            //Plot.Refresh();
+        }
+
+        private string GetCalloutText(int index)
+        {
+            if (index < d && index >= 0)
+            {
+                return callout[index];
+            }
+            return "";
         }
 
         private void Plot_MouseMove(object sender, MouseEventArgs e)
         {
+            Pixel mousePixel = new Pixel(e.GetPosition(Plot).X, e.GetPosition(Plot).Y);
+            Coordinates mouseLocation = Plot.Plot.GetCoordinates(mousePixel);
+            DataPoint point = new DataPoint(mouseLocation.X, mouseLocation.Y, 0);
             try
             {
-                Pixel mousePixel = new Pixel(e.GetPosition(Plot).X, e.GetPosition(Plot).Y);
-                Coordinates mouseLocation = Plot.Plot.GetCoordinates(mousePixel);
-
-                DataPoint point = new DataPoint(mouseLocation.X, mouseLocation.Y, 0);
-
-                if ((mouseLocation.X - (int)mouseLocation.X) > -.2 && (int)mouseLocation.X <d-1.5)
+                if ((mouseLocation.X - (int)mouseLocation.X) > -.5 && (int)mouseLocation.X < d - .8)
                 {
                     MyHighlightText.IsVisible = true;
                     MyHighlightText.Location = point.Coordinates;
-                    //MessageBox.Show(callout[1]);
-                    if (callout[((int)(point.X + .5))] != null)
-                    {
-                        MyHighlightText.LabelText = callout[((int)(point.X + .5))];
-                    }
-                    else
-                    {
-                        MyHighlightText.LabelText = "";
-                    }
+                    MyHighlightText.LabelText = GetCalloutText((int)(point.X + .5));
                     MyHighlightText.LabelFontColor = ScottPlot.Colors.White;
                     MyHighlightText.LabelFontSize = 14;
 
@@ -128,7 +157,6 @@ namespace Final_Inspection_Machine_v3._0.UC
                     }
 
                     Plot.Refresh();
-
                 }
                 else
                 {
@@ -138,11 +166,8 @@ namespace Final_Inspection_Machine_v3._0.UC
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + " " + ((int)(point.X + .5)).ToString());
             }
-
-
-
         }
 
         //public void Actualizar()
@@ -219,10 +244,11 @@ namespace Final_Inspection_Machine_v3._0.UC
             {
 
                 Plot.Reset();
+                
                 CultureInfo spanishCulture = new CultureInfo("es-MX");
                 DateTime Inicio; DateTime Fin;
 
-                Inicio = DateTime.Today.AddDays(-DateTime.Today.Day + 1);
+                Inicio = DateTime.Today.AddDays(-DateTime.Today.Day + 1).AddHours(+7);
                 Fin = Inicio.AddMonths(1).AddSeconds(-1);
 
 
@@ -249,7 +275,9 @@ namespace Final_Inspection_Machine_v3._0.UC
 
 
                     ticks[i] = new Tick(i, Produccion.Rows[i]["fecha_formateada"].ToString());
-                    callout[i] = Produccion.Rows[i]["fecha_formateada"].ToString();
+                    callout[i] = Produccion.Rows[i]["fecha_formateada"].ToString() +"\n";
+                    callout[i] = callout[i] + "Buenas:" + Produccion.Rows[i]["OK"].ToString()+"\n";
+                    callout[i] = callout[i] + "Buenas:" + Produccion.Rows[i]["NOK"].ToString() + "\n";
                     //MessageBox.Show(callout[i]);
                 }
 
@@ -257,6 +285,7 @@ namespace Final_Inspection_Machine_v3._0.UC
                 var Barplot = Plot.Plot.Add.Bars(barMalas);
                 var BarPlot2 = Plot.Plot.Add.Bars(barBuenas);
                 Plot.Plot.HideGrid();
+                
 
                 Barplot.ValueLabelStyle.ForeColor = ScottPlot.Colors.White;
                 Barplot.ValueLabelStyle.FontSize = 22;
@@ -275,8 +304,14 @@ namespace Final_Inspection_Machine_v3._0.UC
                 Plot.Plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(ticks);
                 Plot.Plot.Axes.Bottom.MajorTickStyle.Length = 0;
                 Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
-                var line = Plot.Plot.Add.Line(-.5, 200, 12.5, 200);
+                var line = Plot.Plot.Add.Line(-.5, 2150, d+.5, 2150);
                 line.LinePattern = LinePattern.Dashed;
+                var line2 = Plot.Plot.Add.Line(-.5, 1750, d+.5, 1750);
+                line2.LinePattern = LinePattern.Dashed;
+                var line3 = Plot.Plot.Add.Line(-.5, 4300, d+.5, 4300);
+                line3.LinePattern = LinePattern.Dashed;
+                var line4 = Plot.Plot.Add.Line(-.5, 3500, d+.5, 3500);
+                line4.LinePattern = LinePattern.Dashed;
             }
 
             catch (Exception ex)
@@ -343,7 +378,11 @@ namespace Final_Inspection_Machine_v3._0.UC
                     barplot[i] = Plot.Plot.Add.Bars(Cantidades[i]);
                     barplot[i].ValueLabelStyle.ForeColor = ScottPlot.Colors.White;
                     barplot[i].ValueLabelStyle.FontSize = 18;
-                    callout[i] = ticks[i].Label;
+                    callout[i] = ticks[i].Label + "\n";
+                    for (int j = 0; j < modelos; j++)
+                    {
+                        callout[i] = callout[i] + Produccion.Rows[j]["Modelo"].ToString() + ":" + int.Parse(Produccion.Rows[(i * modelos) + j]["OK"].ToString()) + "\n";
+                    }
                 }
 
                 for (int i = 0; i < modelos; i++)
@@ -370,6 +409,14 @@ namespace Final_Inspection_Machine_v3._0.UC
                 Plot.Plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(ticks);
                 Plot.Plot.Axes.Bottom.MajorTickStyle.Length = 0;
                 Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
+                var line = Plot.Plot.Add.Line(-.5, 2150, d + .5, 2150);
+                line.LinePattern = LinePattern.Dashed;
+                var line2 = Plot.Plot.Add.Line(-.5, 1750, d + .5, 1750);
+                line2.LinePattern = LinePattern.Dashed;
+                var line3 = Plot.Plot.Add.Line(-.5, 4300, d + .5, 4300);
+                line3.LinePattern = LinePattern.Dashed;
+                var line4 = Plot.Plot.Add.Line(-.5, 3500, d + .5, 3500);
+                line4.LinePattern = LinePattern.Dashed;
             }
 
             catch (Exception ex)

@@ -105,11 +105,11 @@ namespace Final_Inspection_Machine_v3._0.UC
 
             if ((int)DateTime.Today.DayOfWeek == 0)
             {
-                Inicio = DateTime.Today.AddDays(-6);
+                Inicio = DateTime.Today.AddDays(-6).AddHours(7);
             }
             else
             {
-                Inicio = DateTime.Today.AddDays(-((int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday));
+                Inicio = DateTime.Today.AddDays(-((int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday)).AddHours(7);
             }
 
              Fin = Inicio.AddDays(7);
@@ -222,11 +222,11 @@ namespace Final_Inspection_Machine_v3._0.UC
 
             if ((int)DateTime.Today.DayOfWeek == 0)
             {
-                Inicio = DateTime.Today.AddDays(-6);
+                Inicio = DateTime.Today.AddDays(-6).AddHours(7);
             }
             else
             {
-                Inicio = DateTime.Today.AddDays(-((int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday));
+                Inicio = DateTime.Today.AddDays(-((int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday)).AddHours(7);
             }
 
             Fin = Inicio.AddDays(7);

@@ -4,13 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:SP="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+             xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.UC"
              mc:Ignorable="d" 
              d:DesignHeight="470" d:DesignWidth="1740">
     <Viewbox>
         <StackPanel Background="#181818">
-            <TextBlock Text="PRODUCCIÓN POR HORA" HorizontalAlignment="Center" FontSize="46" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"/>
-            <SP:WpfPlot x:Name="ProduccionPlot" Height="320" Width="1410"  HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Foreground="White" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="PRODUCCIÓN POR HORA" HorizontalAlignment="Center" FontSize="46" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Grid.Column="1"/>
+                <Button x:Name="AnteriorBtn" Background="Transparent" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Click="AnteriorBtn_Click">
+                    <icons:FontAwesome Kind="CaretLeftSolid" Height="35" Width="35"/>
+                </Button>
+                <Button x:Name="SiguienteBtn" Background="Transparent" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Click="SiguienteBtn_Click">
+                    <icons:FontAwesome Kind="CaretRightSolid" Height="35" Width="35"/>
+                </Button>
+            </Grid>
+            <TextBlock x:Name="Fecha" HorizontalAlignment="Center" FontSize="14" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"/>
+            <SP:WpfPlot x:Name="ProduccionPlot" Height="300" Width="1410"  HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Foreground="White" />
         </StackPanel>
     </Viewbox>
 </UserControl>
