@@ -43,7 +43,7 @@ namespace Final_Inspection_Machine_v3._0
             Pass[0] = false;
             Fail[1] = false;
             Pass[1] = false;
-            Dispatcher.Invoke(new Action(() => HabilitarBotones(false)));
+            Dispatcher.InvokeAsync(new Action(() => HabilitarBotones(false)));
 
             EsperarEtiquetaE1 = new ManualResetEvent(false);
             EsperarEtiquetaE2 = new ManualResetEvent(false);
@@ -68,9 +68,13 @@ namespace Final_Inspection_Machine_v3._0
             Com.Terminar();
             Thread.Sleep(2500);
 
-            Dispatcher.Invoke(new Action(() => HabilitarBotones(true)));
-            Dispatcher.Invoke(LimpiarPantalla);
-            Dispatcher.Invoke(CargarContadores);
+            Dispatcher.InvokeAsync(new Action(() =>
+            {
+                HabilitarBotones(true);
+                LimpiarPantalla();
+                CargarContadores();
+            }
+            ));
         }
         private void HabilitarBotones(bool op)
         {
@@ -89,11 +93,11 @@ namespace Final_Inspection_Machine_v3._0
             ResultadosE1[0] = await Corrugado1.PruebaAsync(ResultadosE1[0]);
             if (ResultadosE1[0].OKNG && (ResultadosE1[0].Programa == 0))
             {
-                Dispatcher.Invoke(() => LargoBI1.OK(true));
+                Dispatcher.InvokeAsync(() => LargoBI1.OK(true));
             }
             else
             {
-                Dispatcher.Invoke(() => LargoBI1.OK(false));
+                Dispatcher.InvokeAsync(() => LargoBI1.OK(false));
                 Fail[0] = true;
             }
             #endregion
@@ -107,24 +111,24 @@ namespace Final_Inspection_Machine_v3._0
             {
                 if (sinsentido)
                 {
-                    Dispatcher.Invoke(() =>SentidoBI1.OK(true));
+                    Dispatcher.InvokeAsync(() =>SentidoBI1.OK(true));
                 }
                 else
                 {
                     if (ResultadosE1[1].Res == "00")
                     {
-                        Dispatcher.Invoke(() => SentidoBI1.OK(true));
+                        Dispatcher.InvokeAsync(() => SentidoBI1.OK(true));
                     }
                     else if (ResultadosE1[1].Res == "01")
                     {
-                        Dispatcher.Invoke(() => SentidoBI1.OK(false));
+                        Dispatcher.InvokeAsync(() => SentidoBI1.OK(false));
                         ResultadosE1[1].OKNG = false;
                     }
                 }
             }
             else
             {
-                Dispatcher.Invoke(() => SentidoBI1.OK(false));
+                Dispatcher.InvokeAsync(() => SentidoBI1.OK(false));
                 Fail[0] = true;
             }
             #endregion
@@ -138,56 +142,38 @@ namespace Final_Inspection_Machine_v3._0
             {
                 if (!nutrojo && (ResultadosE1[2].Res == "01"))
                 {
-                    Dispatcher.Invoke(() => NutBI1.OK(true));
+                    Dispatcher.InvokeAsync(() => NutBI1.OK(true));
                 }
                 else if (nutrojo && (ResultadosE1[2].Res == "00"))
                 {
-                    Dispatcher.Invoke(() => NutBI1.OK(true));
+                    Dispatcher.InvokeAsync(() => NutBI1.OK(true));
                 }
                 else
                 {
-                    Dispatcher.Invoke(() => NutBI1.OK(false));
+                    Dispatcher.InvokeAsync(() => NutBI1.OK(false));
                     Fail[0] = true;
                     ResultadosE1[2].OKNG = false;
                 }
             }
             else
             {
-                Dispatcher.Invoke(() => NutBI1.OK(false));
+                Dispatcher.InvokeAsync(() => NutBI1.OK(false));
                 Fail[0] = true;
             }
             #endregion
 
             //PilotBracket
             #region
-            if (Com.PilotBracket())
+            if (Com.PilotBracket1())
             {
-                if (Com.PilotBracket1())
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI1.OK(true));
-                    ResultadosE1[5].OKNG = true;
-                }
-                else
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI1.OK(false));
-                    ResultadosE1[5].OKNG = false;
-                    //Fail[0] = true;
-                }
+                Dispatcher.InvokeAsync(() => PilotBracketBI1.OK(true));
+                ResultadosE1[5].OKNG = true;
             }
             else
             {
-                if (Com.PilotBracket1())
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI1.OK(false));
-                    ResultadosE1[5].OKNG = false;
-                    //Fail[0] = true;
-                }
-                else
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI1.OK(true));
-                    ResultadosE1[5].OKNG = true;
-                }
-                ResultadosE1[5].Res = "SinPB";
+                Dispatcher.InvokeAsync(() => PilotBracketBI1.OK(false));
+                ResultadosE1[5].OKNG = false;
+                //Fail[0] = true;
             }
             #endregion
 
@@ -219,13 +205,13 @@ namespace Final_Inspection_Machine_v3._0
             ResultadosE1[3] = await Corrugado1.PruebaAsync(ResultadosE1[3]);
             if (ResultadosE1[3].OKNG)
             {
-                Dispatcher.Invoke(() => TaponBI1.OK(true));
-                Com.E1_TAPON_COLOCADO(true);
                 etiquetadora.GenerarEtiqueta(serial1);
+                Dispatcher.InvokeAsync(() => TaponBI1.OK(true));
+                Com.E1_TAPON_COLOCADO(true);
             }
             else
             {
-                Dispatcher.Invoke(() => TaponBI1.OK(false));
+                Dispatcher.InvokeAsync(() => TaponBI1.OK(false));
                 Fail[0] = true;
                 ResultadosE1[3].Calificacion = 0;
             }
@@ -251,12 +237,12 @@ namespace Final_Inspection_Machine_v3._0
             ResultadosE1[4] = await Corrugado1.PruebaAsync(ResultadosE1[4]);
             if (ResultadosE1[4].OKNG)
             {
-                Dispatcher.Invoke(() => EtiquetaBI1.OK(true));
+                Dispatcher.InvokeAsync(() => EtiquetaBI1.OK(true));
                 Pass[0] = true;
             }
             else
             {
-                Dispatcher.Invoke(() => EtiquetaBI1.OK(false));
+                Dispatcher.InvokeAsync(() => EtiquetaBI1.OK(false));
                 //db.Guardar(serial1, modelo, DateTime.Now, false);
                 Fail[0] = true;
                 Pass[0] = false;
@@ -272,11 +258,11 @@ namespace Final_Inspection_Machine_v3._0
             ResultadosOrifice1 = await Orifice11.PruebaAsync(ResultadosOrifice1);
             if (ResultadosOrifice1.OKNG)
             {
-                Dispatcher.Invoke(() => OrificeBI1.OK(true));
+                Dispatcher.InvokeAsync(() => OrificeBI1.OK(true));
             }
             else
             {
-                Dispatcher.Invoke(() => OrificeBI1.OK(false));
+                Dispatcher.InvokeAsync(() => OrificeBI1.OK(false));
                 Fail[0] = true;
             }
         }
@@ -291,12 +277,12 @@ namespace Final_Inspection_Machine_v3._0
             ResultadosE2[0] = await Corrugado2.PruebaAsync(ResultadosE2[0]);
             if (ResultadosE2[0].OKNG && (ResultadosE2[0].Programa == 0))
             {
-                Dispatcher.Invoke(() => LargoBI2.OK(true));
+                Dispatcher.InvokeAsync(() => LargoBI2.OK(true));
 
             }
             else
             {
-                Dispatcher.Invoke(() => LargoBI2.OK(false));
+                Dispatcher.InvokeAsync(() => LargoBI2.OK(false));
                 Fail[1] = true;
             }
             #endregion
@@ -310,24 +296,24 @@ namespace Final_Inspection_Machine_v3._0
             {
                 if (sinsentido)
                 {
-                    Dispatcher.Invoke(() => SentidoBI2.OK(true));
+                    Dispatcher.InvokeAsync(() => SentidoBI2.OK(true));
                 }
                 else
                 {
                     if (ResultadosE2[1].Res == "00")
                     {
-                        Dispatcher.Invoke(() => SentidoBI2.OK(true));
+                        Dispatcher.InvokeAsync(() => SentidoBI2.OK(true));
                     }
                     else if (ResultadosE2[1].Res == "01")
                     {
-                        Dispatcher.Invoke(() => SentidoBI2.OK(false));
+                        Dispatcher.InvokeAsync(() => SentidoBI2.OK(false));
                         ResultadosE2[1].OKNG = false;
                     }
                 }
             }
             else
             {
-                Dispatcher.Invoke(() => SentidoBI2.OK(false));
+                Dispatcher.InvokeAsync(() => SentidoBI2.OK(false));
                 Fail[1] = true;
             }
             #endregion
@@ -341,57 +327,39 @@ namespace Final_Inspection_Machine_v3._0
             {
                 if (!nutrojo && (ResultadosE2[2].Res == "00"))
                 {
-                    Dispatcher.Invoke(() => NutBI2.OK(true));
+                    Dispatcher.InvokeAsync(() => NutBI2.OK(true));
                 }
                 else if (nutrojo && (ResultadosE2[2].Res == "01"))
                 {
-                    Dispatcher.Invoke(() => NutBI2.OK(true));
+                    Dispatcher.InvokeAsync(() => NutBI2.OK(true));
                 }
                 else
                 {
-                    Dispatcher.Invoke(() => NutBI2.OK(false));
+                    Dispatcher.InvokeAsync(() => NutBI2.OK(false));
                     Fail[1] = true;
                     ResultadosE2[2].OKNG = false;
                 }
             }
             else
             {
-                Dispatcher.Invoke(() => NutBI2.OK(false));
+                Dispatcher.InvokeAsync(() => NutBI2.OK(false));
                 Fail[1] = true;
             }
             #endregion
 
             //PilotBracket
             #region
-            if (Com.PilotBracket())
+
+            if (Com.PilotBracket2())
             {
-                if (Com.PilotBracket2())
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI2.OK(true));
-                    ResultadosE2[5].OKNG = true;
-                }
-                else
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI2.OK(false));
-                    ResultadosE2[5].OKNG = false;
-                    //Fail[1] = true;
-                }
+                Dispatcher.InvokeAsync(() => PilotBracketBI2.OK(true));
+                ResultadosE2[5].OKNG = true;
             }
             else
             {
-                if (Com.PilotBracket2())
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI2.OK(false));
-                    ResultadosE2[5].OKNG = false;
-                    //Fail[1] = true;
-                }
-                else
-                {
-                    Dispatcher.Invoke(() => PilotBracketBI2.OK(true));
-                    //Dispatcher.Invoke(() => PilotBracketBI2.IndicatorText.Text = "NA");
-                    ResultadosE2[5].OKNG = true;
-                }
-                ResultadosE2[5].Res = "SinPB";
+                Dispatcher.InvokeAsync(() => PilotBracketBI2.OK(false));
+                ResultadosE2[5].OKNG = false;
+                //Fail[1] = true;
             }
             #endregion
 
@@ -424,14 +392,13 @@ namespace Final_Inspection_Machine_v3._0
             ResultadosE2[3] = await Corrugado2.PruebaAsync(ResultadosE2[3]);
             if (ResultadosE2[3].OKNG)
             {
-                Dispatcher.Invoke(() => TaponBI2.OK(true));
-                Com.E2_TAPON_COLOCADO(true);
-                Thread.Sleep(350);
                 etiquetadora.GenerarEtiqueta(serial2);
+                Dispatcher.InvokeAsync(() => TaponBI2.OK(true));
+                Com.E2_TAPON_COLOCADO(true);
             }
             else
             {
-                Dispatcher.Invoke(() => TaponBI2.OK(false));
+                Dispatcher.InvokeAsync(() => TaponBI2.OK(false));
                 Fail[1] = true;
                 ResultadosE2[3].Calificacion = 0;
             }
@@ -459,7 +426,7 @@ namespace Final_Inspection_Machine_v3._0
             ResultadosE2[4] = await Corrugado2.PruebaAsync(ResultadosE2[4]);
             if (ResultadosE2[4].OKNG)
             {
-                Dispatcher.Invoke(() => EtiquetaBI2.OK(true));
+                Dispatcher.InvokeAsync(() => EtiquetaBI2.OK(true));
                 Pass[1] = true;
                 
             }
