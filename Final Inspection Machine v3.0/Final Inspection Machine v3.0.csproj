@@ -71,8 +71,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>Final_Inspection_Machine_v3._0.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>7233866175EA325BDC859B9BB2F5CE8505A65611</ManifestCertificateThumbprint>
@@ -85,6 +84,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo %281%29.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="IV3-Keyence, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -176,6 +178,9 @@
     <Compile Include="UC\DetallePruebas.xaml.cs">
       <DependentUpon>DetallePruebas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UC\Grafico Anual.xaml.cs">
+      <DependentUpon>Grafico Anual.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UC\Grafico Diario.xaml.cs">
       <DependentUpon>Grafico Diario.xaml</DependentUpon>
     </Compile>
@@ -247,6 +252,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UC\DetallePruebas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\Grafico Anual.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -365,7 +374,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 y x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -374,6 +383,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Logo %281%29.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

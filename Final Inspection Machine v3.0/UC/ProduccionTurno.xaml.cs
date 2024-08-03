@@ -30,9 +30,11 @@ namespace Final_Inspection_Machine_v3._0.UC
         double SinF = 0;
         double SinI = 0;
         bool T;
+        
         public ProduccionTurno()
         {
             InitializeComponent();
+            SiguienteBtn.IsEnabled = false;
             Refresh(false);
         }
 
@@ -163,41 +165,24 @@ namespace Final_Inspection_Machine_v3._0.UC
 
         private void AnteriorBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (T)
+            Agregado = Agregado - 12;
+            if (Ts)
             {
-                SinF = 0;
-                SinI = 0;
-                Agregado = Agregado - 12;
-                if (Agregado <= -36)
-                {
-                    AnteriorBtn.IsEnabled = false;
-                }
-                if(Agregado <= 24)
-                {
-                    SiguienteBtn.IsEnabled = true;
-                }
+                SinI = SinI - 14.4;
+                SinF = SinF - 15.1;
             }
             else
             {
-                Agregado = Agregado - 7;
-                if (Agregado <= -21)
-                {
-                    AnteriorBtn.IsEnabled = false;
-                }
-                if (Agregado <= 14)
-                {
-                    SiguienteBtn.IsEnabled = true;
-                }
-                if (Ts)
-                {
-                    SinI = SinI -14.4;
-                    SinF = SinF -15.1;
-                }
-                else
-                {
-                    SinI = SinI-9.6;
-                    SinF = SinF-8.9;
-                }
+                SinI = SinI - 9.6;
+                SinF = SinF - 8.9;
+            }
+            if (Agregado <= -36)
+            {
+                AnteriorBtn.IsEnabled = false;
+            }
+            if (Agregado <= 24)
+            {
+                SiguienteBtn.IsEnabled = true;
             }
 
             Refresh(T);
@@ -205,43 +190,33 @@ namespace Final_Inspection_Machine_v3._0.UC
 
         private void SiguienteBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (T)
+            Agregado = Agregado + 12;
+            if (Ts)
             {
-                SinF = 0;
-                SinI = 0;
-                Agregado = Agregado + 12;
-                if (Agregado >= 36)
-                {
-                    SiguienteBtn.IsEnabled = false;
-                }
-                if (Agregado >= -24)
-                {
-                    AnteriorBtn.IsEnabled = true;
-                }
+                SinI = SinI + 9.6;
+                SinF = SinF + 8.9;
             }
             else
             {
-                Agregado = Agregado + 7;
-                if (Agregado >= 21)
-                {
-                    SiguienteBtn.IsEnabled = false;
-                }
-                if (Agregado >= -14)
-                {
-                    AnteriorBtn.IsEnabled = true;
-                }
-                if (Ts)
-                {
-                    SinI = SinI+9.6;
-                    SinF = SinF+8.9;
-                }
-                else
-                {
-                    SinI = SinI+14.4;
-                    SinF = SinF+15.1;
-                }
+                SinI = SinI + 14.4;
+                SinF = SinF + 15.1;
             }
+
+            if (Agregado >= 0)
+            {
+                SiguienteBtn.IsEnabled = false;
+            }
+            if (Agregado >= -24)
+            {
+                AnteriorBtn.IsEnabled = true;
+            }
+
             Refresh(T);
+        }
+
+        private void AnteriorBtn_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            
         }
     }
 }

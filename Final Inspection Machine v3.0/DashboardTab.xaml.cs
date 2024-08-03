@@ -72,15 +72,22 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Refresh()
         {
-            ProduccionActual.Refresh();
-            ProduccionTurno.Refresh(TE);
-            ModelosTurno.Refresh(TE);
-            GraficaTurno.Refresh(TE);
-            TiemposTurno.Refresh(TE);
-            GraficoDiario.Actualizar(OKNOK);
-            GraficoSemanal.Actualizar(OKNOK);
-            GraficoMensual.Actualizar(OKNOK);
-            
+            try
+            {
+                ProduccionActual.Refresh();
+                ProduccionTurno.Refresh(TE);
+                ModelosTurno.Refresh(TE);
+                GraficaTurno.Refresh(TE);
+                TiemposTurno.Refresh(TE);
+                GraficoDiario.Actualizar(OKNOK);
+                GraficoSemanal.Actualizar(OKNOK);
+                GraficoMensual.Actualizar(OKNOK);
+                GraficoAnual.Actualizar(OKNOK);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
         private void CerrarBtn_Click(object sender, RoutedEventArgs e)
@@ -98,6 +105,11 @@ namespace Final_Inspection_Machine_v3._0
         {
             OKNOK = true;
             Refresh();
+        }
+
+        private void ScrollViewer_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+
         }
     }
 

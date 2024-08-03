@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Final_Inspection_Machine_v3._0.UC.Produccion_Mensual"
+﻿<UserControl x:Class="Final_Inspection_Machine_v3._0.UC.Grafico_Anual"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,10 +6,10 @@
              xmlns:SP="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
              xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.UC"
              mc:Ignorable="d" 
-             d:DesignHeight="965" d:DesignWidth="1690">
+                          d:DesignHeight="1165" d:DesignWidth="1690">
     <StackPanel Background="#181818">
-        <TextBlock Text="PRODUCCIÓN MENSUAL" FontSize="48" Foreground="White" HorizontalAlignment="Center"/>
-        <SP:WpfPlot x:Name="Plot" Height="800" Margin="3"/>
-        <TextBlock x:Name="LapsoTB" Text="01 - 31 JUNIO" FontSize="24" Foreground="White" HorizontalAlignment="Center" />
+        <TextBlock Text="PRODUCCIÓN ANUAL" FontSize="48" Foreground="White" HorizontalAlignment="Center"/>
+        <SP:WpfPlot x:Name="Plot" Height="1000" Margin="3"/>
+        <TextBlock x:Name="LapsoTB" Text="" FontSize="24" Foreground="White" HorizontalAlignment="Center" />
     </StackPanel>
 </UserControl>

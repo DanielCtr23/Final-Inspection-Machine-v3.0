@@ -8,6 +8,16 @@
              xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0.UC"
              mc:Ignorable="d" 
              d:DesignHeight="470" d:DesignWidth="1740">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Viewbox>
         <StackPanel Background="#181818">
             <Grid>
@@ -17,10 +27,10 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="PRODUCCIÓN POR HORA" HorizontalAlignment="Center" FontSize="46" Foreground="White" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Grid.Column="1"/>
-                <Button x:Name="AnteriorBtn" Background="Transparent" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Click="AnteriorBtn_Click">
+                <Button x:Name="AnteriorBtn" Background="Transparent" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Click="AnteriorBtn_Click" BorderThickness="0,0,0,0" IsEnabledChanged="AnteriorBtn_IsEnabledChanged">
                     <icons:FontAwesome Kind="CaretLeftSolid" Height="35" Width="35"/>
                 </Button>
-                <Button x:Name="SiguienteBtn" Background="Transparent" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Click="SiguienteBtn_Click">
+                <Button x:Name="SiguienteBtn" Background="Transparent" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="2" Click="SiguienteBtn_Click" BorderThickness="0,0,0,0">
                     <icons:FontAwesome Kind="CaretRightSolid" Height="35" Width="35"/>
                 </Button>
             </Grid>

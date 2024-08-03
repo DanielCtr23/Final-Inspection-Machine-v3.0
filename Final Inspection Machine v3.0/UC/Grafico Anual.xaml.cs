@@ -1,9 +1,8 @@
-﻿using ScottPlot;
-using ScottPlot.Plottables;
+﻿using ScottPlot.Plottables;
+using ScottPlot;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,42 +15,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Globalization;
 
 namespace Final_Inspection_Machine_v3._0.UC
 {
     /// <summary>
-    /// Lógica de interacción para Grafico_Semanal.xaml
+    /// Lógica de interacción para Grafico_Anual.xaml
     /// </summary>
-    public partial class Grafico_Semanal : UserControl
+    public partial class Grafico_Anual : UserControl
     {
         DataManager DM = new DataManager();
         ScottPlot.Plottables.Text MyHighlightText;
-        string[] callout = new string[7];
-        public Grafico_Semanal()
+        string[] callout = new string[12];
+
+        public Grafico_Anual()
         {
             InitializeComponent();
             Actualizar(true);
         }
-
-        public void Actualizar(bool op)
-        {
-            if (op)
-            {
-                OKNOK();
-            }
-            else
-            {
-                Modelos();
-            }
-            MyHighlightText = Plot.Plot.Add.Text("", 0, 0);
-            MyHighlightText.LabelAlignment = Alignment.LowerLeft;
-            MyHighlightText.LabelBold = true;
-            MyHighlightText.OffsetX = -10;
-            MyHighlightText.OffsetY = 0;
-            Plot.MouseMove += Plot_MouseMove;
-        }
-
-
         private void Plot_MouseMove(object sender, MouseEventArgs e)
         {
             try
@@ -61,7 +42,7 @@ namespace Final_Inspection_Machine_v3._0.UC
 
                 DataPoint point = new DataPoint(mouseLocation.X, mouseLocation.Y, 0);
 
-                if ((mouseLocation.X - (int)mouseLocation.X) > -.2 && (int)mouseLocation.X < 23.3)
+                if (((int)(point.X + .5)) >= 0 && ((int)(point.X + .5)) < 12)
                 {
                     MyHighlightText.IsVisible = true;
                     MyHighlightText.Location = point.Coordinates;
@@ -73,7 +54,7 @@ namespace Final_Inspection_Machine_v3._0.UC
                     {
                         MyHighlightText.LabelOffsetX = 5;
                     }
-                    else if (((int)(point.X + .5)) > 5)
+                    else if (((int)(point.X + .5)) > 10)
                     {
                         MyHighlightText.LabelOffsetX = -30;
                     }
@@ -96,90 +77,67 @@ namespace Final_Inspection_Machine_v3._0.UC
 
         }
 
+        public void Actualizar(bool op)
+        {
+            Plot.MouseMove -= Plot_MouseMove;
+            if (op)
+            {
+                OKNOK();
+            }
+            else
+            {
+                Modelos();
+            }
+            MyHighlightText = Plot.Plot.Add.Text("", 0, 0);
+            MyHighlightText.LabelAlignment = Alignment.LowerLeft;
+            MyHighlightText.LabelBold = true;
+            MyHighlightText.OffsetX = -10;
+            MyHighlightText.OffsetY = 0;
+            Plot.MouseMove += Plot_MouseMove;
+        }
 
         public void OKNOK()
         {
             Plot.Reset();
-            CultureInfo spanishCulture = new CultureInfo("es-MX");
-            DateTime Inicio; DateTime Fin;
+            Bar[] barBuenas = new Bar[12];
+            Bar[] barMalas = new Bar[12];
+            Tick[] ticks = new Tick[12];
+            DateTime Inicio;
+            DateTime Fin;
 
-            if ((int)DateTime.Today.DayOfWeek == 0)
+            Inicio = DateTime.Today.AddDays(-DateTime.Now.DayOfYear+1).AddHours(7);
+            Fin = Inicio.AddYears(1);
+
+            LapsoTB.Text = Inicio.ToString() + " - " + Fin.ToString();
+
+            DataTable Produccion = DM.Produccion(Inicio, Fin, "M");
+
+            for (int i = 0; i < 12; i++)
             {
-                Inicio = DateTime.Today.AddDays(-6).AddHours(7);
-            }
-            else
-            {
-                Inicio = DateTime.Today.AddDays(-((int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday)).AddHours(7);
-            }
-
-             Fin = Inicio.AddDays(7);
-
-
-            DataTable Produccion = DM.Produccion(Inicio, Fin, "S");
-
-            LapsoTB.Text = Inicio.ToString() + " - " + Fin.AddSeconds(-1).ToString() ;
-
-            Bar[] barBuenas = new Bar[7];
-            Bar[] barMalas = new Bar[7];
-            Tick[] ticks = new Tick[7];
-
-            for (int i = 0; i < 7; i++)
-            {
-                int si;
-                if (i == 6)
-                {
-                    si = 0; 
-                }
-                else
-                {
-                    si = i + 1;
-                }
-                DayOfWeek s = (DayOfWeek)(si);
                 barBuenas[i] = new Bar() { Position = i, Value = int.Parse(Produccion.Rows[i]["OK"].ToString()), FillColor = ScottPlot.Colors.Green };
-                barMalas[i] = new Bar() { Position = i, Value = int.Parse(Produccion.Rows[i]["NOK"].ToString()), FillColor = ScottPlot.Colors.Red }; barBuenas[i].Label = barBuenas[i].Value.ToString();
+                barMalas[i] = new Bar() { Position = i, Value = int.Parse(Produccion.Rows[i]["NOK"].ToString()), FillColor = ScottPlot.Colors.Red };
                 barBuenas[i].Label = barBuenas[i].Value.ToString();
                 barMalas[i].Label = barMalas[i].Value.ToString();
-                barBuenas[i].LabelOffset = -25;
-                barMalas[i].LabelOffset = -25;
+                barBuenas[i].LabelOffset = -22;
+                barMalas[i].LabelOffset = -22;
                 barMalas[i].Value = barBuenas[i].Value + barMalas[i].Value;
 
-                //if (barMalas[i].Value < 300)
-                //{
-                //    barMalas[i].LabelOffset = -22 + (17 - (float)(barMalas[i].Value/17));
-                //}
+                ticks[i] = new Tick(i, DateTime.Parse(Produccion.Rows[i]["fecha_formateada"].ToString()).ToString("MMMM", new CultureInfo("es-MX")).ToUpper());
 
-                //if (barBuenas[i].Value < 300)
-                //{
-                //    barBuenas[i].LabelOffset = -22 + (17 - (float)(barBuenas[i].Value/17));
-                //    if (barMalas[i].Value < 300)
-                //    {
-                //        barMalas[i].LabelOffset = (barMalas[i].LabelOffset/17) + 17;
-                //    }
-                //    else
-                //    {
-                //        barMalas[i].LabelOffset = (barMalas[i].LabelOffset/17) + 17 - 22;
-                //    }
-
-                //}
-
-                ticks[i] = new Tick(i, spanishCulture.DateTimeFormat.GetDayName(s).ToUpper() + " " + Produccion.Rows[i]["fecha_formateada"].ToString());
-
-
-                callout[i] = ticks[i].Label.ToString() + "\n";
+                callout[i] = DateTime.Parse(Produccion.Rows[i]["fecha_formateada"].ToString()).ToString("MMMM yyyy", new CultureInfo("es-MX")).ToUpper() + "\n";
                 callout[i] = callout[i] + "Buenas:" + Produccion.Rows[i]["OK"].ToString() + "\n";
                 callout[i] = callout[i] + "Malas:" + Produccion.Rows[i]["NOK"].ToString() + "\n";
             }
 
 
             var Barplot = Plot.Plot.Add.Bars(barMalas);
-            var BarPlot2 = Plot.Plot.Add.Bars(barBuenas);
+            var Barplot2 = Plot.Plot.Add.Bars(barBuenas);
+
             Plot.Plot.HideGrid();
-
             Barplot.ValueLabelStyle.ForeColor = ScottPlot.Colors.White;
-            Barplot.ValueLabelStyle.FontSize = 22;
-            BarPlot2.ValueLabelStyle.ForeColor = ScottPlot.Colors.White;
-            BarPlot2.ValueLabelStyle.FontSize = 22;
-
+            Barplot.ValueLabelStyle.FontSize = 18;
+            Barplot2.ValueLabelStyle.ForeColor = ScottPlot.Colors.White;
+            Barplot2.ValueLabelStyle.FontSize = 18;
             Plot.Plot.Add.Palette = new ScottPlot.Palettes.Penumbra();
             Plot.Plot.FigureBackground.Color = ScottPlot.Color.FromHex("#181818");
             Plot.Plot.Axes.Color(ScottPlot.Color.FromHex("#d7d7d7"));
@@ -194,105 +152,80 @@ namespace Final_Inspection_Machine_v3._0.UC
             Plot.Plot.Axes.Bottom.MajorTickStyle.Length = 0;
             Plot.Plot.Axes.Bottom.TickLabelStyle.FontSize = 14;
             Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
-            var line = Plot.Plot.Add.Line(-.5, 2150, 24.5, 2150);
+            var line = Plot.Plot.Add.Line(-.5, 94500, 11.5, 94500);
             line.LinePattern = LinePattern.Dashed;
-            var line2 = Plot.Plot.Add.Line(-.5, 1750, 24.5, 1750);
-            line2.LinePattern = LinePattern.Dashed;
-            var line3 = Plot.Plot.Add.Line(-.5, 4300, 24.5, 4300);
-            line3.LinePattern = LinePattern.Dashed;
-            var line4 = Plot.Plot.Add.Line(-.5, 3500, 24.5, 3500);
-            line4.LinePattern = LinePattern.Dashed;
-
-
-            Plot.Plot.Axes.SetLimits(-0.5, 6.5, 0, 6000);
 
             Plot.Refresh();
+
+            Plot.Plot.Axes.SetLimits(-0.5, 11.5, 0, 140000);
 
             ScottPlot.Control.Interaction interaction = new ScottPlot.Control.Interaction(Plot);
             interaction.Disable();
             Plot.Interaction = interaction;
-
         }
 
         public void Modelos()
         {
             Plot.Reset();
-            CultureInfo spanishCulture = new CultureInfo("es-MX");
             DateTime Inicio;
             DateTime Fin;
 
-            if ((int)DateTime.Today.DayOfWeek == 0)
-            {
-                Inicio = DateTime.Today.AddDays(-6).AddHours(7);
-            }
-            else
-            {
-                Inicio = DateTime.Today.AddDays(-((int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday)).AddHours(7);
-            }
 
-            Fin = Inicio.AddDays(7);
+            Inicio = DateTime.Today.AddDays(-DateTime.Now.DayOfYear+1).AddHours(7);
+            Fin = Inicio.AddYears(1);
 
 
-            DataTable Produccion = DM.ProduccionModelos(Inicio, Fin, "S");
+            LapsoTB.Text = Inicio.ToString() + " - " + Fin.ToString();
 
-            LapsoTB.Text = Inicio.ToString() + " - " + Fin.AddSeconds(-1).ToString(); 
+            DataTable Produccion = DM.ProduccionModelos(Inicio, Fin, "M");
 
-            int modelos = Produccion.Rows.Count / 7;
+            int modelos = Produccion.Rows.Count / 12;
             //MessageBox.Show(modelos.ToString()+" "+ Produccion.Rows.Count.ToString());
 
             ScottPlot.Palettes.Category10 palette = new ScottPlot.Palettes.Category10();
 
 
 
-            Bar[][] Cantidades = new Bar[7][];
-            Tick[] ticks = new Tick[7];
+            Bar[][] Cantidades = new Bar[12][];
+            Tick[] ticks = new Tick[12];
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 12; i++)
             {
                 Cantidades[i] = new Bar[modelos];
             }
-            int[] acum = new int[7];
+            int[] acum = new int[12];
             for (int i = modelos - 1; i >= 0; i--)
             {
-                int k = 0;
-                for (int j = 0; j < 7; j++)
+
+                for (int j = 0; j < 12; j++)
                 {
-                    int si;
-                    if (k == 6)
-                    {
-                        si = 0;
-                    }
-                    else
-                    {
-                        si = k + 1;
-                    }
-                    k++;
                     Cantidades[j][i] = new Bar()
                     {
                         Position = j,
                         Value = int.Parse(Produccion.Rows[(j * modelos) + i]["OK"].ToString()) + acum[j],
                         FillColor = palette.GetColor(i)
                     };
-                    DayOfWeek s = (DayOfWeek)(si);
                     Cantidades[j][i].Label = (Cantidades[j][i].Value - acum[j]).ToString();
-                    Cantidades[j][i].LabelOffset = -25;
+                    Cantidades[j][i].LabelOffset = -22;
                     acum[j] = (int)Cantidades[j][i].Value;
-                    ticks[j] = new Tick(j, spanishCulture.DateTimeFormat.GetDayName(s).ToUpper() + " " + Produccion.Rows[j*modelos]["Fecha"].ToString());
+                    ticks[j] = new Tick(j, DateTime.Parse(Produccion.Rows[(j * modelos)]["Fecha"].ToString()).ToString("MMMM", new CultureInfo("es-MX")).ToUpper());
+
                 }
             }
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 12; i++)
             {
-                callout[i] = ticks[i].Label.ToString() + "\n";
+                callout[i] = DateTime.Parse(Produccion.Rows[(i * modelos)]["Fecha"].ToString()).ToString("MMMM yyyy", new CultureInfo("es-MX")).ToUpper() + "\n";
                 for (int j = 0; j < modelos; j++)
                 {
                     callout[i] = callout[i] + Produccion.Rows[j]["Modelo"].ToString() + ":" + Produccion.Rows[(i * modelos) + j]["OK"].ToString() + "\n";
                 }
             }
 
-            BarPlot[] barplot = new BarPlot[7];
 
-            for (int i = 0; i < 7; i++)
+            BarPlot[] barplot = new BarPlot[12];
+
+            for (int i = 0; i < 12; i++)
             {
                 barplot[i] = Plot.Plot.Add.Bars(Cantidades[i]);
                 barplot[i].ValueLabelStyle.ForeColor = ScottPlot.Colors.White;
@@ -307,7 +240,11 @@ namespace Final_Inspection_Machine_v3._0.UC
                     FillColor = palette.GetColor(i)
                 };
                 Plot.Plot.Legend.ManualItems.Add(item);
+
             }
+
+
+
             Plot.Plot.Legend.Orientation = ScottPlot.Orientation.Horizontal;
             Plot.Plot.ShowLegend(Alignment.UpperRight);
 
@@ -326,18 +263,12 @@ namespace Final_Inspection_Machine_v3._0.UC
             Plot.Plot.Axes.Bottom.MajorTickStyle.Length = 0;
             Plot.Plot.Axes.Bottom.TickLabelStyle.FontSize = 14;
             Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
-            var line = Plot.Plot.Add.Line(-.5, 2150, 24.5, 2150);
+            var line = Plot.Plot.Add.Line(-.5, 94500, 11.5, 94500);
             line.LinePattern = LinePattern.Dashed;
-            var line2 = Plot.Plot.Add.Line(-.5, 1750, 24.5, 1750);
-            line2.LinePattern = LinePattern.Dashed;
-            var line3 = Plot.Plot.Add.Line(-.5, 4300, 24.5, 4300);
-            line3.LinePattern = LinePattern.Dashed;
-            var line4 = Plot.Plot.Add.Line(-.5, 3500, 24.5, 3500);
-            line4.LinePattern = LinePattern.Dashed;
 
             Plot.Refresh();
 
-            Plot.Plot.Axes.SetLimits(-0.5, 6.5, 0, 6000);
+            Plot.Plot.Axes.SetLimits(-0.5, 11.5, 0, 140000);
 
             ScottPlot.Control.Interaction interaction = new ScottPlot.Control.Interaction(Plot);
             interaction.Disable();

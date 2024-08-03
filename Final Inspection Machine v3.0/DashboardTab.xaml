@@ -174,7 +174,7 @@
                     </Setter>
                 </Style>
             </TabControl.Resources>
-            <TabItem MinWidth="140" MinHeight="65" HorizontalAlignment="Stretch">
+            <TabItem MinWidth="140" MinHeight="65" HorizontalAlignment="Stretch" Margin="0,-2,0,0">
                 <TabItem.Header>
                     <StackPanel>
                         <iconPacks:PackIconFontAwesome Kind="HomeSolid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White"/>
@@ -211,9 +211,9 @@
                         <TextBlock Text="CONTADORES" Foreground="White"/>
                     </StackPanel>
                 </TabItem.Header>
-                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" >
                     <Viewbox Stretch="Fill" StretchDirection="DownOnly" Height="Auto">
-                        <Grid Width="1920" Height="1550">
+                        <Grid Width="1920" Height="2800">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="11.2*"/>
                                 <ColumnDefinition Width="8*"/>
@@ -221,7 +221,8 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="630"/>
-                                <RowDefinition/>
+                                <RowDefinition  Height="960"/>
+                                <RowDefinition  Height="1160"/>
                             </Grid.RowDefinitions>
 
                             <Grid Margin="20,5,15,0" Background="#181818" Grid.ColumnSpan="2" Height="40" HorizontalAlignment="Stretch">
@@ -239,6 +240,7 @@
                             <UC:Grafico_Diario x:Name="GraficoDiario" Height="590" Width="1100" Grid.Row="1" Grid.Column="0" Margin="15"/>
                             <UC:Grafico_Semanal x:Name="GraficoSemanal" Height="590" Width="770" Grid.Row="1" Grid.Column="1" Margin="15"/>
                             <UC:Produccion_Mensual x:Name="GraficoMensual"  Height="930" Width="1890" Margin="15,5,15,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+                            <UC:Grafico_Anual x:Name="GraficoAnual"  Height="1130" Width="1890" Margin="15,5,15,0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
                         </Grid>
                     </Viewbox>
                 </ScrollViewer>

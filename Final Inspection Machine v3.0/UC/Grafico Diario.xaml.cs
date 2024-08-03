@@ -48,7 +48,7 @@ namespace Final_Inspection_Machine_v3._0.UC
 
                 DataPoint point = new DataPoint(mouseLocation.X, mouseLocation.Y, 0);
 
-                if ((mouseLocation.X - (int)mouseLocation.X) > -.2 && (int)mouseLocation.X < 23.3)
+                if (((int)(point.X + .5)) >= 0 && ((int)(point.X + .5)) < 24)
                 {
                     MyHighlightText.IsVisible = true;
                     MyHighlightText.Location = point.Coordinates;
@@ -163,6 +163,7 @@ namespace Final_Inspection_Machine_v3._0.UC
 
             Plot.Plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(ticks);
             Plot.Plot.Axes.Bottom.MajorTickStyle.Length = 0;
+            Plot.Plot.Axes.Bottom.TickLabelStyle.FontSize = 14;
             Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
             var line = Plot.Plot.Add.Line(-.5, 200, 24.5, 200);
             line.LinePattern = LinePattern.Dashed;
@@ -278,6 +279,7 @@ namespace Final_Inspection_Machine_v3._0.UC
 
             Plot.Plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(ticks);
             Plot.Plot.Axes.Bottom.MajorTickStyle.Length = 0;
+            Plot.Plot.Axes.Bottom.TickLabelStyle.FontSize = 14;
             Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
             var line = Plot.Plot.Add.Line(-.5, 200, 24.5, 200);
             line.LinePattern = LinePattern.Dashed;

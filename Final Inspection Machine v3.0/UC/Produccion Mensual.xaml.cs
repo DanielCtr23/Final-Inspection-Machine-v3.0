@@ -2,6 +2,7 @@
 using Mysqlx.Crud;
 using Org.BouncyCastle.Crypto.Engines;
 using ScottPlot;
+using ScottPlot.Control;
 using ScottPlot.Plottables;
 using System;
 using System.Collections.Generic;
@@ -32,95 +33,148 @@ namespace Final_Inspection_Machine_v3._0.UC
         ScottPlot.Plottables.Text MyHighlightText = new Text();
         string[] callout = new string[31];
         int d;
-        int s; 
+        int s;
         private double highlightX = double.NaN;
         private double highlightY = double.NaN;
+        private AxisLimits savedLimits;
+
 
         public Produccion_Mensual()
         {
             InitializeComponent();
             Actualizar(true);
+            
         }
 
         public void Actualizar(bool op)
         {
-            if (!double.IsNaN(MyHighlightText.Location.X) && !double.IsNaN(MyHighlightText.Location.Y))
+            InputBindings customInputBindings = new ScottPlot.Control.InputBindings()
             {
-                highlightX = MyHighlightText.Location.X;
-                highlightY = MyHighlightText.Location.Y;
-            }
-            var left = Plot.Plot.Axes.Left.Min;
-            var right = Plot.Plot.Axes.Left.Max;
-            var b = Plot.Plot.Axes.Bottom.Min;
-            var t = Plot.Plot.Axes.Bottom.Max;
-            if (op)
+                DragPanButton = ScottPlot.Control.MouseButton.Left,
+                DragZoomButton = ScottPlot.Control.MouseButton.Right,
+                ClickAutoAxisButton = ScottPlot.Control.MouseButton.Middle,
+                ClickContextMenuButton = ScottPlot.Control.MouseButton.Right,
+                DoubleClickButton = ScottPlot.Control.MouseButton.Left,
+            };
+            PlotActions customPlotActions = new PlotActions()
             {
+                ZoomIn = StandardActions.ZoomIn,
+                ZoomOut = StandardActions.ZoomOut,
+                PanUp = StandardActions.PanUp,
+                PanDown = StandardActions.PanDown,
+                PanLeft = StandardActions.PanLeft,
+                PanRight = StandardActions.PanRight,
+                DragPan = StandardActions.DragPan,
+                DragZoom = StandardActions.DragZoom,
+                ToggleBenchmark = StandardActions.ToggleBenchmark,
+                AutoScale = StandardActions.AutoScale,
+            };
+
+            Interaction interaction = new Interaction(Plot)
+            {
+                Inputs = customInputBindings,
+                Actions = customPlotActions,
+            };
+
+            Plot.Interaction = interaction;
+            Plot.Interaction.Enable();
+
+            Plot.ContextMenu = null;
+
+            try
+            {
+                
+                savedLimits = Plot.Plot.Axes.GetLimits();
+                if (!double.IsNaN(MyHighlightText.Location.X) && !double.IsNaN(MyHighlightText.Location.Y))
+                {
+                    highlightX = MyHighlightText.Location.X;
+                    highlightY = MyHighlightText.Location.Y;
+                }
+                var left = Plot.Plot.Axes.Left.Min;
+                var right = Plot.Plot.Axes.Left.Max;
+                var b = Plot.Plot.Axes.Bottom.Min;
+                var t = Plot.Plot.Axes.Bottom.Max;
+                if (op)
+                {
+                    try
+                    {
+
+                        OKNOK();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        Modelos();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+
                 try
                 {
+                    ScottPlot.AxisRules.MaximumSpan rule1 = new ScottPlot.AxisRules.MaximumSpan(
+                    xAxis: Plot.Plot.Axes.Bottom,
+                    yAxis: Plot.Plot.Axes.Left,
+                    xSpan: 20,
+                    ySpan: 7000);
 
-                    OKNOK();
+
+                    ScottPlot.AxisRules.LockedBottom bottom = new ScottPlot.AxisRules.LockedBottom(Plot.Plot.Axes.Left, 0);
+                    ScottPlot.AxisRules.LockedTop top = new ScottPlot.AxisRules.LockedTop(Plot.Plot.Axes.Left, 7000);
+
+                    ScottPlot.AxisRules.MaximumBoundary boundary =
+                        new ScottPlot.AxisRules.MaximumBoundary(Plot.Plot.Axes.Bottom, Plot.Plot.Axes.Left, limits: new AxisLimits(-.4, d - .6, 0, 7000));
+
+                    Plot.Plot.Axes.Rules.Add(rule1);
+                    Plot.Plot.Axes.Rules.Add(bottom);
+                    Plot.Plot.Axes.Rules.Add(top);
+                    Plot.Plot.Axes.Rules.Add(boundary);
+                    if (s != d)
+                    {
+                        s = d;
+
+                    }
+                    MyHighlightText = Plot.Plot.Add.Text("", 0, 0);
+                    MyHighlightText.LabelFontColor = ScottPlot.Colors.White;
+                    MyHighlightText.LabelAlignment = Alignment.LowerLeft;
+                    MyHighlightText.LabelBold = true;
+                    MyHighlightText.OffsetX = -10;
+                    MyHighlightText.OffsetY = 0;
+
+                    if (!double.IsNaN(highlightX) && !double.IsNaN(highlightY))
+                    {
+                        MyHighlightText.Location = new Coordinates(highlightX, highlightY);
+                        MyHighlightText.IsVisible = true;
+                        MyHighlightText.LabelText = GetCalloutText((int)highlightX);
+                    }
+
+                    Plot.MouseMove += Plot_MouseMove;
+                    Plot.Plot.Axes.SetLimits(savedLimits);
+                    //Plot.Plot.Axes.SetLimits(left ,right, b, t);
+                    Plot.Refresh();
                 }
-
-                catch (Exception ex)
+                catch (Exception e)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(e.Message);
                 }
             }
-            else
+            catch (Exception e)
             {
-                try
-                {
-                    Modelos();
-                }
-
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-
-            ScottPlot.AxisRules.MaximumSpan rule1 = new ScottPlot.AxisRules.MaximumSpan(
-            xAxis: Plot.Plot.Axes.Bottom,
-            yAxis: Plot.Plot.Axes.Left,
-            xSpan: 15,
-            ySpan: 7000);
-
-
-            ScottPlot.AxisRules.LockedBottom bottom = new ScottPlot.AxisRules.LockedBottom(Plot.Plot.Axes.Left, 0);
-            ScottPlot.AxisRules.LockedTop top = new ScottPlot.AxisRules.LockedTop(Plot.Plot.Axes.Left, 7000);
-
-            ScottPlot.AxisRules.MaximumBoundary boundary =
-                new ScottPlot.AxisRules.MaximumBoundary(Plot.Plot.Axes.Bottom, Plot.Plot.Axes.Left, limits: new AxisLimits(-.4, d-.6, 0, 7000));
-
-            Plot.Plot.Axes.Rules.Add(rule1);
-            Plot.Plot.Axes.Rules.Add(bottom);
-            Plot.Plot.Axes.Rules.Add(top);
-            Plot.Plot.Axes.Rules.Add(boundary);
-
-            if (s != d)
-            {
-                s = d;
+                MessageBox.Show(e.Message);
 
             }
 
 
-
-            MyHighlightText = Plot.Plot.Add.Text("", 0, 0);
-            MyHighlightText.LabelAlignment = Alignment.LowerLeft;
-            MyHighlightText.LabelBold = true;
-            MyHighlightText.OffsetX = -10;
-            MyHighlightText.OffsetY = 0;
-
-            if (!double.IsNaN(highlightX) && !double.IsNaN(highlightY))
-            {
-                MyHighlightText.Location = new Coordinates(highlightX, highlightY);
-                MyHighlightText.IsVisible = true;
-                MyHighlightText.LabelText = GetCalloutText((int)highlightX);
-            }
-
-            Plot.MouseMove += Plot_MouseMove; 
-            //Plot.Plot.Axes.SetLimits(left ,right, b, t);
-            //Plot.Refresh();
         }
 
         private string GetCalloutText(int index)
@@ -139,7 +193,7 @@ namespace Final_Inspection_Machine_v3._0.UC
             DataPoint point = new DataPoint(mouseLocation.X, mouseLocation.Y, 0);
             try
             {
-                if ((mouseLocation.X - (int)mouseLocation.X) > -.5 && (int)mouseLocation.X < d - .8)
+                if ((int)(point.X + .5) >= 0 && (int)(point.X + .5) < d)
                 {
                     MyHighlightText.IsVisible = true;
                     MyHighlightText.Location = point.Coordinates;
@@ -170,73 +224,6 @@ namespace Final_Inspection_Machine_v3._0.UC
             }
         }
 
-        //public void Actualizar()
-        //{
-        //    LapsoTB.Text = "01 - "+DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) + " DE " + DateTime.Now.ToString("MMMM", CultureInfo.CreateSpecificCulture("es-MX")).ToUpper();
-        //    DataTable Produccion = db.ProduccionMensual();
-
-        //    Bar[] barBuenas = new Bar[Produccion.Rows.Count];
-        //    Bar[] barMalas = new Bar[Produccion.Rows.Count];
-        //    Tick[] ticks = new Tick[Produccion.Rows.Count];
-
-        //    for (int i = 0; i < Produccion.Rows.Count; i++)
-        //    {
-        //        barBuenas[i] = new Bar() { Position = i, Value = int.Parse(Produccion.Rows[i]["Buenas"].ToString()), FillColor = ScottPlot.Colors.Green };
-        //        barBuenas[i].Label = barBuenas[i].Value.ToString();
-        //        barBuenas[i].LabelOffset = -20;
-        //        barMalas[i] = new Bar() { Position = i, Value = int.Parse(Produccion.Rows[i]["Malas"].ToString()), FillColor = ScottPlot.Colors.Red };
-        //        barMalas[i].Label = barMalas[i].Value.ToString();
-        //        barMalas[i].LabelOffset = -20;
-        //        barMalas[i].Value = barMalas[i].Value + barBuenas[i].Value;
-
-        //        ticks[i] = new Tick(i, Produccion.Rows[i]["Dia"].ToString());
-        //    }
-
-        //    var Barplot = Plot.Plot.Add.Bars(barMalas);
-        //    Plot.Plot.Add.Bars(barBuenas);
-        //    Plot.Plot.HideGrid();
-        //    Barplot.ValueLabelStyle.ForeColor = ScottPlot.Colors.White;
-        //    Plot.Plot.Add.Palette = new ScottPlot.Palettes.Penumbra();
-        //    Plot.Plot.FigureBackground.Color = ScottPlot.Color.FromHex("#181818");
-        //    Plot.Plot.Axes.Color(ScottPlot.Color.FromHex("#d7d7d7"));
-        //    Plot.Plot.Grid.MajorLineColor = ScottPlot.Color.FromHex("#404040");
-        //    Plot.Plot.Legend.BackgroundColor = ScottPlot.Color.FromHex("#404040");
-        //    Plot.Plot.Legend.FontColor = ScottPlot.Color.FromHex("#d7d7d7");
-        //    Plot.Plot.Legend.OutlineColor = ScottPlot.Color.FromHex("#d7d7d7");
-
-
-        //    Plot.Plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(ticks);
-        //    Plot.Plot.Axes.Bottom.MajorTickStyle.Length = 0;
-        //    Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
-        //    var line = Plot.Plot.Add.Line(-.5, 200, 12.5, 200);
-        //    line.LinePattern = LinePattern.Dashed;
-
-        //    ScottPlot.Control.Interaction interaction = new ScottPlot.Control.Interaction(Plot);
-        //    //ScottPlot.AxisRules.LockedVertical rule = new ScottPlot.AxisRules.LockedVertical(Plot.Plot.Axes.Left, 0, 6000);
-        //    ////ScottPlot.AxisRules.LockedHorizontal rule1 = new ScottPlot.AxisRules.LockedHorizontal(Plot.Plot.Axes.Bottom, 0, Produccion.Rows.Count);
-        //    //Plot.Plot.Axes.Rules.Add(rule);
-        //    //Plot.Plot.Axes.Rules.Add(rule1);
-        //    ScottPlot.AxisRules.MaximumSpan rule1 = new ScottPlot.AxisRules.MaximumSpan(
-        //    xAxis: Plot.Plot.Axes.Bottom,
-        //    yAxis: Plot.Plot.Axes.Left,
-        //    xSpan: 15,
-        //    ySpan: 7000);
-        //    Plot.Plot.Axes.Rules.Add(rule1); 
-        //    ScottPlot.AxisRules.MinimumSpan rule2 = new ScottPlot.AxisRules.MinimumSpan(
-        //    xAxis: Plot.Plot.Axes.Bottom,
-        //    yAxis: Plot.Plot.Axes.Left,
-        //    xSpan: 10,
-        //    ySpan: 4000);
-        //    Plot.Plot.Axes.Rules.Add(rule2);
-
-        //    ScottPlot.AxisRules.LockedBottom bottom = new ScottPlot.AxisRules.LockedBottom(Plot.Plot.Axes.Left, 0);
-        //    Plot.Plot.Axes.Rules.Add(bottom);
-
-        //    ScottPlot.AxisRules.MaximumBoundary boundary = 
-        //        new ScottPlot.AxisRules.MaximumBoundary(Plot.Plot.Axes.Bottom, Plot.Plot.Axes.Left, limits: new AxisLimits(-0.5, Produccion.Rows.Count-0.5, 0, 5000));
-
-        //    Plot.Plot.Axes.Rules.Add(boundary);
-        //}
 
         public void OKNOK()
         {
@@ -244,7 +231,7 @@ namespace Final_Inspection_Machine_v3._0.UC
             {
 
                 Plot.Reset();
-                
+
                 CultureInfo spanishCulture = new CultureInfo("es-MX");
                 DateTime Inicio; DateTime Fin;
 
@@ -274,9 +261,9 @@ namespace Final_Inspection_Machine_v3._0.UC
                     barMalas[i].Value = barBuenas[i].Value + barMalas[i].Value;
 
 
-                    ticks[i] = new Tick(i, Produccion.Rows[i]["fecha_formateada"].ToString());
-                    callout[i] = Produccion.Rows[i]["fecha_formateada"].ToString() +"\n";
-                    callout[i] = callout[i] + "Buenas:" + Produccion.Rows[i]["OK"].ToString()+"\n";
+                    ticks[i] = new Tick(i, DateTime.Parse(Produccion.Rows[i]["fecha_formateada"].ToString()).ToString("ddd d", spanishCulture).ToUpper());
+                    callout[i] = Produccion.Rows[i]["fecha_formateada"].ToString() + "\n";
+                    callout[i] = callout[i] + "Buenas:" + Produccion.Rows[i]["OK"].ToString() + "\n";
                     callout[i] = callout[i] + "Buenas:" + Produccion.Rows[i]["NOK"].ToString() + "\n";
                     //MessageBox.Show(callout[i]);
                 }
@@ -285,7 +272,7 @@ namespace Final_Inspection_Machine_v3._0.UC
                 var Barplot = Plot.Plot.Add.Bars(barMalas);
                 var BarPlot2 = Plot.Plot.Add.Bars(barBuenas);
                 Plot.Plot.HideGrid();
-                
+
 
                 Barplot.ValueLabelStyle.ForeColor = ScottPlot.Colors.White;
                 Barplot.ValueLabelStyle.FontSize = 22;
@@ -303,14 +290,15 @@ namespace Final_Inspection_Machine_v3._0.UC
 
                 Plot.Plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(ticks);
                 Plot.Plot.Axes.Bottom.MajorTickStyle.Length = 0;
+                Plot.Plot.Axes.Bottom.TickLabelStyle.FontSize = 18;
                 Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
-                var line = Plot.Plot.Add.Line(-.5, 2150, d+.5, 2150);
+                var line = Plot.Plot.Add.Line(-.5, 2150, d + .5, 2150);
                 line.LinePattern = LinePattern.Dashed;
-                var line2 = Plot.Plot.Add.Line(-.5, 1750, d+.5, 1750);
+                var line2 = Plot.Plot.Add.Line(-.5, 1750, d + .5, 1750);
                 line2.LinePattern = LinePattern.Dashed;
-                var line3 = Plot.Plot.Add.Line(-.5, 4300, d+.5, 4300);
+                var line3 = Plot.Plot.Add.Line(-.5, 4300, d + .5, 4300);
                 line3.LinePattern = LinePattern.Dashed;
-                var line4 = Plot.Plot.Add.Line(-.5, 3500, d+.5, 3500);
+                var line4 = Plot.Plot.Add.Line(-.5, 3500, d + .5, 3500);
                 line4.LinePattern = LinePattern.Dashed;
             }
 
@@ -329,7 +317,7 @@ namespace Final_Inspection_Machine_v3._0.UC
                 CultureInfo spanishCulture = new CultureInfo("es-MX");
                 DateTime Inicio; DateTime Fin;
 
-                Inicio = DateTime.Today.AddDays(-DateTime.Today.Day + 1);
+                Inicio = DateTime.Today.AddDays(-DateTime.Today.Day + 1).AddHours(+7);
                 Fin = Inicio.AddMonths(1).AddSeconds(-1);
 
 
@@ -365,7 +353,7 @@ namespace Final_Inspection_Machine_v3._0.UC
                         Cantidades[j][i].Label = (Cantidades[j][i].Value - acum[j]).ToString();
                         Cantidades[j][i].LabelOffset = -25;
                         acum[j] = (int)Cantidades[j][i].Value;
-                        ticks[j] = new Tick(j, Produccion.Rows[j * modelos]["Fecha"].ToString());
+                        ticks[j] = new Tick(j, DateTime.Parse(Produccion.Rows[j * modelos]["Fecha"].ToString()).ToString("ddd dd", spanishCulture).ToUpper());
                     }
                 }
 
@@ -408,6 +396,7 @@ namespace Final_Inspection_Machine_v3._0.UC
 
                 Plot.Plot.Axes.Bottom.TickGenerator = new ScottPlot.TickGenerators.NumericManual(ticks);
                 Plot.Plot.Axes.Bottom.MajorTickStyle.Length = 0;
+                Plot.Plot.Axes.Bottom.TickLabelStyle.FontSize = 18;
                 Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
                 var line = Plot.Plot.Add.Line(-.5, 2150, d + .5, 2150);
                 line.LinePattern = LinePattern.Dashed;
@@ -425,5 +414,18 @@ namespace Final_Inspection_Machine_v3._0.UC
             }
         }
 
+        private void Plot_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //e.Handled = true;
+        }
+
+        private void Plot_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+           if (e.RightButton == MouseButtonState.Pressed)
+            {
+                // Cancela el menú contextual del clic derecho
+                //e.Handled = false;
+            }
+        }
     }
 }
