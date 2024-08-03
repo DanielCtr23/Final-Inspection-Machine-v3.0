@@ -30,7 +30,7 @@ namespace Final_Inspection_Machine_v3._0.UC
         {
             InitializeComponent();
             BusquedaTmr = new DispatcherTimer();
-            BusquedaTmr.Interval = TimeSpan.FromSeconds(10);
+            BusquedaTmr.Interval = TimeSpan.FromSeconds(5);
             BusquedaTmr.Tick += BusquedaTmr_Tick;
             PruebasDG.ItemsSource = DM.Detalles(null, null, null, null, null, true, true).DefaultView;
             ModelosCB.ItemsSource = DM.ObtenerModelos().DefaultView;
@@ -212,8 +212,9 @@ namespace Final_Inspection_Machine_v3._0.UC
                     int valor1 = int.Parse(valor.Row[0].ToString());
                     Detalle.CargarDetalle(valor1);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
