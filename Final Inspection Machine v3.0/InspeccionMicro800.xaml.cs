@@ -78,7 +78,7 @@ namespace Final_Inspection_Machine_v3._0
             CargarContadores();
             OcultarPilotBracket(true);
             OcultarResorte(false);
-            this.IsVisibleChanged += InspeccionCL2_IsVisibleChanged;
+            this.IsVisibleChanged += InspeccionMicro800_IsVisibleChanged;
             E1 = DM.Estacion(1);
             E2 = DM.Estacion(2);
         }
