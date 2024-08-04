@@ -217,7 +217,6 @@ namespace Final_Inspection_Machine_v3._0
                 ResultadosE1[5].Res = DM.PilotBracketNombre(ResultadosE1[5].Programa);
 
 
-
                 if (Com.PilotBracket1())
                 {
                     Dispatcher.InvokeAsync(() => PilotBracketBI1.OK(true));
@@ -340,6 +339,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
+                Dispatcher.InvokeAsync(() => EstadoE2(0));
                 await Corrugado2.CambioProgramaAsync(0);
                 serial2 = 2.ToString();
                 Task Orifice2 = TaskO2();
@@ -356,6 +356,8 @@ namespace Final_Inspection_Machine_v3._0
                 {
                     Dispatcher.InvokeAsync(() => LargoBI2.OK(false));
                     Fail[1] = true;
+                    Error2 = Error2 + " Largo ";
+                    Dispatcher.InvokeAsync(() => EstadoE2(0));
                 }
                 #endregion
 
@@ -381,6 +383,9 @@ namespace Final_Inspection_Machine_v3._0
                         {
                             Dispatcher.InvokeAsync(() => SentidoBI2.OK(false));
                             ResultadosE2[1].OKNG = false;
+                            Fail[0] = true;
+                            Error2 = Error2 + " Sentido I ";
+                            Dispatcher.InvokeAsync(() => EstadoE2(0));
                         }
                     }
                 }
@@ -389,6 +394,8 @@ namespace Final_Inspection_Machine_v3._0
                     ResultadosE2[1].Res = "-1";
                     Dispatcher.InvokeAsync(() => SentidoBI2.OK(false));
                     Fail[1] = true;
+                    Error2 = Error2 + " Sentido -  ";
+                    Dispatcher.InvokeAsync(() => EstadoE2(0));
                 }
                 #endregion
 
@@ -398,22 +405,34 @@ namespace Final_Inspection_Machine_v3._0
                 //Nut
                 #region
                 ResultadosE2[2] = await Corrugado2.PruebaAsync(ResultadosE2[2]);
+                string n = "";
                 if (ResultadosE2[2].OKNG)
                 {
-                    if (!nutrojo && (ResultadosE2[2].Res == "00"))
+                    if (ResultadosE1[2].Res == "00")
+                    {
+                        ResultadosE1[2].Res = "0";
+                        n = "A ";
+                    }
+                    else if (ResultadosE1[2].Res == "01")
+                    {
+                        ResultadosE1[2].Res = "1";
+                        n = "R ";
+                    }
+                    if (!nutrojo && (ResultadosE2[2].Res == "0"))
                     {
                         Dispatcher.InvokeAsync(() => NutBI2.OK(true));
                     }
-                    else if (nutrojo && (ResultadosE2[2].Res == "01"))
+                    else if (nutrojo && (ResultadosE2[2].Res == "1"))
                     {
                         Dispatcher.InvokeAsync(() => NutBI2.OK(true));
                     }
                     else
                     {
-                        ResultadosE2[2].Res = "-1";
                         Dispatcher.InvokeAsync(() => NutBI2.OK(false));
                         Fail[1] = true;
                         ResultadosE2[2].OKNG = false;
+                        Error2 = Error2 + " Nut " + n;
+                        Dispatcher.InvokeAsync(() => EstadoE2(0));
                     }
                 }
                 else
@@ -421,6 +440,8 @@ namespace Final_Inspection_Machine_v3._0
                     ResultadosE2[2].Res = "-1";
                     Dispatcher.InvokeAsync(() => NutBI2.OK(false));
                     Fail[1] = true;
+                    Error2 = Error2 + " Nut " + "D ";
+                    Dispatcher.InvokeAsync(() => EstadoE2(0));
                 }
                 #endregion
 
@@ -443,6 +464,8 @@ namespace Final_Inspection_Machine_v3._0
                     Dispatcher.InvokeAsync(() => PilotBracketBI2.OK(false));
                     ResultadosE2[5].OKNG = false;
                     //Fail[1] = true;
+                    Error2 = Error2 + " PB " + ResultadosE2[5].Programa + " ";
+                    Dispatcher.InvokeAsync(() => EstadoE2(0));
                 }
                 #endregion
 
@@ -462,6 +485,7 @@ namespace Final_Inspection_Machine_v3._0
 
                 if (Fail[1])
                 {
+                    Dispatcher.InvokeAsync(() => EstadoE2(2));
                     _ctsTaskE2.Cancel();
                 }
                 else
@@ -487,6 +511,8 @@ namespace Final_Inspection_Machine_v3._0
                     Dispatcher.InvokeAsync(() => TaponBI2.OK(false));
                     Fail[1] = true;
                     ResultadosE2[3].Calificacion = 0;
+                    Error2 = Error2 + "Tapon ";
+                    Dispatcher.InvokeAsync(() => EstadoE2(0));
                 }
 
                 DM.Guardar(serial2, DateTime.Now, false, Fail[1], ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, false, -1);
@@ -497,6 +523,7 @@ namespace Final_Inspection_Machine_v3._0
 
                 if (Fail[1])
                 {
+                    Dispatcher.InvokeAsync(() => EstadoE2(2));
                     _ctsTaskE2.Cancel();
                 }
                 else
@@ -514,6 +541,7 @@ namespace Final_Inspection_Machine_v3._0
                 {
                     Dispatcher.InvokeAsync(() => EtiquetaBI2.OK(true));
                     Pass[1] = true;
+                    Dispatcher.InvokeAsync(() => EstadoE2(1));
 
                 }
                 else
@@ -521,6 +549,8 @@ namespace Final_Inspection_Machine_v3._0
                     Dispatcher.InvokeAsync(() => EtiquetaBI2.OK(false));
                     Fail[1] = true;
                     Pass[1] = false;
+                    Error2 = Error2 + "Etiqueta ";
+                    Dispatcher.InvokeAsync(() => EstadoE2(2));
                 }
                 #endregion
                 DM.Guardar(serial2, DateTime.Now, Pass[1], !Pass[1], ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, ResultadosE2[4].OKNG, ResultadosE2[4].Calificacion);

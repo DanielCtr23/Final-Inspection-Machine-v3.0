@@ -75,7 +75,6 @@ namespace Final_Inspection_Machine_v3._0
             Seleccionado.PLCAddressValue = new PLCAddressItem("MODELO_SELECCIONADO");
             Seleccionado.DataChanged += Seleccionado_DataChanged;
 
-
             Mensaje.ComComponent = Com;
             Mensaje.PLCAddressValue = new PLCAddressItem("MENSAJE");
             Mensaje.DataChanged += Mensaje_DataChanged;
@@ -150,6 +149,14 @@ namespace Final_Inspection_Machine_v3._0
         public bool PilotBracket2()
         {
             return bool.Parse(Com.Read("PB_E2_OK"));
+        }
+        public int PilotBracketN1()
+        {
+            return int.Parse(Com.Read("PB1N"));
+        }
+        public int PilotBracketN2()
+        {
+            return int.Parse(Com.Read("PB2N"));
         }
 
         //Lecturas 

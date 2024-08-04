@@ -85,9 +85,9 @@ namespace Final_Inspection_Machine_v3._0
             {
                 try
                 {
-                    //inspeccion_Micro800.Inicializar();
-                    inspeccion_Micro800.Show();
+                    inspeccion_Micro800.Inicializar();
                     inspeccion_Micro800.IsVisibleChanged += Inspeccion_Micro800_IsVisibleChanged;
+                    inspeccion_Micro800.Show();
                     inspeccion_Micro800.Closed += Inspeccion_Micro800_Closed;
                     this.Hide();
                 }
@@ -149,6 +149,10 @@ namespace Final_Inspection_Machine_v3._0
                 if (inspeccion_CL2 != null)
                 {
                     inspeccion_CL2.Close();
+                }
+                if (inspeccion_Micro800 != null)
+                {
+                    inspeccion_Micro800.Close();
                 }
             }
             catch (Exception)

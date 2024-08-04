@@ -13,6 +13,7 @@ namespace Final_Inspection_Machine_v3._0
     {
         CompactLogix Com;
         String Error1;
+        String Error2;
 
         private void InicializarPLC()
         {
@@ -28,10 +29,7 @@ namespace Final_Inspection_Machine_v3._0
                 Com.DetenerCiclo += Com_DetenerCiclo;
                 Com.CambioSeleccionado += Com_CambioSeleccionado;
             }
-            else
-            {
-
-            }
+            
             
         }
 
@@ -168,6 +166,30 @@ namespace Final_Inspection_Machine_v3._0
             {
                 MensajeE1.Text = "En Espera";
                 MensajeE1.Foreground = Brushes.White;
+            }
+        }
+
+        private void EstadoE2(int op)
+        {
+            if (op == 0)
+            {
+                MensajeE2.Text = "Ejecutando Pruebas " + Error2;
+                MensajeE2.Foreground = Brushes.White;
+            }
+            if (op == 1)
+            {
+                MensajeE2.Text = "Pieza OK " + Error2;
+                MensajeE2.Foreground = Brushes.Green;
+            }
+            if (op == 2)
+            {
+                MensajeE2.Text = "Pieza NOK " + Error2;
+                MensajeE2.Foreground = Brushes.Red;
+            }
+            if (op == 3)
+            {
+                MensajeE2.Text = "En Espera";
+                MensajeE2.Foreground = Brushes.White;
             }
         }
 
