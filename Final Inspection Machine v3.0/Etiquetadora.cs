@@ -35,25 +35,6 @@ namespace Final_Inspection_Machine_v3._0
             }
         }
 
-        public bool ImprimirEtiqueta(String ZPL)
-        {
-
-            try
-            {
-                Impresora.Open();
-                Impresora.Write(Encoding.UTF8.GetBytes(ZPL));
-                Impresora.Close();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message);
-                return false;
-                throw;
-            }
-        }
-
         private readonly object printerLock = new object();
 
         public void GenerarEtiqueta(string Serial)

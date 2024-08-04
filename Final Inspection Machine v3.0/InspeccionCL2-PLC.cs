@@ -11,8 +11,8 @@ namespace Final_Inspection_Machine_v3._0
 {
     public partial class InspeccionCL2
     {
-
         CompactLogix Com;
+        String Error1;
 
         private void InicializarPLC()
         {
@@ -44,36 +44,16 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
-                if (Estacion1 != null && Estacion1.IsAlive)
-                {
-                    Estacion1.Abort();
-                }
-
-                if (Estacion2 != null && Estacion2.IsAlive)
-                {
-                    Estacion2.Abort();
-                }
-
-                if (HiloPrincipal != null && HiloPrincipal.IsAlive)
-                {
-                    HiloPrincipal.Abort();
-                }
+                _ctsTaskE1.Cancel();
+                _ctsTaskE2.Cancel();
+                EsperarEtiquetaE1.Set();
+                EsperarEtiquetaE2.Set();
+                EsperarTaponE1.Set();
+                EsperarTaponE2.Set();
             }
-            catch (ThreadAbortException)
+            catch (Exception)
             {
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                Com.Terminar();
-                Thread.Sleep(800);
-                ModeloBtn.IsEnabled = true;
-                RegresarBtn.IsEnabled = true;
-                LimpiarPantalla();
+                throw;
             }
         }
 
@@ -145,15 +125,10 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
-                nutrojo = Com.NutRojo();
-                sinsentido = Com.SinSentido();
-                HiloPrincipal = new Thread(Ejecucion);
-                HiloPrincipal.IsBackground = true;
-                HiloPrincipal.Start();
+                Task.Run(() => Ejecucion());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
             }
         }
 
@@ -171,5 +146,31 @@ namespace Final_Inspection_Machine_v3._0
             OcultarPilotBracket(true);
             OcultarResorte(false);
         }
+
+        private void EstadoE1(int op)
+        {
+            if (op == 0)
+            {
+                MensajeE1.Text = "Ejecutando Pruebas " + Error1;
+                MensajeE1.Foreground = Brushes.White;
+            }
+            if (op == 1)
+            {
+                MensajeE1.Text = "Pieza OK " + Error1;
+                MensajeE1.Foreground = Brushes.Green;
+            }
+            if (op == 2)
+            {
+                MensajeE1.Text = "Pieza NOK " + Error1;
+                MensajeE1.Foreground = Brushes.Red;
+            }
+            if (op == 3)
+            {
+                MensajeE1.Text = "En Espera";
+                MensajeE1.Foreground = Brushes.White;
+            }
+        }
+
+
     }
 }
