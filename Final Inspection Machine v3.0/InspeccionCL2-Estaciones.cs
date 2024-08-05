@@ -321,6 +321,7 @@ namespace Final_Inspection_Machine_v3._0
                     Error1 = Error1 + "Etiqueta ";
                     Dispatcher.InvokeAsync(() => EstadoE1(2));
                 }
+                Com.E1_TAPON_COLOCADO(false);
                 #endregion
                 DM.Guardar(serial1, DateTime.Now, Pass[0], !Pass[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, ResultadosE1[4].OKNG, ResultadosE1[4].Calificacion);
             }
@@ -347,6 +348,11 @@ namespace Final_Inspection_Machine_v3._0
             }
             catch (OperationCanceledException)
             {
+                
+            }
+            catch(Exception e) 
+            {
+                MessageBox.Show(e.Message);
             }
         }
         private async Task TaskE2()
@@ -566,6 +572,7 @@ namespace Final_Inspection_Machine_v3._0
                     Error2 = Error2 + "Etiqueta ";
                     Dispatcher.InvokeAsync(() => EstadoE2(2));
                 }
+                Com.E2_TAPON_COLOCADO(false);
                 #endregion
                 DM.Guardar(serial2, DateTime.Now, Pass[1], !Pass[1], ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, ResultadosE2[4].OKNG, ResultadosE2[4].Calificacion);
 
@@ -594,6 +601,10 @@ namespace Final_Inspection_Machine_v3._0
             catch (OperationCanceledException)
             {
 
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
             }
         }
         private string GenerarSerial(string Modelo, int Estacion, int Contador)

@@ -1,86 +1,101 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using Zebra.Sdk.Comm;
 using Zebra.Sdk.Printer;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Final_Inspection_Machine_v3._0
 {
     internal class Etiquetadora
     {
-        Zebra.Sdk.Comm.Connection Impresora;
-        public Thread Conexion;
-        bool status = false;
-        
-        object locko = new object();
+        private Zebra.Sdk.Comm.Connection Impresora;
+        private ZebraPrinter genericPrinter;
+        private ZebraPrinterLinkOs linkOsPrinter;
+        private readonly object locko = new object();
+        private bool status = false;
 
-        ZebraPrinter genericPrinter;
-        ZebraPrinterLinkOs linkOsPrinter;
         public Etiquetadora()
         {
             Inicializar();
         }
 
-        public void Inicializar()
+        private void Inicializar()
         {
-            try
+            lock (locko)
             {
-                Impresora = new Zebra.Sdk.Comm.TcpConnection("192.168.1.30", 6101);
-                Impresora.Open();
-                genericPrinter = ZebraPrinterFactory.GetInstance(Impresora);
-                linkOsPrinter = ZebraPrinterFactory.CreateLinkOsPrinter(genericPrinter);
-            }
-            catch (Exception)
-            {
+                try
+                {
+                    Impresora = new Zebra.Sdk.Comm.TcpConnection("192.168.1.30", 6101);
+                    Impresora.Open();
+                    genericPrinter = ZebraPrinterFactory.GetInstance(Impresora);
+                    linkOsPrinter = ZebraPrinterFactory.CreateLinkOsPrinter(genericPrinter);
+                    status = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error inicializando la impresora: {ex.Message}");
+                    status = false;
+                }
             }
         }
 
-
         public void GenerarEtiqueta(string Serial)
         {
-                //Connection cnZebra = new UsbConnection("USB001:");
-            try
+            lock (locko)
             {
-                if (!Impresora.Connected)
+                try
                 {
-                    try
+                    if (!Impresora.Connected)
                     {
+                        try
+                        {
+                            Impresora.Close();
+                        }
+                        catch (Exception) { }
+
                         Impresora.Open();
                     }
-                    catch (Exception e)
+
+                    if (linkOsPrinter != null)
                     {
-                        MessageBox.Show(e.Message);
+                        var vars = new Dictionary<int, string> { { 1, Serial } };
+                        linkOsPrinter.PrintStoredFormat("E:ETIQUETA.ZPL", vars);
                     }
                 }
-                //Impresora.Open();
-
-                if (linkOsPrinter != null)
+                catch (ConnectionException e)
                 {
-                    Dictionary<int, string> vars = new Dictionary<int, string> {  { 1, Serial }, };
-                    //linkOsPrinter.PrintStoredFormatWithVarGraphics("E:ETIQUETA.ZPL", vars);
-                    linkOsPrinter.PrintStoredFormat("E:ETIQUETA.ZPL", vars);
-
+                    //MessageBox.Show($"Error de conexión: {e.Message}");
+                    ReintentarImpresion(Serial);
+                }
+                catch (ZebraPrinterLanguageUnknownException e)
+                {
+                    MessageBox.Show($"Error de lenguaje de impresora desconocido: {e.Message}");
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"Error inesperado: {e.Message}");
                 }
             }
-            catch (ConnectionException e)
-            {
-                MessageBox.Show(e.Message);
-            }
-            catch (ZebraPrinterLanguageUnknownException e)
-            {
-                MessageBox.Show(e.Message);
-            }
-            finally
-            {
-                //Impresora.Close();
-            }
-            
+        }
 
+        private void ReintentarImpresion(string Serial)
+        {
+            lock (locko)
+            {
+                try
+                {
+                    if (linkOsPrinter != null)
+                    {
+                        var vars = new Dictionary<int, string> { { 1, Serial } };
+                        linkOsPrinter.PrintStoredFormat("E:ETIQUETA.ZPL", vars);
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"Error al reintentar la impresión: {e.Message}");
+                }
+            }
         }
     }
 }
