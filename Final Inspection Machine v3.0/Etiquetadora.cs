@@ -44,33 +44,41 @@ namespace Final_Inspection_Machine_v3._0
         public void GenerarEtiqueta(string Serial)
         {
                 //Connection cnZebra = new UsbConnection("USB001:");
-                try
+            try
+            {
+                if (!Impresora.Connected)
                 {
-                    //Impresora.Open();
-
-                    if (linkOsPrinter != null)
+                    try
                     {
-                        Dictionary<int, string> vars = new Dictionary<int, string> {
-                    { 1, Serial },
-                };
+                        Impresora.Open();
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message);
+                    }
+                }
+                //Impresora.Open();
 
-                        //linkOsPrinter.PrintStoredFormatWithVarGraphics("E:ETIQUETA.ZPL", vars);
+                if (linkOsPrinter != null)
+                {
+                    Dictionary<int, string> vars = new Dictionary<int, string> {  { 1, Serial }, };
+                    //linkOsPrinter.PrintStoredFormatWithVarGraphics("E:ETIQUETA.ZPL", vars);
                     linkOsPrinter.PrintStoredFormat("E:ETIQUETA.ZPL", vars);
 
                 }
-                }
-                catch (ConnectionException e)
-                {
-                    MessageBox.Show(e.Message);
-                }
-                catch (ZebraPrinterLanguageUnknownException e)
-                {
-                    MessageBox.Show(e.Message);
-                }
-                finally
-                {
-                    //Impresora.Close();
-                }
+            }
+            catch (ConnectionException e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            catch (ZebraPrinterLanguageUnknownException e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                //Impresora.Close();
+            }
             
 
         }

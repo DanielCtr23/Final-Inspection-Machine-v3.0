@@ -68,5 +68,8 @@
         <Button x:Name="CerrarBtn" Background="Transparent" Grid.Column="6" MinWidth="60" MinHeight="60" VerticalAlignment="Top" HorizontalAlignment="Right" BorderThickness="0" Click="CerrarBtn_Click">
             <iconpacks:PackIconMaterialDesign Kind="Close"/>
         </Button>
+        <Button x:Name="RestartBtn" Background="Transparent" Grid.Column="0" MinWidth="60" MinHeight="60" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="0" Click="RestartBtn_Click">
+            <iconpacks:ForkAwesome Kind="Refresh"/>
+        </Button>
     </Grid>
 </Window>

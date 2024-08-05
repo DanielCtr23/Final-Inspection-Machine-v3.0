@@ -76,8 +76,8 @@ namespace Final_Inspection_Machine_v3._0
             try
             {
                 await Task.WhenAll(taskE1, taskE2);
-                await Task.Delay(1200);
                 Com.Terminar();
+                await Task.Delay(1200);
             }
             catch (Exception ex)
             {
@@ -85,8 +85,8 @@ namespace Final_Inspection_Machine_v3._0
                 // Por ejemplo, registrar el error
             }
 
-            await Task.Delay(800);
             Com.Terminar();
+            await Task.Delay(800);
 
             // Actualizar UI después de completar las tareas
             Dispatcher.Invoke(() =>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -173,6 +174,23 @@ namespace Final_Inspection_Machine_v3._0
             DashboardTab.Closed += DashboardTab_Closed;
             DashboardTab.Show();
             this.Hide();
+        }
+
+        private void RestartBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("¿Desea reiniciar la aplicación?", "Reiniciar", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                // Obtener el nombre del ejecutable de la aplicación actual
+                string applicationPath = Process.GetCurrentProcess().MainModule.FileName;
+
+                // Iniciar un nuevo proceso para la misma aplicación
+                Process.Start(applicationPath);
+
+                // Cerrar la aplicación actual
+                Application.Current.Shutdown();
+            }
         }
     }
 }
