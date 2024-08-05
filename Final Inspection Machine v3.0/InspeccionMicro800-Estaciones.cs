@@ -1,11 +1,14 @@
 ﻿using IV3_Keyence;
+using ScottPlot.Plottables;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static IV3_Keyence.Estructuras;
 
 namespace Final_Inspection_Machine_v3._0
@@ -46,6 +49,9 @@ namespace Final_Inspection_Machine_v3._0
             EsperarTaponE1 = new ManualResetEvent(false);
             EsperarTaponE2 = new ManualResetEvent(false);
 
+            _ctsTaskE1 = new CancellationTokenSource();
+            _ctsTaskE2 = new CancellationTokenSource();
+
             // Configuraciones iniciales
             Contador1 = DM.ContadorSerial(E1);
             Contador2 = DM.ContadorSerial(E2);
@@ -63,13 +69,15 @@ namespace Final_Inspection_Machine_v3._0
             });
 
             // Ejecutar pruebas en paralelo
-            var taskE1 = TaskE1();
-            var taskE2 = TaskE2();
+
+            var taskE1 = Task.Run(() => TaskE1());
+            var taskE2 = Task.Run(() => TaskE2());
 
             try
             {
                 await Task.WhenAll(taskE1, taskE2);
                 await Task.Delay(1200);
+                Com.Terminar();
             }
             catch (Exception ex)
             {
@@ -85,6 +93,8 @@ namespace Final_Inspection_Machine_v3._0
             {
                 Error1 = "";
                 EstadoE1(3);
+                Error2 = "";
+                EstadoE2(3);
                 HabilitarBotones(true);
                 LimpiarPantalla();
                 CargarContadores();
@@ -314,26 +324,29 @@ namespace Final_Inspection_Machine_v3._0
                 #endregion
                 DM.Guardar(serial1, DateTime.Now, Pass[0], !Pass[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, ResultadosE1[4].OKNG, ResultadosE1[4].Calificacion);
 
-
             }
             catch (OperationCanceledException)
             {
 
             }
-
-
         }
         private async Task TaskO1()
         {
-            ResultadosOrifice1 = await Orifice11.PruebaAsync(ResultadosOrifice1);
-            if (ResultadosOrifice1.OKNG)
+            try
             {
-                Dispatcher.Invoke(() => OrificeBI1.OK(true));
+                ResultadosOrifice1 = await Orifice11.PruebaAsync(ResultadosOrifice1);
+                if (ResultadosOrifice1.OKNG)
+                {
+                    Dispatcher.Invoke(() => OrificeBI1.OK(true));
+                }
+                else
+                {
+                    Dispatcher.Invoke(() => OrificeBI1.OK(false));
+                    Fail[0] = true;
+                }
             }
-            else
+            catch (OperationCanceledException)
             {
-                Dispatcher.Invoke(() => OrificeBI1.OK(false));
-                Fail[0] = true;
             }
         }
         private async Task TaskE2()
@@ -564,15 +577,23 @@ namespace Final_Inspection_Machine_v3._0
         }
         private async Task TaskO2()
         {
-            ResultadosOrifice2 = await Orifice21.PruebaAsync(ResultadosOrifice2);
-            if (ResultadosOrifice2.OKNG)
+            try
             {
-                Dispatcher.Invoke(() => OrificeBI2.OK(true));
+                ResultadosOrifice2 = await Orifice21.PruebaAsync(ResultadosOrifice2);
+                if (ResultadosOrifice2.OKNG)
+                {
+                    Dispatcher.Invoke(() => OrificeBI2.OK(true));
+                }
+                else
+                {
+                    Dispatcher.Invoke(() => OrificeBI2.OK(false));
+                    Fail[1] = true;
+                }
+                _ctsTaskE2.Token.ThrowIfCancellationRequested();
             }
-            else
+            catch (OperationCanceledException)
             {
-                Dispatcher.Invoke(() => OrificeBI2.OK(false));
-                Fail[1] = true;
+
             }
         }
         private string GenerarSerial(string Modelo, int Estacion, int Contador)

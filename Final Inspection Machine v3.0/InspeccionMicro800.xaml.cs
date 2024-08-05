@@ -33,6 +33,7 @@ namespace Final_Inspection_Machine_v3._0
         string[] Camara = new string[4];
         string[] IPCamara = new string[4];
         bool IV3op;
+        public bool inicializacionExitosa = false;
         public InspeccionMicro800()
         {
             InitializeComponent();
@@ -213,6 +214,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             Com.IniciarCiclo += Com_IniciarCiclo;
             HabilitarBotones(true);
+            Com.Terminar();
         }
 
         private void RegresarBtn_Click(object sender, RoutedEventArgs e)

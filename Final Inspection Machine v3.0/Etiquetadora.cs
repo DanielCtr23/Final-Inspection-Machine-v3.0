@@ -19,6 +19,8 @@ namespace Final_Inspection_Machine_v3._0
         
         object locko = new object();
 
+        ZebraPrinter genericPrinter;
+        ZebraPrinterLinkOs linkOsPrinter;
         public Etiquetadora()
         {
             Inicializar();
@@ -29,24 +31,22 @@ namespace Final_Inspection_Machine_v3._0
             try
             {
                 Impresora = new Zebra.Sdk.Comm.TcpConnection("192.168.1.30", 6101);
+                Impresora.Open();
+                genericPrinter = ZebraPrinterFactory.GetInstance(Impresora);
+                linkOsPrinter = ZebraPrinterFactory.CreateLinkOsPrinter(genericPrinter);
             }
             catch (Exception)
             {
             }
         }
 
-        private readonly object printerLock = new object();
 
         public void GenerarEtiqueta(string Serial)
         {
-            lock(locko)
-            {
                 //Connection cnZebra = new UsbConnection("USB001:");
                 try
                 {
-                    Impresora.Open();
-                    ZebraPrinter genericPrinter = ZebraPrinterFactory.GetInstance(Impresora);
-                    ZebraPrinterLinkOs linkOsPrinter = ZebraPrinterFactory.CreateLinkOsPrinter(genericPrinter);
+                    //Impresora.Open();
 
                     if (linkOsPrinter != null)
                     {
@@ -54,8 +54,10 @@ namespace Final_Inspection_Machine_v3._0
                     { 1, Serial },
                 };
 
-                        linkOsPrinter.PrintStoredFormatWithVarGraphics("E:ETIQUETA.ZPL", vars);
-                    }
+                        //linkOsPrinter.PrintStoredFormatWithVarGraphics("E:ETIQUETA.ZPL", vars);
+                    linkOsPrinter.PrintStoredFormat("E:ETIQUETA.ZPL", vars);
+
+                }
                 }
                 catch (ConnectionException e)
                 {
@@ -67,9 +69,9 @@ namespace Final_Inspection_Machine_v3._0
                 }
                 finally
                 {
-                    Impresora.Close();
+                    //Impresora.Close();
                 }
-            }
+            
 
         }
     }

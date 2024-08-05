@@ -49,6 +49,9 @@ namespace Final_Inspection_Machine_v3._0
             EsperarTaponE1 = new ManualResetEvent(false);
             EsperarTaponE2 = new ManualResetEvent(false);
 
+            _ctsTaskE1 = new CancellationTokenSource();
+            _ctsTaskE2 = new CancellationTokenSource();
+
             // Configuraciones iniciales
             Contador1 = DM.ContadorSerial(E1);
             Contador2 = DM.ContadorSerial(E2);
@@ -66,13 +69,15 @@ namespace Final_Inspection_Machine_v3._0
             });
 
             // Ejecutar pruebas en paralelo
-            var taskE1 = TaskE1();
-            var taskE2 = TaskE2();
+            
+            var taskE1 = Task.Run(() => TaskE1());
+            var taskE2 = Task.Run(() => TaskE2());
 
             try
             {
                 await Task.WhenAll(taskE1, taskE2);
                 await Task.Delay(1200);
+                Com.Terminar();
             }
             catch (Exception ex)
             {
@@ -88,6 +93,8 @@ namespace Final_Inspection_Machine_v3._0
             {
                 Error1 = "";
                 EstadoE1(3);
+                Error2 = "";
+                EstadoE2(3);
                 HabilitarBotones(true);
                 LimpiarPantalla();
                 CargarContadores();
@@ -181,11 +188,11 @@ namespace Final_Inspection_Machine_v3._0
                         n = "R ";
                     }
 
-                    if (!nutrojo && (ResultadosE1[2].Res == "1"))
+                    if (!nutrojo && (ResultadosE1[2].Res == "0"))
                     {
                         Dispatcher.InvokeAsync(() => NutBI1.OK(true));
                     }
-                    else if (nutrojo && (ResultadosE1[2].Res == "0"))
+                    else if (nutrojo && (ResultadosE1[2].Res == "1"))
                     {
                         Dispatcher.InvokeAsync(() => NutBI1.OK(true));
                     }
@@ -324,15 +331,22 @@ namespace Final_Inspection_Machine_v3._0
         }
         private async Task TaskO1()
         {
-            ResultadosOrifice1 = await Orifice11.PruebaAsync(ResultadosOrifice1);
-            if (ResultadosOrifice1.OKNG)
+            try
             {
-                Dispatcher.Invoke(() => OrificeBI1.OK(true));
+                ResultadosOrifice1 = await Orifice11.PruebaAsync(ResultadosOrifice1);
+                if (ResultadosOrifice1.OKNG)
+                {
+                    Dispatcher.Invoke(() => OrificeBI1.OK(true));
+                }
+                else
+                {
+                    Dispatcher.Invoke(() => OrificeBI1.OK(false));
+                    Fail[0] = true;
+                }
+                _ctsTaskE1.Token.ThrowIfCancellationRequested();
             }
-            else
+            catch (OperationCanceledException)
             {
-                Dispatcher.Invoke(() => OrificeBI1.OK(false));
-                Fail[0] = true;
             }
         }
         private async Task TaskE2()
@@ -408,14 +422,14 @@ namespace Final_Inspection_Machine_v3._0
                 string n = "";
                 if (ResultadosE2[2].OKNG)
                 {
-                    if (ResultadosE1[2].Res == "00")
+                    if (ResultadosE2[2].Res == "00")
                     {
-                        ResultadosE1[2].Res = "0";
+                        ResultadosE2[2].Res = "0";
                         n = "A ";
                     }
-                    else if (ResultadosE1[2].Res == "01")
+                    else if (ResultadosE2[2].Res == "01")
                     {
-                        ResultadosE1[2].Res = "1";
+                        ResultadosE2[2].Res = "1";
                         n = "R ";
                     }
                     if (!nutrojo && (ResultadosE2[2].Res == "0"))
@@ -563,15 +577,23 @@ namespace Final_Inspection_Machine_v3._0
         }
         private async Task TaskO2()
         {
-            ResultadosOrifice2 = await Orifice21.PruebaAsync(ResultadosOrifice2);
-            if (ResultadosOrifice2.OKNG)
+            try
             {
-                Dispatcher.Invoke(() => OrificeBI2.OK(true));
+                ResultadosOrifice2 = await Orifice21.PruebaAsync(ResultadosOrifice2);
+                if (ResultadosOrifice2.OKNG)
+                {
+                    Dispatcher.Invoke(() => OrificeBI2.OK(true));
+                }
+                else
+                {
+                    Dispatcher.Invoke(() => OrificeBI2.OK(false));
+                    Fail[1] = true;
+                }
+                _ctsTaskE2.Token.ThrowIfCancellationRequested();
             }
-            else
+            catch (OperationCanceledException)
             {
-                Dispatcher.Invoke(() => OrificeBI2.OK(false));
-                Fail[1] = true;
+
             }
         }
         private string GenerarSerial(string Modelo, int Estacion, int Contador)
