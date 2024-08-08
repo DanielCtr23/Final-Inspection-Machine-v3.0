@@ -48,13 +48,11 @@ namespace Final_Inspection_Machine_v3._0
                 {
                     if (!Impresora.Connected)
                     {
-                        Impresora.Open();
-                        genericPrinter = ZebraPrinterFactory.GetInstance(Impresora);
-                        linkOsPrinter = ZebraPrinterFactory.CreateLinkOsPrinter(genericPrinter);
+                        Inicializar();
                         if (linkOsPrinter != null)
                         {
                             var vars = new Dictionary<int, string> { { 1, Serial } };
-                            linkOsPrinter.PrintStoredFormat("E:ETIQUETA.ZPL", vars);
+                            linkOsPrinter.PrintStoredFormatWithVarGraphics("E:ETIQUETA.ZPL", vars);
                         }
                     }
                     else
@@ -83,23 +81,5 @@ namespace Final_Inspection_Machine_v3._0
             }
         }
 
-        private void ReintentarImpresion(string Serial)
-        {
-            lock (locko)
-            {
-                try
-                {
-                    if (linkOsPrinter != null)
-                    {
-                        var vars = new Dictionary<int, string> { { 1, Serial } };
-                        linkOsPrinter.PrintStoredFormat("E:ETIQUETA.ZPL", vars);
-                    }
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show($"Error al reintentar la impresión: {e.Message}");
-                }
-            }
-        }
     }
 }

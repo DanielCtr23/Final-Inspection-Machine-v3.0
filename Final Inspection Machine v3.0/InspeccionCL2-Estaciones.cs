@@ -15,8 +15,6 @@ namespace Final_Inspection_Machine_v3._0
 {
     public partial class InspeccionCL2
     {
-        private CancellationTokenSource _ctsTaskE1;
-        private CancellationTokenSource _ctsTaskE2;
         Estructuras.ResultadosCorrugado[] ResultadosE1 = new ResultadosCorrugado[8];
         Estructuras.ResultadosCorrugado[] ResultadosE2 = new ResultadosCorrugado[8];
         Estructuras.ResultadosCorrugado ResultadosOrifice1 = new ResultadosCorrugado();
@@ -45,7 +43,7 @@ namespace Final_Inspection_Machine_v3._0
             Pass[0] = false;
             Fail[1] = false;
             Pass[1] = false;
-            Dispatcher.Invoke(() => HabilitarBotones(false));
+            Dispatcher.InvokeAsync(() => HabilitarBotones(false));
 
             // Inicializar ManualResetEvents
             EsperarEtiquetaE1 = new ManualResetEvent(false);
@@ -63,7 +61,7 @@ namespace Final_Inspection_Machine_v3._0
             resorte = Com.Resorte();
 
             // Actualizar UI
-            Dispatcher.Invoke(() =>
+            Dispatcher.InvokeAsync(() =>
             {
                 PilotBracketTxB1.Text = pilotbracket ? "PILOT BRACKET" : "PILOT BRACKET N/A";
                 PilotBracketTxB2.Text = pilotbracket ? "PILOT BRACKET" : "PILOT BRACKET N/A";
@@ -83,10 +81,10 @@ namespace Final_Inspection_Machine_v3._0
 
             //Esperar Para Limpiar Pantalla
             Com.Terminar();
-            Thread.Sleep(TiempoFinal);
+            Thread.Sleep(1750);
 
             // Actualizar UI después de completar las tareas
-            Dispatcher.Invoke(() =>
+            Dispatcher.InvokeAsync(() =>
             {
                 Error1 = "";
                 EstadoE1(3);
@@ -126,43 +124,6 @@ namespace Final_Inspection_Machine_v3._0
             #endregion
 
             await Corrugado1.CambioProgramaAsync(1);
-
-            //Sentido de Corrugado
-            #region
-            ResultadosE1[1] = await Corrugado1.PruebaAsync(ResultadosE1[1]);
-            if (ResultadosE1[1].OKNG && (ResultadosE1[1].Programa == 1))
-            {
-                if (sinsentido)
-                {
-                    Dispatcher.InvokeAsync(() => SentidoBI1.OK(true));
-                }
-                else
-                {
-                    if (ResultadosE1[1].Res == "00")
-                    {
-                        Dispatcher.InvokeAsync(() => SentidoBI1.OK(true));
-                    }
-                    else if (ResultadosE1[1].Res == "01")
-                    {
-                        Dispatcher.InvokeAsync(() => SentidoBI1.OK(false));
-                        ResultadosE1[1].OKNG = false;
-                        Fail[0] = true;
-                        Error1 = Error1 + " Sentido I ";
-                        Dispatcher.InvokeAsync(() => EstadoE1(0));
-                    }
-                }
-            }
-            else
-            {
-                ResultadosE1[1].Res = "-1";
-                Dispatcher.InvokeAsync(() => SentidoBI1.OK(false));
-                Fail[0] = true;
-                Error1 = Error1 + " Sentido -  ";
-                Dispatcher.InvokeAsync(() => EstadoE1(0));
-            }
-            #endregion
-
-            await Corrugado1.CambioProgramaAsync(2);
 
             //Sentido de Corrugado
             #region
@@ -262,7 +223,7 @@ namespace Final_Inspection_Machine_v3._0
                 Dispatcher.InvokeAsync(() => PilotBracketBI1.OK(false));
                 ResultadosE1[5].OKNG = false;
                 //Fail[0] = true;
-                Error1 = Error1 + " PB " + ResultadosE1[5].Programa + " ";
+                Error1 = Error1 + " PB " + ResultadosE1[5].Res + " ";
                 Dispatcher.InvokeAsync(() => EstadoE1(0));
             }
             #endregion
@@ -280,7 +241,7 @@ namespace Final_Inspection_Machine_v3._0
 
             if (Fail[0])
             {
-                Thread.Sleep(500);
+                Dispatcher.InvokeAsync(() => EstadoE1(2));
                 Estacion1.Abort();
             }
             else
@@ -294,26 +255,27 @@ namespace Final_Inspection_Machine_v3._0
             //Tapon
             #region
             ResultadosE1[3] = await Corrugado1.PruebaAsync(ResultadosE1[3]);
-            if (ResultadosE1[3].OKNG)
+            if (ResultadosE1[3].OKNG && ResultadosE1[3].Programa == 3)
             {
-                Dispatcher.Invoke(() => TaponBI1.OK(true));
-                Com.E1_TAPON_COLOCADO(true);
                 etiquetadora.GenerarEtiqueta(serial1);
+                Dispatcher.InvokeAsync(() => TaponBI1.OK(true));
+                Com.E1_TAPON_COLOCADO(true);
             }
             else
             {
-                Dispatcher.Invoke(() => TaponBI1.OK(false));
+                Dispatcher.InvokeAsync(() => TaponBI1.OK(false));
                 Fail[0] = true;
-                ResultadosE1[3].Calificacion = 0;
+                //ResultadosE1[3].Calificacion = 0;
+                Error1 = Error1 + "Tapon ";
+                Dispatcher.InvokeAsync(() => EstadoE1(0));
             }
 
             DM.Guardar(serial1, DateTime.Now, false, Fail[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
-
             #endregion
 
             if (Fail[0])
             {
-                Thread.Sleep(500);
+                Dispatcher.InvokeAsync(() => EstadoE1(2));
                 Estacion1.Abort();
             }
             else
@@ -323,97 +285,28 @@ namespace Final_Inspection_Machine_v3._0
 
             await Corrugado1.CambioProgramaAsync(4);
 
+
             //Etiqueta
             #region
             ResultadosE1[4] = await Corrugado1.PruebaAsync(ResultadosE1[4]);
-            if (ResultadosE1[4].OKNG)
+            if (ResultadosE1[4].OKNG && ResultadosE1[4].Programa == 4)
             {
-                Dispatcher.Invoke(() => EtiquetaBI1.OK(true));
+                Dispatcher.InvokeAsync(() => EtiquetaBI1.OK(true));
                 Pass[0] = true;
+                Dispatcher.InvokeAsync(() => EstadoE1(1));
             }
             else
             {
-                Dispatcher.Invoke(() => EtiquetaBI1.OK(false));
+                Dispatcher.InvokeAsync(() => EtiquetaBI1.OK(false));
                 Fail[0] = true;
                 Pass[0] = false;
+                Error1 = Error1 + "Etiqueta ";
+                Dispatcher.InvokeAsync(() => EstadoE1(2));
             }
+            Com.E1_TAPON_COLOCADO(false);
             #endregion
-
             DM.Guardar(serial1, DateTime.Now, Pass[0], !Pass[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, ResultadosE1[4].OKNG, ResultadosE1[4].Calificacion);
 
-
-            try
-            {
-
-                
-                if (Fail[0])
-                {
-                    Dispatcher.InvokeAsync(() => EstadoE1(2));
-                }
-                else
-                {
-                    Com.E1_3Pass(true);
-                    EsperarTaponE1.WaitOne(); 
-                    await Corrugado1.CambioProgramaAsync(3);
-
-                    //Tapon
-                    #region
-                    ResultadosE1[3] = await Corrugado1.PruebaAsync(ResultadosE1[3]);
-                    if (ResultadosE1[3].OKNG && ResultadosE1[3].Programa == 3)
-                    {
-                        etiquetadora.GenerarEtiqueta(serial1);
-                        Dispatcher.InvokeAsync(() => TaponBI1.OK(true));
-                        Com.E1_TAPON_COLOCADO(true);
-                    }
-                    else
-                    {
-                        Dispatcher.InvokeAsync(() => TaponBI1.OK(false));
-                        Fail[0] = true;
-                        ResultadosE1[3].Calificacion = 0;
-                        Error1 = Error1 + "Tapon ";
-                        Dispatcher.InvokeAsync(() => EstadoE1(0));
-                    }
-
-                    DM.Guardar(serial1, DateTime.Now, false, Fail[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
-                    #endregion
-                }
-
-                if (Fail[0])
-                {
-                    Dispatcher.InvokeAsync(() => EstadoE1(2));
-                }
-                else
-                {
-                    await Corrugado1.CambioProgramaAsync(4);
-                    EsperarEtiquetaE1.WaitOne();
-
-                    //Etiqueta
-                    #region
-                    ResultadosE1[4] = await Corrugado1.PruebaAsync(ResultadosE1[4]);
-                    if (ResultadosE1[4].OKNG)
-                    {
-                        Dispatcher.InvokeAsync(() => EtiquetaBI1.OK(true));
-                        Pass[0] = true;
-                        Dispatcher.InvokeAsync(() => EstadoE1(1));
-                    }
-                    else
-                    {
-                        Dispatcher.InvokeAsync(() => EtiquetaBI1.OK(false));
-                        Fail[0] = true;
-                        Pass[0] = false;
-                        Error1 = Error1 + "Etiqueta ";
-                        Dispatcher.InvokeAsync(() => EstadoE1(2));
-                    }
-                    Com.E1_TAPON_COLOCADO(false);
-                    #endregion
-                    DM.Guardar(serial1, DateTime.Now, Pass[0], !Pass[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, ResultadosE1[4].OKNG, ResultadosE1[4].Calificacion);
-                }
-
-            }
-            catch (Exception e)
-            {
-                //MessageBox.Show(e.Message);
-            }
         }
         private async Task TaskO1()
         {
@@ -422,17 +315,19 @@ namespace Final_Inspection_Machine_v3._0
                 ResultadosOrifice1 = await Orifice11.PruebaAsync(ResultadosOrifice1);
                 if (ResultadosOrifice1.OKNG)
                 {
-                    Dispatcher.Invoke(() => OrificeBI1.OK(true));
+                    await Dispatcher.InvokeAsync(() => OrificeBI1.OK(true));
                 }
                 else
                 {
-                    Dispatcher.Invoke(() => OrificeBI1.OK(false));
+                    await Dispatcher.InvokeAsync(() => OrificeBI1.OK(false));
                     Fail[0] = true;
+                    Error1 = Error1 + " Rosca ";
                 }
             }
-            catch(Exception e) 
+            catch(Exception e)
             {
-               // MessageBox.Show(e.Message);
+                Fail[0] = true;
+                Error1 = Error1 + " *Rosca* ";
             }
         }
         private async void TaskE2()
@@ -441,7 +336,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 Dispatcher.InvokeAsync(() => EstadoE2(0));
                 await Corrugado2.CambioProgramaAsync(0);
-                serial2 = 2.ToString();
+                serial2 = E2.ToString();
                 Task Orifice2 = TaskO2();
 
                 //Largo de Corrugado
@@ -561,7 +456,7 @@ namespace Final_Inspection_Machine_v3._0
                     Dispatcher.InvokeAsync(() => PilotBracketBI2.OK(false));
                     ResultadosE2[5].OKNG = false;
                     //Fail[1] = true;
-                    Error2 = Error2 + " PB " + ResultadosE2[5].Programa + " ";
+                    Error2 = Error2 + " PB " + ResultadosE2[5].Res + " ";
                     Dispatcher.InvokeAsync(() => EstadoE2(0));
                 }
                 #endregion
@@ -569,7 +464,6 @@ namespace Final_Inspection_Machine_v3._0
                 await Orifice2;
 
                 serial2 = GenerarSerial(modelo, E2, Contador2);
-
                 DM.Guardar(serial2, modelo, DateTime.Now, false, Fail[1],
                     /*Rosca*/ ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion, /*Crack*/ false, -1, -1,
                     /*Resorte*/ false,
@@ -581,75 +475,77 @@ namespace Final_Inspection_Machine_v3._0
                 if (Fail[1])
                 {
                     Dispatcher.InvokeAsync(() => EstadoE2(2));
+                    Estacion2.Abort();
                 }
                 else
                 {
                     Com.E2_3Pass(true);
                     EsperarTaponE2.WaitOne();
-                    await Corrugado2.CambioProgramaAsync(3);
-
-                    //Tapon
-                    #region
-                    ResultadosE2[3] = await Corrugado2.PruebaAsync(ResultadosE2[3]);
-                    if (ResultadosE2[3].OKNG && ResultadosE2[3].Programa == 3)
-                    {
-                        etiquetadora.GenerarEtiqueta(serial2);
-                        Dispatcher.InvokeAsync(() => TaponBI2.OK(true));
-                        Com.E2_TAPON_COLOCADO(true);
-                    }
-                    else
-                    {
-                        Dispatcher.InvokeAsync(() => TaponBI2.OK(false));
-                        Fail[1] = true;
-                        ResultadosE2[3].Calificacion = 0;
-                        Error2 = Error2 + "Tapon ";
-                        Dispatcher.InvokeAsync(() => EstadoE2(0));
-                    }
-
-                    DM.Guardar(serial2, DateTime.Now, false, Fail[1], ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, false, -1);
-
-                    #endregion
                 }
+
+                await Corrugado2.CambioProgramaAsync(3);
+
+                //Tapon
+                #region
+                ResultadosE2[3] = await Corrugado2.PruebaAsync(ResultadosE2[3]);
+                if (ResultadosE2[3].OKNG && ResultadosE2[3].Programa == 3)
+                {
+                    etiquetadora.GenerarEtiqueta(serial2);
+                    Dispatcher.InvokeAsync(() => TaponBI2.OK(true));
+                    Com.E2_TAPON_COLOCADO(true);
+                }
+                else
+                {
+                    Dispatcher.InvokeAsync(() => TaponBI2.OK(false));
+                    Fail[1] = true;
+                    //ResultadosE2[3].Calificacion = 0;
+                    Error2 = Error2 + "Tapon ";
+                    Dispatcher.InvokeAsync(() => EstadoE2(0));
+                }
+
+                DM.Guardar(serial2, DateTime.Now, false, Fail[1], ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, false, -1);
+                #endregion
 
 
                 if (Fail[1])
                 {
                     Dispatcher.InvokeAsync(() => EstadoE2(2));
+                    Estacion2.Abort();
                 }
                 else
                 {
-                    await Corrugado2.CambioProgramaAsync(4);
-                    EsperarEtiquetaE2.WaitOne(); 
-                    
+                    EsperarEtiquetaE2.WaitOne();
+                }
 
-                    //Etiqueta
-                    #region
-                    ResultadosE2[4] = await Corrugado2.PruebaAsync(ResultadosE2[4]);
-                    if (ResultadosE2[4].OKNG)
-                    {
-                        Dispatcher.InvokeAsync(() => EtiquetaBI2.OK(true));
-                        Pass[1] = true;
-                        Dispatcher.InvokeAsync(() => EstadoE2(1));
+                await Corrugado2.CambioProgramaAsync(4);
 
-                    }
-                    else
-                    {
-                        Dispatcher.InvokeAsync(() => EtiquetaBI2.OK(false));
-                        Fail[1] = true;
-                        Pass[1] = false;
-                        Error2 = Error2 + "Etiqueta ";
-                        Dispatcher.InvokeAsync(() => EstadoE2(2));
-                    }
-                    Com.E2_TAPON_COLOCADO(false);
-                    #endregion
-                    DM.Guardar(serial2, DateTime.Now, Pass[1], !Pass[1], ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, ResultadosE2[4].OKNG, ResultadosE2[4].Calificacion);
+                //Etiqueta
+                #region
+                ResultadosE2[4] = await Corrugado2.PruebaAsync(ResultadosE2[4]);
+                if (ResultadosE2[4].OKNG && ResultadosE2[4].Programa == 4)
+                {
+                    Dispatcher.InvokeAsync(() => EtiquetaBI2.OK(true));
+                    Pass[1] = true;
+                    Dispatcher.InvokeAsync(() => EstadoE2(1));
 
                 }
+                else
+                {
+                    Dispatcher.InvokeAsync(() => EtiquetaBI2.OK(false));
+                    Fail[1] = true;
+                    Pass[1] = false;
+                    Error2 = Error2 + "Etiqueta ";
+                    Dispatcher.InvokeAsync(() => EstadoE2(2));
+                }
+                Com.E2_TAPON_COLOCADO(false);
+                #endregion
+                DM.Guardar(serial2, DateTime.Now, Pass[1], !Pass[1], ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, ResultadosE2[4].OKNG, ResultadosE2[4].Calificacion);
+
 
             }
             catch (Exception e)
             {
-                // MessageBox.Show(e.Message);
+
             }
 
         }
@@ -660,17 +556,19 @@ namespace Final_Inspection_Machine_v3._0
                 ResultadosOrifice2 = await Orifice21.PruebaAsync(ResultadosOrifice2);
                 if (ResultadosOrifice2.OKNG)
                 {
-                    Dispatcher.Invoke(() => OrificeBI2.OK(true));
+                    await Dispatcher.InvokeAsync(() => OrificeBI2.OK(true));
                 }
                 else
                 {
-                    Dispatcher.Invoke(() => OrificeBI2.OK(false));
+                    await Dispatcher.InvokeAsync(() => OrificeBI2.OK(false));
                     Fail[1] = true;
+                    Error2 = Error2 + " Rosca ";
                 }
             }
             catch (Exception e)
             {
-                //MessageBox.Show(e.Message);
+                Fail[1] = true;
+                Error2 = Error2 + " *Rosca* ";
             }
         }
         private string GenerarSerial(string Modelo, int Estacion, int Contador)
@@ -685,7 +583,5 @@ namespace Final_Inspection_Machine_v3._0
             ContadorBuenas.Text = "PIEZAS BUENAS: " + int.Parse(dt.Rows[0]["Valor"].ToString()).ToString("D3");
             ContadorMalas.Text = "PIEZAS MALAS:  " + int.Parse(dt.Rows[1]["Valor"].ToString()).ToString("D3");
         }
-
-
     }
 }

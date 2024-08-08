@@ -40,7 +40,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
-                if (HiloPrincipal.IsAlive)
+                if (HiloPrincipal.IsAlive && HiloPrincipal != null)
                 {
                     if (Estacion1 != null && Estacion1.IsAlive)
                     {
@@ -50,11 +50,32 @@ namespace Final_Inspection_Machine_v3._0
                     {
                         Estacion2.Abort();
                     }
-                    TiempoFinal = 700;
+                    HiloPrincipal.Abort();
+                }
+                else
+                {
+
                 }
             }
             catch (Exception)
             {
+            }
+            finally
+            {
+                Com.Terminar();
+                Thread.Sleep(800);
+
+                // Actualizar UI después de completar las tareas
+                Dispatcher.InvokeAsync(() =>
+                {
+                    Error1 = "";
+                    EstadoE1(3);
+                    Error2 = "";
+                    EstadoE2(3);
+                    HabilitarBotones(true);
+                    LimpiarPantalla();
+                    CargarContadores();
+                });
             }
         }
 

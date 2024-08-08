@@ -34,10 +34,11 @@ namespace Final_Inspection_Machine_v3._0
         string[] Camara = new string[4];
         string[] IPCamara = new string[4];
         bool IV3op;
-        public bool inicializacionExitosa = false;
+        public bool inicializacionExitosa = true;
         public InspeccionCL2()
         {
             InitializeComponent();
+            inicializacionExitosa = false;
         }
 
         public void Inicializar()
