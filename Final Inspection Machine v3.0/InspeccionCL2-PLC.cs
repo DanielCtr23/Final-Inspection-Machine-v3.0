@@ -29,8 +29,6 @@ namespace Final_Inspection_Machine_v3._0
                 Com.DetenerCiclo += Com_DetenerCiclo;
                 Com.CambioSeleccionado += Com_CambioSeleccionado;
             }
-            
-            
         }
 
         private void Com_CambioSeleccionado(object sender, string e)
@@ -57,7 +55,6 @@ namespace Final_Inspection_Machine_v3._0
             }
             catch (Exception)
             {
-                throw;
             }
         }
 
@@ -201,7 +198,6 @@ namespace Final_Inspection_Machine_v3._0
                 MensajeE2.Foreground = Brushes.White;
             }
         }
-
 
     }
 }

@@ -48,25 +48,29 @@ namespace Final_Inspection_Machine_v3._0
                 {
                     if (!Impresora.Connected)
                     {
-                        try
-                        {
-                            Impresora.Close();
-                        }
-                        catch (Exception) { }
-
                         Impresora.Open();
+                        genericPrinter = ZebraPrinterFactory.GetInstance(Impresora);
+                        linkOsPrinter = ZebraPrinterFactory.CreateLinkOsPrinter(genericPrinter);
+                        if (linkOsPrinter != null)
+                        {
+                            var vars = new Dictionary<int, string> { { 1, Serial } };
+                            linkOsPrinter.PrintStoredFormat("E:ETIQUETA.ZPL", vars);
+                        }
+                    }
+                    else
+                    {
+                        if (linkOsPrinter != null)
+                        {
+                            var vars = new Dictionary<int, string> { { 1, Serial } };
+                            linkOsPrinter.PrintStoredFormat("E:ETIQUETA.ZPL", vars);
+                        }
                     }
 
-                    if (linkOsPrinter != null)
-                    {
-                        var vars = new Dictionary<int, string> { { 1, Serial } };
-                        linkOsPrinter.PrintStoredFormat("E:ETIQUETA.ZPL", vars);
-                    }
                 }
                 catch (ConnectionException e)
                 {
-                    //MessageBox.Show($"Error de conexión: {e.Message}");
-                    ReintentarImpresion(Serial);
+                    MessageBox.Show($"Error de conexión: {e.Message}");
+                    //ReintentarImpresion(Serial);
                 }
                 catch (ZebraPrinterLanguageUnknownException e)
                 {

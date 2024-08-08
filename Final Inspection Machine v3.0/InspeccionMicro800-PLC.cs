@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Xceed.Wpf.Toolkit;
 
 namespace Final_Inspection_Machine_v3._0
 {
@@ -39,16 +40,21 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
-                _ctsTaskE1.Cancel();
-                _ctsTaskE2.Cancel();
-                EsperarEtiquetaE1.Set();
-                EsperarEtiquetaE2.Set();
-                EsperarTaponE1.Set();
-                EsperarTaponE2.Set();
+                if (HiloPrincipal.IsAlive && HiloPrincipal != null)
+                {
+                    if (Estacion1 != null && Estacion1.IsAlive)
+                    {
+                        Estacion1.Abort();
+                    }
+                    if (Estacion2 != null && Estacion2.IsAlive)
+                    {
+                        Estacion2.Abort();
+                    }
+                    TiempoFinal = 700;
+                }
             }
             catch (Exception)
             {
-                throw;
             }
         }
 
@@ -120,10 +126,13 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
-                Task.Run(() => Ejecucion());
+                HiloPrincipal = new Thread(Ejecucion);
+                HiloPrincipal.IsBackground = true;
+                HiloPrincipal.Start();
             }
             catch (Exception ex)
             {
+                MessageBox.Show("No se puede iniciar el ciclo: Com_IniciarCiclo\n" + ex.Message);
             }
         }
 

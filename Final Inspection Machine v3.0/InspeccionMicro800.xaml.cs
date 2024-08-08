@@ -33,10 +33,11 @@ namespace Final_Inspection_Machine_v3._0
         string[] Camara = new string[4];
         string[] IPCamara = new string[4];
         bool IV3op;
-        public bool inicializacionExitosa = false;
+        public bool inicializacionExitosa = true;
         public InspeccionMicro800()
         {
             InitializeComponent();
+            inicializacionExitosa = false;
         }
         public void Inicializar()
         {
@@ -83,8 +84,6 @@ namespace Final_Inspection_Machine_v3._0
             E1 = DM.Estacion(1);
             E2 = DM.Estacion(2);
         }
-
-
 
         private void InspeccionMicro800_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {

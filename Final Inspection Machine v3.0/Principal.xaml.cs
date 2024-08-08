@@ -73,9 +73,9 @@ namespace Final_Inspection_Machine_v3._0
                     if (inspeccion_CL2.inicializacionExitosa == false)
                     {
                         inspeccion_CL2.Inicializar();
+                        inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
+                        inspeccion_CL2.Closed += Inspeccion_CL2_Closed;
                     }
-                    inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
-                    inspeccion_CL2.Closed += Inspeccion_CL2_Closed;
                     inspeccion_CL2.Show();
                     this.Hide();
                 }
@@ -89,10 +89,13 @@ namespace Final_Inspection_Machine_v3._0
             {
                 try
                 {
-                    inspeccion_Micro800.Inicializar();
-                    inspeccion_Micro800.IsVisibleChanged += Inspeccion_Micro800_IsVisibleChanged;
+                    if (inspeccion_Micro800.inicializacionExitosa == false)
+                    {
+                        inspeccion_Micro800.Inicializar();
+                        inspeccion_Micro800.IsVisibleChanged += Inspeccion_Micro800_IsVisibleChanged;
+                        inspeccion_Micro800.Closed += Inspeccion_Micro800_Closed;
+                    }
                     inspeccion_Micro800.Show();
-                    inspeccion_Micro800.Closed += Inspeccion_Micro800_Closed;
                     this.Hide();
                 }
                 catch (Exception)
@@ -109,12 +112,27 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Inspeccion_Micro800_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            this.Show();
+            try
+            {
+                this.Show();
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void Inspeccion_CL2_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            this.Show();
+            try
+            {
+                this.Show();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private void Inspeccion_CL2_Closed(object sender, System.EventArgs e)
