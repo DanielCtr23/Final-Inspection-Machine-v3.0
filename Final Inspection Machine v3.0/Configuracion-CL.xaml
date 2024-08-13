@@ -1,19 +1,13 @@
-﻿<Window
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window x:Class="Final_Inspection_Machine_v3._0.Configuracion_CL"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:UC="clr-namespace:Final_Inspection_Machine_v3._0.UC"
-        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-        xmlns:SP="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:iconpacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-        x:Class="Final_Inspection_Machine_v3._0.DashboardTab"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:Final_Inspection_Machine_v3._0"
         mc:Ignorable="d"
-        Title="DashboardTab" Height="1080" Width="1920" WindowState="Maximized" WindowStyle="None">
+        Title="Configuracion_CL" Height="1080" Width="1920" WindowState="Maximized" WindowStyle="None">
     <Window.Resources>
         <Style x:Key="ButtonFocusVisual">
             <Setter Property="Control.Template">
@@ -131,12 +125,8 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <ToggleButton x:Name="TiempoExtraToggle" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Style="{StaticResource ToggleButtonStyle1}" 
-                          Checked="ToggleButton_Checked" Click="ToggleButton_Click" Unchecked="Toggle_Unchecked">
-
-            </ToggleButton>
             <Viewbox Grid.RowSpan="3" Grid.ColumnSpan="1" Grid.Column="1">
-                <TextBlock Text="FIM DASHBOARD" FontSize="80" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
+                <TextBlock Text="FIM CONFIGURACIÓN" FontSize="80" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
             </Viewbox>
             <TextBlock x:Name="FechaTB" Text="20/06/2024" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,15,0" 
                        FontSize="20" Grid.Row="1" Grid.Column="4"/>
@@ -179,7 +169,7 @@
                 <TabItem.Header>
                     <StackPanel>
                         <iconPacks:PackIconFontAwesome Kind="HomeSolid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White"/>
-                        <TextBlock Text="INICIO" Foreground="White"/>
+                        <TextBlock Text="PRUEBAS" Foreground="White"/>
                     </StackPanel>
                 </TabItem.Header>
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -195,11 +185,6 @@
                                 <RowDefinition Height="447.5"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <UC:BuenasActualGauge x:Name="ProduccionActual" Height="417.5" Width="417.5" Margin="15" Grid.Column="0"/>
-                            <UC:BuenasTurno x:Name="ProduccionTurno" Height="417.5" Width="417.5" Margin="15"  Grid.Column="1"/>
-                            <UC:ModelosCorridos x:Name="ModelosTurno" Height="417.5" Width="417.5" Margin="15"  Grid.Column="2"/>
-                            <UC:TiemposTurno x:Name="TiemposTurno" Height="417.5" Width="417.5" Margin="15" Grid.Column="3"/>
-                            <UC:ProduccionTurno x:Name="GraficaTurno" Height="Auto" Width="1760" Margin="15" Grid.Row="1" Grid.ColumnSpan="4"/>
                         </Grid>
                     </Viewbox>
                 </ScrollViewer>
@@ -209,7 +194,7 @@
                 <TabItem.Header>
                     <StackPanel>
                         <iconPacks:PackIconFontAwesome Kind="TableSolid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White"/>
-                        <TextBlock Text="CONTADORES" Foreground="White"/>
+                        <TextBlock Text="CONTROLADOR" Foreground="White"/>
                     </StackPanel>
                 </TabItem.Header>
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" >
@@ -225,23 +210,6 @@
                                 <RowDefinition  Height="960"/>
                                 <RowDefinition  Height="1160"/>
                             </Grid.RowDefinitions>
-
-                            <Grid Margin="20,5,15,0" Background="#181818" Grid.ColumnSpan="2" Height="40" HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <ToggleButton x:Name="ToggleButtonProduccion" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Style="{StaticResource ToggleButtonStyle2}" 
-              Checked="ToggleButtonProduccion_Checked"  Unchecked="ToggleButtonProduccion_Unchecked"  />
-
-                            </Grid>
-
-                            <UC:Grafico_Diario x:Name="GraficoDiario" Height="590" Width="1100" Grid.Row="1" Grid.Column="0" Margin="15"/>
-                            <UC:Grafico_Semanal x:Name="GraficoSemanal" Height="590" Width="770" Grid.Row="1" Grid.Column="1" Margin="15"/>
-                            <UC:Produccion_Mensual x:Name="GraficoMensual"  Height="930" Width="1890" Margin="15,5,15,0" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
-                            <UC:Grafico_Anual x:Name="GraficoAnual"  Height="1130" Width="1890" Margin="15,5,15,0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
                         </Grid>
                     </Viewbox>
                 </ScrollViewer>
@@ -250,12 +218,11 @@
                 <TabItem.Header>
                     <StackPanel>
                         <iconPacks:PackIconFontAwesome Kind="ListSolid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White"/>
-                        <TextBlock Text="DETALLE" Foreground="White"/>
+                        <TextBlock Text="DATOS" Foreground="White"/>
                     </StackPanel>
                 </TabItem.Header>
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                     <Viewbox Stretch="Uniform" StretchDirection="Both">
-                        <UC:DetallePruebas Width="1080" Height="575" Margin="15"/>
                     </Viewbox>
                 </ScrollViewer>
             </TabItem>
@@ -263,7 +230,7 @@
                 <TabItem.Header>
                     <StackPanel>
                         <iconPacks:PackIconFontAwesome Kind="FileArchiveRegular" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Foreground="White"/>
-                        <TextBlock Text="INFORMES" Foreground="White"/>
+                        <TextBlock Text="CAMARAS" Foreground="White"/>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Background="#FFE5E5E5"/>

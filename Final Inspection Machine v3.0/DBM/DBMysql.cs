@@ -80,6 +80,32 @@ namespace Final_Inspection_Machine_v3._0.DBM
         }
 
         //READ
+        public DataTable Metas()
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                con.Open();
+                using (cmd = new MySqlCommand("Metas", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        dt.Load(reader);
+                    }
+                }
+                con.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            return dt;
+        }
+
 
         public int TipoPLC()
         {

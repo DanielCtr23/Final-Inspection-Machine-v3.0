@@ -38,7 +38,21 @@ namespace Final_Inspection_Machine_v3._0
 
 
         //READ
+        public DataTable Metas()
+        {
+            DataTable dt = new DataTable();
 
+            try
+            {
+                dt = dBMysql.Metas();
+                return dt;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public int TipoPLC()
         {
             int PLC;

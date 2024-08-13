@@ -27,14 +27,22 @@ namespace Final_Inspection_Machine_v3._0.UC
         DataManager DM = new DataManager();
         ScottPlot.Plottables.Text MyHighlightText;
         string[] callout = new string[7];
+        int meta1, meta2, meta3, meta4;
+        DataTable Metas;
         public Grafico_Semanal()
         {
+            
             InitializeComponent();
             Actualizar(true);
         }
 
         public void Actualizar(bool op)
         {
+            Metas = DM.Metas();
+            meta1 = int.Parse(Metas.Rows[0]["Valor"].ToString());
+            meta2 = int.Parse(Metas.Rows[1]["Valor"].ToString());
+            meta3 = meta1 * 2;
+            meta4 = meta2 * 2;
             if (op)
             {
                 OKNOK();
@@ -194,13 +202,13 @@ namespace Final_Inspection_Machine_v3._0.UC
             Plot.Plot.Axes.Bottom.MajorTickStyle.Length = 0;
             Plot.Plot.Axes.Bottom.TickLabelStyle.FontSize = 14;
             Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
-            var line = Plot.Plot.Add.Line(-.5, 2150, 24.5, 2150);
+            var line = Plot.Plot.Add.Line(-.5, meta2, 24.5, meta2);
             line.LinePattern = LinePattern.Dashed;
-            var line2 = Plot.Plot.Add.Line(-.5, 1750, 24.5, 1750);
+            var line2 = Plot.Plot.Add.Line(-.5, meta1, 24.5, meta1);
             line2.LinePattern = LinePattern.Dashed;
-            var line3 = Plot.Plot.Add.Line(-.5, 4300, 24.5, 4300);
+            var line3 = Plot.Plot.Add.Line(-.5, meta4, 24.5, meta4);
             line3.LinePattern = LinePattern.Dashed;
-            var line4 = Plot.Plot.Add.Line(-.5, 3500, 24.5, 3500);
+            var line4 = Plot.Plot.Add.Line(-.5, meta3, 24.5, meta3);
             line4.LinePattern = LinePattern.Dashed;
 
 
@@ -326,13 +334,13 @@ namespace Final_Inspection_Machine_v3._0.UC
             Plot.Plot.Axes.Bottom.MajorTickStyle.Length = 0;
             Plot.Plot.Axes.Bottom.TickLabelStyle.FontSize = 14;
             Plot.Plot.Axes.Margins(bottom: 0, left: .01, right: .01, top: .1);
-            var line = Plot.Plot.Add.Line(-.5, 2150, 24.5, 2150);
+            var line = Plot.Plot.Add.Line(-.5, meta2, 24.5, meta2);
             line.LinePattern = LinePattern.Dashed;
-            var line2 = Plot.Plot.Add.Line(-.5, 1750, 24.5, 1750);
+            var line2 = Plot.Plot.Add.Line(-.5, meta1, 24.5, meta1);
             line2.LinePattern = LinePattern.Dashed;
-            var line3 = Plot.Plot.Add.Line(-.5, 4300, 24.5, 4300);
+            var line3 = Plot.Plot.Add.Line(-.5, meta4, 24.5, meta4);
             line3.LinePattern = LinePattern.Dashed;
-            var line4 = Plot.Plot.Add.Line(-.5, 3500, 24.5, 3500);
+            var line4 = Plot.Plot.Add.Line(-.5, meta3, 24.5, meta3);
             line4.LinePattern = LinePattern.Dashed;
 
             Plot.Refresh();
