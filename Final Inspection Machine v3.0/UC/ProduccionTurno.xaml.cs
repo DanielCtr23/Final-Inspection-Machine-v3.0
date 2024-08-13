@@ -153,7 +153,7 @@ namespace Final_Inspection_Machine_v3._0.UC
             line.LinePattern = LinePattern.Dashed;
 
 
-            ProduccionPlot.Plot.Axes.SetLimits(-0.5, Horas-.5, 0, 350);
+            ProduccionPlot.Plot.Axes.SetLimits(-0.5, Horas-.5, 0, 330);
 
             ProduccionPlot.Refresh();
 

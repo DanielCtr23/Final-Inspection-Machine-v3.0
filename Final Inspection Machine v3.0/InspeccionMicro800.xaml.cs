@@ -33,7 +33,7 @@ namespace Final_Inspection_Machine_v3._0
         string[] Camara = new string[4];
         string[] IPCamara = new string[4];
         bool IV3op;
-        public bool inicializacionExitosa;
+        public bool inicializacionExitosa = true;
         public InspeccionMicro800()
         {
             InitializeComponent();
@@ -42,21 +42,16 @@ namespace Final_Inspection_Machine_v3._0
 
         public void Inicializar()
         {
-            //bool inicializacionExitosa = true;
+            bool inicializacionExitosa = true;
 
-            this.IsVisibleChanged += InspeccionMicro800_IsVisibleChanged;
             try
             {
                 InicializarPLC();
-                //MessageBox.Show("Si se pudo Iniciar PLC");
-                inicializacionExitosa = true;
             }
             catch (Exception)
             {
                 MessageBox.Show("No se pudo Iniciar PLC");
                 inicializacionExitosa = false;
-                this.Hide();
-                return;
             }
 
             if (inicializacionExitosa)
@@ -64,37 +59,31 @@ namespace Final_Inspection_Machine_v3._0
                 try
                 {
                     InicializarCamaras();
-                    //MessageBox.Show("Si se pudieron Iniciar Camaras IV3");
-                    inicializacionExitosa = true;
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("No se pudieron Iniciar Camaras IV3");
                     inicializacionExitosa = false;
-                    this.Hide();
-                    return;
                 }
             }
 
             if (!inicializacionExitosa)
             {
-                this.Hide();
+                this.Close();
                 return;
             }
-            else
-            {// Configuración común que siempre debe ejecutarse
-                etiquetadora = new Etiquetadora();
-                Segundero.Interval = TimeSpan.FromSeconds(1);
-                Segundero.Tick += Segundero_Tick;
-                Segundero.Start();
-                CargarContadores();
-                OcultarPilotBracket(true);
-                OcultarResorte(false);
-                E1 = DM.Estacion(1);
-                E2 = DM.Estacion(2);
-            }
 
-
+            // Configuración común que siempre debe ejecutarse
+            etiquetadora = new Etiquetadora();
+            Segundero.Interval = TimeSpan.FromSeconds(1);
+            Segundero.Tick += Segundero_Tick;
+            Segundero.Start();
+            CargarContadores();
+            OcultarPilotBracket(true);
+            OcultarResorte(false);
+            this.IsVisibleChanged += InspeccionMicro800_IsVisibleChanged;
+            E1 = DM.Estacion(1);
+            E2 = DM.Estacion(2);
         }
 
         private void InspeccionMicro800_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -105,15 +94,50 @@ namespace Final_Inspection_Machine_v3._0
         private void InicializarCamaras()
         {
             IV3op = true;
-            IPAddress C1IP = IPAddress.Parse("192.168.1.2");
-            Corrugado1.AbrirConexion(C1IP, 1024);
-            IPAddress C2IP = IPAddress.Parse("192.168.1.3");
-            Corrugado2.AbrirConexion(C2IP, 8500);
-            IPAddress O11IP = IPAddress.Parse("192.168.1.4");
-            Orifice11.AbrirConexion(O11IP, 8500);
-            IPAddress O21IP = IPAddress.Parse("192.168.1.6");
-            Orifice21.AbrirConexion(O21IP, 8500);
-            
+            try
+            {
+                IPAddress C1IP = IPAddress.Parse("192.168.1.2");
+                Corrugado1.AbrirConexion(C1IP, 1024);
+                //IPCamara[0] = C1IP.ToString();
+            }
+            catch (Exception)
+            {
+                //IPCamara[0] = "0";
+                //IV3op = false;
+            }
+            try
+            {
+                IPAddress C2IP = IPAddress.Parse("192.168.1.3");
+                Corrugado2.AbrirConexion(C2IP, 8500);
+                //IPCamara[1] = C2IP.ToString();
+            }
+            catch (Exception)
+            {
+                //IPCamara[1] = "0";
+                //IV3op = false;
+            }
+            try
+            {
+                IPAddress O11IP = IPAddress.Parse("192.168.1.4");
+                Orifice11.AbrirConexion(O11IP, 8500);
+                //IPCamara[2] = O11IP.ToString();
+            }
+            catch (Exception)
+            {
+                //IPCamara[2] = "0";
+                //IV3op = false;
+            }
+            try
+            {
+                IPAddress O21IP = IPAddress.Parse("192.168.1.6");
+                Orifice21.AbrirConexion(O21IP, 8500);
+                //IPCamara[3] = O21IP.ToString();
+            }
+            catch (Exception)
+            {
+                //IPCamara[3] = "0";
+                //IV3op = false;
+            }
 
         }
 
@@ -194,8 +218,7 @@ namespace Final_Inspection_Machine_v3._0
         }
 
         private void RegresarBtn_Click(object sender, RoutedEventArgs e)
-        {
-            inicializacionExitosa = true;
+        {   
             this.Hide();
         }
     }

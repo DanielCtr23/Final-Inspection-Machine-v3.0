@@ -30,8 +30,8 @@ namespace Final_Inspection_Machine_v3._0
         {
             Com = new EthernetIPforCLXCom();
             Com.IPAddress = "192.168.1.1";
-            Com.Timeout = 10000;
-            Com.PollRateOverride = 0;
+            Com.Timeout = 1000;
+            Com.PollRateOverride = 500;
             Inicializar();
         }
 

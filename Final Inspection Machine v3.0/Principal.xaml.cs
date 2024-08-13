@@ -95,16 +95,13 @@ namespace Final_Inspection_Machine_v3._0
                         inspeccion_Micro800.IsVisibleChanged += Inspeccion_Micro800_IsVisibleChanged;
                         inspeccion_Micro800.Closed += Inspeccion_Micro800_Closed;
                     }
-
-                    if (inspeccion_Micro800.inicializacionExitosa)
-                    {
-                        inspeccion_Micro800.Show();
-                        this.Hide();
-                    }
+                    inspeccion_Micro800.Show();
+                    this.Hide();
                 }
                 catch (Exception)
                 {
 
+                    throw;
                 }
             }
         }
