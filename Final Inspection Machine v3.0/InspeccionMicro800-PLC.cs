@@ -29,6 +29,10 @@ namespace Final_Inspection_Machine_v3._0
                 Com.DetenerCiclo += Com_DetenerCiclo;
                 Com.CambioSeleccionado += Com_CambioSeleccionado;
             }
+            else
+            {
+                throw new Exception();
+            }
         }
 
         private void Com_CambioSeleccionado(object sender, string e)
