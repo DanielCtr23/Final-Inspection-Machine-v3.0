@@ -23,5 +23,10 @@ namespace Final_Inspection_Machine_v3._0
         {
             InitializeComponent();
         }
+
+        private void CerrarBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

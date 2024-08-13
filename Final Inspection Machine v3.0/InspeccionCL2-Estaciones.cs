@@ -105,142 +105,150 @@ namespace Final_Inspection_Machine_v3._0
         }
         private async void TaskE1()
         {
-            Dispatcher.InvokeAsync(() => EstadoE1(0));
-            await Corrugado1.CambioProgramaAsync(0);
-            serial1 = E1.ToString();
-            Task Orifice1 = TaskO1();
-
-            //Largo de Corrugado
-            #region
-            ResultadosE1[0] = await Corrugado1.PruebaAsync(ResultadosE1[0]);
-            if (ResultadosE1[0].OKNG && (ResultadosE1[0].Programa == 0))
+            try
             {
-                Dispatcher.InvokeAsync(() => LargoBI1.OK(true));
-            }
-            else
-            {
-                Dispatcher.InvokeAsync(() => LargoBI1.OK(false));
-                Fail[0] = true;
-                Error1 = Error1 + " Largo ";
                 Dispatcher.InvokeAsync(() => EstadoE1(0));
-            }
-            #endregion
+                await Corrugado1.CambioProgramaAsync(0);
+                serial1 = E1.ToString();
+                Task Orifice1 = TaskO1();
 
-            await Corrugado1.CambioProgramaAsync(1);
-
-            //Sentido de Corrugado
-            #region
-            ResultadosE1[1] = await Corrugado1.PruebaAsync(ResultadosE1[1]);
-            if (ResultadosE1[1].OKNG && (ResultadosE1[1].Programa == 1))
-            {
-                if (sinsentido)
+                //Largo de Corrugado
+                #region
+                ResultadosE1[0] = await Corrugado1.PruebaAsync(ResultadosE1[0]);
+                if (ResultadosE1[0].OKNG && (ResultadosE1[0].Programa == 0))
                 {
-                    Dispatcher.InvokeAsync(() => SentidoBI1.OK(true));
+                    Dispatcher.InvokeAsync(() => LargoBI1.OK(true));
                 }
                 else
                 {
-                    if (ResultadosE1[1].Res == "00")
+                    Dispatcher.InvokeAsync(() => LargoBI1.OK(false));
+                    Fail[0] = true;
+                    Error1 = Error1 + " Largo ";
+                    Dispatcher.InvokeAsync(() => EstadoE1(0));
+                }
+                #endregion
+
+                await Corrugado1.CambioProgramaAsync(1);
+
+                //Sentido de Corrugado
+                #region
+                ResultadosE1[1] = await Corrugado1.PruebaAsync(ResultadosE1[1]);
+                if (ResultadosE1[1].OKNG && (ResultadosE1[1].Programa == 1))
+                {
+                    if (sinsentido)
                     {
                         Dispatcher.InvokeAsync(() => SentidoBI1.OK(true));
                     }
-                    else if (ResultadosE1[1].Res == "01")
+                    else
                     {
-                        Dispatcher.InvokeAsync(() => SentidoBI1.OK(false));
-                        ResultadosE1[1].OKNG = false;
-                        Fail[0] = true;
-                        Error1 = Error1 + " Sentido I ";
-                        Dispatcher.InvokeAsync(() => EstadoE1(0));
+                        if (ResultadosE1[1].Res == "00")
+                        {
+                            Dispatcher.InvokeAsync(() => SentidoBI1.OK(true));
+                        }
+                        else if (ResultadosE1[1].Res == "01")
+                        {
+                            Dispatcher.InvokeAsync(() => SentidoBI1.OK(false));
+                            ResultadosE1[1].OKNG = false;
+                            Fail[0] = true;
+                            Error1 = Error1 + " Sentido I ";
+                            Dispatcher.InvokeAsync(() => EstadoE1(0));
+                        }
                     }
-                }
-            }
-            else
-            {
-                ResultadosE1[1].Res = "-1";
-                Dispatcher.InvokeAsync(() => SentidoBI1.OK(false));
-                Fail[0] = true;
-                Error1 = Error1 + " Sentido -  ";
-                Dispatcher.InvokeAsync(() => EstadoE1(0));
-            }
-            #endregion
-
-            await Corrugado1.CambioProgramaAsync(2);
-
-            //Nut
-            #region
-            ResultadosE1[2] = await Corrugado1.PruebaAsync(ResultadosE1[2]);
-            string n = "";
-            if (ResultadosE1[2].OKNG && ResultadosE1[2].Programa == 2)
-            {
-                if (ResultadosE1[2].Res == "01")
-                {
-                    ResultadosE1[2].Res = "0";
-                    n = "A ";
-                }
-                else if (ResultadosE1[2].Res == "00")
-                {
-                    ResultadosE1[2].Res = "1";
-                    n = "R ";
-                }
-
-                if (!nutrojo && (ResultadosE1[2].Res == "0"))
-                {
-                    Dispatcher.InvokeAsync(() => NutBI1.OK(true));
-                }
-                else if (nutrojo && (ResultadosE1[2].Res == "1"))
-                {
-                    Dispatcher.InvokeAsync(() => NutBI1.OK(true));
                 }
                 else
                 {
-                    Dispatcher.InvokeAsync(() => NutBI1.OK(false));
+                    ResultadosE1[1].Res = "-1";
+                    Dispatcher.InvokeAsync(() => SentidoBI1.OK(false));
                     Fail[0] = true;
-                    ResultadosE1[2].OKNG = false;
-                    Error1 = Error1 + " Nut " + n;
+                    Error1 = Error1 + " Sentido -  ";
                     Dispatcher.InvokeAsync(() => EstadoE1(0));
                 }
-            }
-            else
-            {
-                ResultadosE1[2].Res = "-1";
-                Dispatcher.InvokeAsync(() => NutBI1.OK(false));
-                Fail[0] = true;
-                Error1 = Error1 + " Nut " + "D ";
-                Dispatcher.InvokeAsync(() => EstadoE1(0));
-            }
-            #endregion
+                #endregion
 
-            //PilotBracket
-            #region
+                await Corrugado1.CambioProgramaAsync(2);
 
-            ResultadosE1[5].Programa = Com.PilotBracketN1();
-            ResultadosE1[5].Res = DM.PilotBracketNombre(ResultadosE1[5].Programa);
+                //Nut
+                #region
+                ResultadosE1[2] = await Corrugado1.PruebaAsync(ResultadosE1[2]);
+                string n = "";
+                if (ResultadosE1[2].OKNG && ResultadosE1[2].Programa == 2)
+                {
+                    if (ResultadosE1[2].Res == "01")
+                    {
+                        ResultadosE1[2].Res = "0";
+                        n = "A ";
+                    }
+                    else if (ResultadosE1[2].Res == "00")
+                    {
+                        ResultadosE1[2].Res = "1";
+                        n = "R ";
+                    }
+
+                    if (!nutrojo && (ResultadosE1[2].Res == "0"))
+                    {
+                        Dispatcher.InvokeAsync(() => NutBI1.OK(true));
+                    }
+                    else if (nutrojo && (ResultadosE1[2].Res == "1"))
+                    {
+                        Dispatcher.InvokeAsync(() => NutBI1.OK(true));
+                    }
+                    else
+                    {
+                        Dispatcher.InvokeAsync(() => NutBI1.OK(false));
+                        Fail[0] = true;
+                        ResultadosE1[2].OKNG = false;
+                        Error1 = Error1 + " Nut " + n;
+                        Dispatcher.InvokeAsync(() => EstadoE1(0));
+                    }
+                }
+                else
+                {
+                    ResultadosE1[2].Res = "-1";
+                    Dispatcher.InvokeAsync(() => NutBI1.OK(false));
+                    Fail[0] = true;
+                    Error1 = Error1 + " Nut " + "D ";
+                    Dispatcher.InvokeAsync(() => EstadoE1(0));
+                }
+                #endregion
+
+                //PilotBracket
+                #region
+
+                ResultadosE1[5].Programa = Com.PilotBracketN1();
+                ResultadosE1[5].Res = DM.PilotBracketNombre(ResultadosE1[5].Programa);
 
 
-            if (Com.PilotBracket1())
-            {
-                Dispatcher.InvokeAsync(() => PilotBracketBI1.OK(true));
-                ResultadosE1[5].OKNG = true;
-            }
-            else
-            {
-                Dispatcher.InvokeAsync(() => PilotBracketBI1.OK(false));
-                ResultadosE1[5].OKNG = false;
-                //Fail[0] = true;
-                Error1 = Error1 + " PB " + ResultadosE1[5].Res + " ";
-                Dispatcher.InvokeAsync(() => EstadoE1(0));
-            }
-            #endregion
+                if (Com.PilotBracket1())
+                {
+                    Dispatcher.InvokeAsync(() => PilotBracketBI1.OK(true));
+                    ResultadosE1[5].OKNG = true;
+                }
+                else
+                {
+                    Dispatcher.InvokeAsync(() => PilotBracketBI1.OK(false));
+                    ResultadosE1[5].OKNG = false;
+                    //Fail[0] = true;
+                    Error1 = Error1 + " PB " + ResultadosE1[5].Res + " ";
+                    Dispatcher.InvokeAsync(() => EstadoE1(0));
+                }
+                #endregion
 
-            await Orifice1;
+                await Orifice1;
 
-            serial1 = GenerarSerial(modelo, E1, Contador1);
-            DM.Guardar(serial1, modelo, DateTime.Now, false, Fail[0],
-                /*Rosca*/ ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion, /*Crack*/ false, -1, -1,
-                /*Resorte*/ false,
-                /*PilotBracket*/ ResultadosE1[5].OKNG, ResultadosE1[5].Programa,
-                /*Largo*/  ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
-                /*Sentido*/ ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res),
-                /*NUT*/ ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res));
+                serial1 = GenerarSerial(modelo, E1, Contador1);
+                try
+                {
+                    DM.Guardar(serial1, modelo, DateTime.Now, false, Fail[0],
+                        /*Rosca*/ ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion, /*Crack*/ false, -1, -1,
+                        /*Resorte*/ false,
+                        /*PilotBracket*/ ResultadosE1[5].OKNG, ResultadosE1[5].Programa,
+                        /*Largo*/  ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
+                        /*Sentido*/ ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res),
+                        /*NUT*/ ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res));
+
+                }
+                catch (Exception)
+                {
 
                 }
 
@@ -267,26 +275,26 @@ namespace Final_Inspection_Machine_v3._0
 
                 await Corrugado1.CambioProgramaAsync(3);
 
-            //Tapon
-            #region
-            ResultadosE1[3] = await Corrugado1.PruebaAsync(ResultadosE1[3]);
-            if (ResultadosE1[3].OKNG && ResultadosE1[3].Programa == 3)
-            {
-                etiquetadora.GenerarEtiqueta(serial1);
-                Dispatcher.InvokeAsync(() => TaponBI1.OK(true));
-                Com.E1_TAPON_COLOCADO(true);
-            }
-            else
-            {
-                Dispatcher.InvokeAsync(() => TaponBI1.OK(false));
-                Fail[0] = true;
-                //ResultadosE1[3].Calificacion = 0;
-                Error1 = Error1 + "Tapon ";
-                Dispatcher.InvokeAsync(() => EstadoE1(0));
-            }
+                //Tapon
+                #region
+                ResultadosE1[3] = await Corrugado1.PruebaAsync(ResultadosE1[3]);
+                if (ResultadosE1[3].OKNG && ResultadosE1[3].Programa == 3)
+                {
+                    etiquetadora.GenerarEtiqueta(serial1);
+                    Dispatcher.InvokeAsync(() => TaponBI1.OK(true));
+                    Com.E1_TAPON_COLOCADO(true);
+                }
+                else
+                {
+                    Dispatcher.InvokeAsync(() => TaponBI1.OK(false));
+                    Fail[0] = true;
+                    //ResultadosE1[3].Calificacion = 0;
+                    Error1 = Error1 + "Tapon ";
+                    Dispatcher.InvokeAsync(() => EstadoE1(0));
+                }
 
-            DM.Guardar(serial1, DateTime.Now, false, Fail[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
-            #endregion
+                DM.Guardar(serial1, DateTime.Now, false, Fail[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
+                #endregion
 
                 if (Abortar)
                 {
@@ -339,6 +347,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             catch (Exception)
             {
+            }
 
         }
         private async Task TaskO1()
@@ -497,6 +506,7 @@ namespace Final_Inspection_Machine_v3._0
                 await Orifice2;
 
                 serial2 = GenerarSerial(modelo, E2, Contador2);
+                try { 
                 DM.Guardar(serial2, modelo, DateTime.Now, false, Fail[1],
                     /*Rosca*/ ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion, /*Crack*/ false, -1, -1,
                     /*Resorte*/ false,
@@ -504,6 +514,10 @@ namespace Final_Inspection_Machine_v3._0
                     /*Largo*/  ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
                     /*Sentido*/ ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res),
                     /*NUT*/ ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, int.Parse(ResultadosE2[2].Res));
+
+                }
+                catch (Exception)
+                {
 
                 }
 

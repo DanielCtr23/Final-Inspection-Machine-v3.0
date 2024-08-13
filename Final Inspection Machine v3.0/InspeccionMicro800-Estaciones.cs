@@ -103,6 +103,7 @@ namespace Final_Inspection_Machine_v3._0
         }
         private async void TaskE1()
         {
+            try { 
             Dispatcher.InvokeAsync(() => EstadoE1(0));
             await Corrugado1.CambioProgramaAsync(0);
             serial1 = E1.ToString();
@@ -232,38 +233,44 @@ namespace Final_Inspection_Machine_v3._0
             await Orifice1;
 
             serial1 = GenerarSerial(modelo, E1, Contador1);
-            DM.Guardar(serial1, modelo, DateTime.Now, false, Fail[0],
-               /*Rosca*/ ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion, /*Crack*/ false, -1, -1,
-               /*Resorte*/ false,
-               /*PilotBracket*/ ResultadosE1[5].OKNG, ResultadosE1[5].Programa,
-               /*Largo*/  ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
-               /*Sentido*/ ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res),
-               /*NUT*/ ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res));
+            try
+            {
+                DM.Guardar(serial1, modelo, DateTime.Now, false, Fail[0],
+                   /*Rosca*/ ResultadosOrifice1.OKNG, ResultadosOrifice1.Calificacion, /*Crack*/ false, -1, -1,
+                   /*Resorte*/ false,
+                   /*PilotBracket*/ ResultadosE1[5].OKNG, ResultadosE1[5].Programa,
+                   /*Largo*/  ResultadosE1[0].OKNG, ResultadosE1[0].Calificacion,
+                   /*Sentido*/ ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res),
+                   /*NUT*/ ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res));
 
-                }
+            }
+            catch (Exception)
+            {
 
-                if (Abortar)
-                {
-                    return;
-                }
+            }
 
-                if (Fail[0])
-                {
-                    Dispatcher.InvokeAsync(() => EstadoE1(2));
-                    return;
-                }
-                else
-                {
-                    Com.E1_3Pass(true);
-                    EsperarTaponE1.WaitOne();
-                }
+            if (Abortar)
+            {
+                return;
+            }
 
-                if (Abortar)
-                {
-                    return;
-                }
+            if (Fail[0])
+            {
+                Dispatcher.InvokeAsync(() => EstadoE1(2));
+                return;
+            }
+            else
+            {
+                Com.E1_3Pass(true);
+                EsperarTaponE1.WaitOne();
+            }
 
-                await Corrugado1.CambioProgramaAsync(3);
+            if (Abortar)
+            {
+                return;
+            }
+
+            await Corrugado1.CambioProgramaAsync(3);
 
             //Tapon
             #region
@@ -286,27 +293,27 @@ namespace Final_Inspection_Machine_v3._0
             DM.Guardar(serial1, DateTime.Now, false, Fail[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
             #endregion
 
-                if (Abortar)
-                {
-                    return;
-                }
+            if (Abortar)
+            {
+                return;
+            }
 
-                if (Fail[0])
-                {
-                    Dispatcher.InvokeAsync(() => EstadoE1(2));
-                    return;
-                }
-                else
-                {
-                    EsperarEtiquetaE1.WaitOne();
-                }
+            if (Fail[0])
+            {
+                Dispatcher.InvokeAsync(() => EstadoE1(2));
+                return;
+            }
+            else
+            {
+                EsperarEtiquetaE1.WaitOne();
+            }
 
-                if (Abortar)
-                {
-                    return;
-                }
+            if (Abortar)
+            {
+                return;
+            }
 
-                await Corrugado1.CambioProgramaAsync(4);
+            await Corrugado1.CambioProgramaAsync(4);
 
 
             //Etiqueta
@@ -329,7 +336,11 @@ namespace Final_Inspection_Machine_v3._0
             Com.E1_TAPON_COLOCADO(false);
             #endregion
             DM.Guardar(serial1, DateTime.Now, Pass[0], !Pass[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, ResultadosE1[4].OKNG, ResultadosE1[4].Calificacion);
+        }
+            catch(Exception)
+            {
 
+            }
         }
         private async Task TaskO1()
         {
@@ -487,6 +498,7 @@ namespace Final_Inspection_Machine_v3._0
                 await Orifice2;
 
                 serial2 = GenerarSerial(modelo, E2, Contador2);
+                try { 
                 DM.Guardar(serial2, modelo, DateTime.Now, false, Fail[1],
                     /*Rosca*/ ResultadosOrifice2.OKNG, ResultadosOrifice2.Calificacion, /*Crack*/ false, -1, -1,
                     /*Resorte*/ false,
@@ -494,6 +506,10 @@ namespace Final_Inspection_Machine_v3._0
                     /*Largo*/  ResultadosE2[0].OKNG, ResultadosE2[0].Calificacion,
                     /*Sentido*/ ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res),
                     /*NUT*/ ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, int.Parse(ResultadosE2[2].Res));
+
+                }
+                catch(Exception)
+                {
 
                 }
 
