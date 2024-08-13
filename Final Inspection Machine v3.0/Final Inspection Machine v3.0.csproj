@@ -159,6 +159,9 @@
     <Compile Include="LoadingForm.xaml.cs">
       <DependentUpon>LoadingForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Micro800.cs" />
     <Compile Include="MySql_Conector.cs" />
     <Compile Include="Principal.xaml.cs">
@@ -229,6 +232,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LoadingForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

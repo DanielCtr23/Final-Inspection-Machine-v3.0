@@ -15,8 +15,6 @@ namespace Final_Inspection_Machine_v3._0
 {
     public partial class InspeccionMicro800
     {
-        private CancellationTokenSource _ctsTaskE1;
-        private CancellationTokenSource _ctsTaskE2;
         Estructuras.ResultadosCorrugado[] ResultadosE1 = new ResultadosCorrugado[8];
         Estructuras.ResultadosCorrugado[] ResultadosE2 = new ResultadosCorrugado[8];
         Estructuras.ResultadosCorrugado ResultadosOrifice1 = new ResultadosCorrugado();
@@ -37,6 +35,7 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Ejecucion()
         {
+            Abortar = false;
             TiempoFinal = 1750;
             // Inicializar resultados y estados
             ResultadosE1 = new ResultadosCorrugado[8];
@@ -241,18 +240,30 @@ namespace Final_Inspection_Machine_v3._0
                /*Sentido*/ ResultadosE1[1].OKNG, ResultadosE1[1].Calificacion, int.Parse(ResultadosE1[1].Res),
                /*NUT*/ ResultadosE1[2].OKNG, ResultadosE1[2].Calificacion, int.Parse(ResultadosE1[2].Res));
 
-            if (Fail[0])
-            {
-                Dispatcher.InvokeAsync(() => EstadoE1(2));
-                Estacion1.Abort();
-            }
-            else
-            {
-                Com.E1_3Pass(true);
-                EsperarTaponE1.WaitOne();
-            }
+                }
 
-            await Corrugado1.CambioProgramaAsync(3);
+                if (Abortar)
+                {
+                    return;
+                }
+
+                if (Fail[0])
+                {
+                    Dispatcher.InvokeAsync(() => EstadoE1(2));
+                    return;
+                }
+                else
+                {
+                    Com.E1_3Pass(true);
+                    EsperarTaponE1.WaitOne();
+                }
+
+                if (Abortar)
+                {
+                    return;
+                }
+
+                await Corrugado1.CambioProgramaAsync(3);
 
             //Tapon
             #region
@@ -275,17 +286,27 @@ namespace Final_Inspection_Machine_v3._0
             DM.Guardar(serial1, DateTime.Now, false, Fail[0], ResultadosE1[3].OKNG, ResultadosE1[3].Calificacion, false, -1);
             #endregion
 
-            if (Fail[0])
-            {
-                Dispatcher.InvokeAsync(() => EstadoE1(2));
-                Estacion1.Abort();
-            }
-            else
-            {
-                EsperarEtiquetaE1.WaitOne();
-            }
+                if (Abortar)
+                {
+                    return;
+                }
 
-            await Corrugado1.CambioProgramaAsync(4);
+                if (Fail[0])
+                {
+                    Dispatcher.InvokeAsync(() => EstadoE1(2));
+                    return;
+                }
+                else
+                {
+                    EsperarEtiquetaE1.WaitOne();
+                }
+
+                if (Abortar)
+                {
+                    return;
+                }
+
+                await Corrugado1.CambioProgramaAsync(4);
 
 
             //Etiqueta
@@ -474,15 +495,27 @@ namespace Final_Inspection_Machine_v3._0
                     /*Sentido*/ ResultadosE2[1].OKNG, ResultadosE2[1].Calificacion, int.Parse(ResultadosE2[1].Res),
                     /*NUT*/ ResultadosE2[2].OKNG, ResultadosE2[2].Calificacion, int.Parse(ResultadosE2[2].Res));
 
+                }
+
+                if (Abortar)
+                {
+                    return;
+                }
+
                 if (Fail[1])
                 {
                     Dispatcher.InvokeAsync(() => EstadoE2(2));
-                    Estacion2.Abort();
+                    return;
                 }
                 else
                 {
                     Com.E2_3Pass(true);
                     EsperarTaponE2.WaitOne();
+                }
+
+                if (Abortar)
+                {
+                    return;
                 }
 
                 await Corrugado2.CambioProgramaAsync(3);
@@ -508,15 +541,24 @@ namespace Final_Inspection_Machine_v3._0
                 DM.Guardar(serial2, DateTime.Now, false, Fail[1], ResultadosE2[3].OKNG, ResultadosE2[3].Calificacion, false, -1);
                 #endregion
 
+                if (Abortar)
+                {
+                    return;
+                }
 
                 if (Fail[1])
                 {
                     Dispatcher.InvokeAsync(() => EstadoE2(2));
-                    Estacion2.Abort();
+                    return;
                 }
                 else
                 {
-                    EsperarEtiquetaE2.WaitOne(); 
+                    EsperarEtiquetaE2.WaitOne();
+                }
+
+                if (Abortar)
+                {
+                    return;
                 }
 
                 await Corrugado2.CambioProgramaAsync(4);

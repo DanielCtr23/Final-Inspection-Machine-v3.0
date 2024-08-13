@@ -14,6 +14,7 @@ namespace Final_Inspection_Machine_v3._0
         Micro800 Com;
         String Error1;
         String Error2;
+        volatile bool Abortar = false;
 
         private void InicializarPLC()
         {
@@ -38,45 +39,11 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Com_DetenerCiclo(object sender, EventArgs e)
         {
-            try
-            {
-                if (HiloPrincipal.IsAlive && HiloPrincipal != null)
-                {
-                    if (Estacion1 != null && Estacion1.IsAlive)
-                    {
-                        Estacion1.Abort();
-                    }
-                    if (Estacion2 != null && Estacion2.IsAlive)
-                    {
-                        Estacion2.Abort();
-                    }
-                    HiloPrincipal.Abort();
-                }
-                else
-                {
-
-                }
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                Com.Terminar();
-                Thread.Sleep(800);
-
-                // Actualizar UI después de completar las tareas
-                Dispatcher.InvokeAsync(() =>
-                {
-                    Error1 = "";
-                    EstadoE1(3);
-                    Error2 = "";
-                    EstadoE2(3);
-                    HabilitarBotones(true);
-                    LimpiarPantalla();
-                    CargarContadores();
-                });
-            }
+            Abortar = true;
+            EsperarEtiquetaE1.Set();
+            EsperarEtiquetaE2.Set();
+            EsperarTaponE1.Set();
+            EsperarTaponE2.Set();
         }
 
         private void Com_MensajeRecibido(object sender, int e)

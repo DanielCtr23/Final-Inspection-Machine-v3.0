@@ -210,5 +210,11 @@ namespace Final_Inspection_Machine_v3._0
                 Application.Current.Shutdown();
             }
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+        }
     }
 }

@@ -60,7 +60,7 @@
                 <TextBlock Text="   INSPECCIÓN   " Margin="5,5,5,5" FontFamily="Microsoft Sans Serif" FontWeight="Bold"/>
             </Viewbox>
         </Button>
-        <Button  Grid.Row="1" Grid.Column="5" Margin="10,5,10,5" >
+        <Button  Grid.Row="1" Grid.Column="5" Margin="10,5,10,5" Click="Button_Click_2" >
             <Viewbox>
                 <TextBlock Text="CONFIGURACIÓN" Margin="5,5,5,5" FontFamily="Microsoft Sans Serif" FontWeight="Bold"/>
             </Viewbox>
