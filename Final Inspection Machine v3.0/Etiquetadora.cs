@@ -20,6 +20,18 @@ namespace Final_Inspection_Machine_v3._0
             Inicializar();
         }
 
+        public bool Conectada()
+        {
+            return (Impresora.Connected && linkOsPrinter.Connection.Connected && genericPrinter.Connection.Connected);
+        }
+
+        public void Cerrar()
+        {
+            Impresora.Close();
+        }
+
+
+
         private void Inicializar()
         {
             lock (locko)
@@ -46,7 +58,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 try
                 {
-                    if (!Impresora.Connected)
+                    if (!Impresora.Connected || !linkOsPrinter.Connection.Connected || !genericPrinter.Connection.Connected)
                     {
                         Inicializar();
                         if (linkOsPrinter != null)
@@ -67,8 +79,42 @@ namespace Final_Inspection_Machine_v3._0
                 }
                 catch (ConnectionException e)
                 {
-                    MessageBox.Show($"Error de conexión: {e.Message}");
-                    //ReintentarImpresion(Serial);
+                    //MessageBox.Show($"Error de conexión: {e.Message}"); 
+                    try
+                    {
+                        if (!Impresora.Connected)
+                        {
+                            try
+                            {
+                                Impresora.Close();
+                                linkOsPrinter.Connection.Close();
+                                genericPrinter.Connection.Close();
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+                            Inicializar();
+                            if (linkOsPrinter != null)
+                            {
+                                var vars = new Dictionary<int, string> { { 1, Serial } };
+                                linkOsPrinter.PrintStoredFormatWithVarGraphics("E:ETIQUETA.ZPL", vars);
+                            }
+                        }
+                        else
+                        {
+                            if (linkOsPrinter != null)
+                            {
+                                var vars = new Dictionary<int, string> { { 1, Serial } };
+                                linkOsPrinter.PrintStoredFormat("E:ETIQUETA.ZPL", vars);
+                            }
+                        }
+
+                    }
+                    catch
+                    {
+
+                    }
                 }
                 catch (ZebraPrinterLanguageUnknownException e)
                 {
@@ -76,7 +122,21 @@ namespace Final_Inspection_Machine_v3._0
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show($"Error inesperado: {e.Message}");
+                    try
+                    {
+                        Impresora.Close();
+                        Inicializar();
+                        if (linkOsPrinter != null)
+                        {
+                            var vars = new Dictionary<int, string> { { 1, Serial } };
+                            linkOsPrinter.PrintStoredFormatWithVarGraphics("E:ETIQUETA.ZPL", vars);
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    
                 }
             }
         }

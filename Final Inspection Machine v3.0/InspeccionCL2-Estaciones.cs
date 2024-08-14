@@ -35,6 +35,11 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Ejecucion()
         {
+            if (!etiquetadora.Conectada())
+            {
+                etiquetadora.Cerrar();
+                etiquetadora = new Etiquetadora();
+            }
             Abortar = false;
             TiempoFinal = 1750;
             // Inicializar resultados y estados
@@ -306,17 +311,15 @@ namespace Final_Inspection_Machine_v3._0
                     Dispatcher.InvokeAsync(() => EstadoE1(2));
                     return;
                 }
-                else
-                {
-                    EsperarEtiquetaE1.WaitOne();
-                }
+
+                EsperarEtiquetaE1.WaitOne();
+                await Corrugado1.CambioProgramaAsync(4);
 
                 if (Abortar)
                 {
                     return;
                 }
 
-                await Corrugado1.CambioProgramaAsync(4);
                 //Etiqueta
                 #region
                 ResultadosE1[4] = await Corrugado1.PruebaAsync(ResultadosE1[4]);
@@ -575,17 +578,15 @@ namespace Final_Inspection_Machine_v3._0
                     Dispatcher.InvokeAsync(() => EstadoE2(2));
                     return;
                 }
-                else
-                {
-                    EsperarEtiquetaE2.WaitOne();
-                }
+
+                EsperarEtiquetaE2.WaitOne();
+                await Corrugado2.CambioProgramaAsync(4);
 
                 if (Abortar)
                 {
                     return;
                 }
 
-                await Corrugado2.CambioProgramaAsync(4);
                 //Etiqueta
                 #region
                 ResultadosE2[4] = await Corrugado2.PruebaAsync(ResultadosE2[4]);
@@ -641,7 +642,7 @@ namespace Final_Inspection_Machine_v3._0
         private string GenerarSerial(string Modelo, int Estacion, int Contador)
         {
             string serial = modelo + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd")
-                + DateTime.Now.ToString("HH") + Estacion.ToString() + Contador.ToString("D3");
+                + DateTime.Now.ToString("HH") + Estacion.ToString() + (Contador%1000).ToString("D3");
             return serial;
         }
         private void CargarContadores()

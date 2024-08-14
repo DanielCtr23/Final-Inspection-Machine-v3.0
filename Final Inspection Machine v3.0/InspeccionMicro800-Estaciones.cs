@@ -634,7 +634,7 @@ namespace Final_Inspection_Machine_v3._0
         private string GenerarSerial(string Modelo, int Estacion, int Contador)
         {
             string serial = modelo + DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd")
-                + DateTime.Now.ToString("HH") + Estacion.ToString() + Contador.ToString("D3");
+                + DateTime.Now.ToString("HH") + Estacion.ToString() +(Contador%1000).ToString("D3");
             return serial;
         }
         private void CargarContadores()
