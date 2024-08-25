@@ -23,6 +23,7 @@ namespace Final_Inspection_Machine_v3._0
         ManualResetEvent EsperarTaponE1, EsperarTaponE2, EsperarEtiquetaE1, EsperarEtiquetaE2;
         DataManager DM = new DataManager();
         Etiquetadora etiquetadora;
+        Etiquetadora2 etiquetadora2;
         bool nutrojo, sinsentido, pilotbracket, Resorte;
         string serial1, serial2;
         string modelo;
@@ -34,11 +35,13 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Ejecucion()
         {
-            if (!etiquetadora.Conectada())
+            string etiquetadoraStatus = etiquetadora2.Status();
+            if (etiquetadoraStatus != "Ready To Print")
             {
-                etiquetadora.Cerrar();
-                etiquetadora = new Etiquetadora();
+                MessageBox.Show(etiquetadoraStatus);
+                return;
             }
+
             Abortar = false;
             TiempoFinal = 1750;
             // Inicializar Res y estados
@@ -117,6 +120,8 @@ namespace Final_Inspection_Machine_v3._0
                 serial1 = E1.ToString();
                 Task Orifice1 = TaskO1();
 
+
+
                 //Largo de Corrugado
                 #region
                 ResE1[5] = await Corrugado1.Trigger();
@@ -132,6 +137,8 @@ namespace Final_Inspection_Machine_v3._0
                     Dispatcher.InvokeAsync(() => EstadoE1(0));
                 }
                 #endregion
+
+                MessageBox.Show(ResE1[5].TriggerNo.ToString());
 
                 await Corrugado1.Program(1);
 
@@ -171,6 +178,8 @@ namespace Final_Inspection_Machine_v3._0
                 #endregion
 
                 await Corrugado1.Program(2);
+
+                MessageBox.Show(ResE1[6].TriggerNo.ToString());
 
                 //Nut
                 #region
@@ -215,6 +224,9 @@ namespace Final_Inspection_Machine_v3._0
                     Dispatcher.InvokeAsync(() => EstadoE1(0));
                 }
                 #endregion
+
+
+                MessageBox.Show(ResE1[7].TriggerNo.ToString());
 
                 //PilotBracket
                 #region
@@ -285,7 +297,7 @@ namespace Final_Inspection_Machine_v3._0
                 ResE1[8] = await Corrugado1.Trigger();
                 if (ResE1[8].OKNG && ResE1[8].Programa == 3)
                 {
-                    etiquetadora.GenerarEtiqueta(serial1);
+                    etiquetadora2.GenerarEtiqueta(serial1);
                     Dispatcher.InvokeAsync(() => TaponBI1.OK(true));
                     Com.E1_TAPON_COLOCADO(true);
                 }
@@ -297,6 +309,8 @@ namespace Final_Inspection_Machine_v3._0
                     Error1 = Error1 + "Tapon ";
                     Dispatcher.InvokeAsync(() => EstadoE1(0));
                 }
+
+                MessageBox.Show(ResE1[8].TriggerNo.ToString());
 
                 DM.Guardar(serial1, DateTime.Now, false, Fail[0], ResE1[8].OKNG, ResE1[8].Calificacion, false, -1);
                 #endregion
@@ -313,7 +327,7 @@ namespace Final_Inspection_Machine_v3._0
                 }
 
                 EsperarEtiquetaE1.WaitOne();
-                await Corrugado1.CambioProgramaAsync(4);
+                await Corrugado1.Program(4);
 
                 if (Abortar)
                 {
@@ -351,6 +365,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             catch (Exception)
             {
+                throw;
             }
 
         }
@@ -358,6 +373,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
+                await Orifice11.Program(0);
                 ResE1[0] = await Orifice11.Trigger();
                 if (ResE1[0].OKNG)
                 {
@@ -553,7 +569,7 @@ namespace Final_Inspection_Machine_v3._0
                 ResE2[8] = await Corrugado2.Trigger();
                 if (ResE2[8].OKNG && ResE2[8].Programa == 3)
                 {
-                    etiquetadora.GenerarEtiqueta(serial2);
+                    etiquetadora2.GenerarEtiqueta(serial2);
                     Dispatcher.InvokeAsync(() => TaponBI2.OK(true));
                     Com.E2_TAPON_COLOCADO(true);
                 }
@@ -581,7 +597,7 @@ namespace Final_Inspection_Machine_v3._0
                 }
 
                 EsperarEtiquetaE2.WaitOne();
-                await Corrugado2.CambioProgramaAsync(4);
+                await Corrugado2.Program(4);
 
                 if (Abortar)
                 {
@@ -623,6 +639,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
+                await Orifice21.Program(0);
                 ResE2[0] = await Orifice21.Trigger();
                 if (ResE2[0].OKNG)
                 {

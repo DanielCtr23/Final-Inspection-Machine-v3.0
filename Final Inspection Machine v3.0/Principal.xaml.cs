@@ -21,7 +21,7 @@ namespace Final_Inspection_Machine_v3._0
     /// </summary>
     public partial class Principal : Window
     {
-        InspeccionCL2 inspeccion_CL2;
+        //InspeccionCL2 inspeccion_CL2;
         InspeccionMicro800 inspeccion_Micro800;
         DashboardTab DashboardTab;
         int plc;
@@ -38,29 +38,6 @@ namespace Final_Inspection_Machine_v3._0
 
                 throw;
             }
-            if (plc == 0)
-            {
-                try
-                {
-
-                    inspeccion_CL2 = new InspeccionCL2();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-            else if (plc == 1)
-            {
-                try
-                {
-                    inspeccion_Micro800 = new InspeccionMicro800();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
         }
 
 
@@ -70,7 +47,10 @@ namespace Final_Inspection_Machine_v3._0
             {
                 try
                 {
-                    inspeccion_CL2 = new InspeccionCL2();
+                    InspeccionCL2 inspeccion_CL2 = new InspeccionCL2();
+                    inspeccion_CL2.Closed += Inspeccion_CL2_Closed;
+                    inspeccion_CL2.Show();
+                    this.Close();
                 }
                 catch (Exception)
                 {
@@ -82,14 +62,10 @@ namespace Final_Inspection_Machine_v3._0
             {
                 try
                 {
-                    if (inspeccion_Micro800.inicializacionExitosa == false)
-                    {
-                        inspeccion_Micro800.Inicializar();
-                        inspeccion_Micro800.IsVisibleChanged += Inspeccion_Micro800_IsVisibleChanged;
-                        inspeccion_Micro800.Closed += Inspeccion_Micro800_Closed;
-                    }
+                    inspeccion_Micro800 = new InspeccionMicro800();
                     inspeccion_Micro800.Show();
-                    this.Hide();
+                    inspeccion_Micro800.Closed += Inspeccion_Micro800_Closed;
+                    this.Close();
                 }
                 catch (Exception)
                 {
@@ -132,7 +108,6 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
-                
                 this.Show();
             }
             catch (Exception)
@@ -159,22 +134,6 @@ namespace Final_Inspection_Machine_v3._0
 
         private void CerrarBtn_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (inspeccion_CL2 != null)
-                {
-                    inspeccion_CL2.Close();
-                }
-                if (inspeccion_Micro800 != null)
-                {
-                    inspeccion_Micro800.Close();
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
             App.Current.Shutdown();
             Application.Current.Shutdown();
         }

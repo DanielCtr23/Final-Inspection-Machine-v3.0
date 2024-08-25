@@ -16,7 +16,7 @@ namespace Final_Inspection_Machine_v3._0
         String Error2;
         volatile bool Abortar = false;
 
-        private void InicializarPLC()
+        private bool InicializarPLC()
         {
             Com = new Micro800();
             if (Com.Conexion())
@@ -29,6 +29,11 @@ namespace Final_Inspection_Machine_v3._0
                 Com.MensajeRecibido += Com_MensajeRecibido;
                 Com.DetenerCiclo += Com_DetenerCiclo;
                 Com.CambioSeleccionado += Com_CambioSeleccionado;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 

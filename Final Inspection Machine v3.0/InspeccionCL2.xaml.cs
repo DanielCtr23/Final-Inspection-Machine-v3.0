@@ -2,6 +2,7 @@
 using K_IV3;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net;
@@ -28,17 +29,18 @@ namespace Final_Inspection_Machine_v3._0
     {
         DispatcherTimer Segundero = new DispatcherTimer();
 
-        IV3 Corrugado1;
-        IV3 Corrugado2;
-        IV3 Orifice11;
-        IV3 Orifice12;
-        IV3 Orifice21;
-        IV3 Orifice22;
+        IV3 Corrugado1 = new IV3();
+        IV3 Corrugado2 = new IV3();
+        IV3 Orifice11 = new IV3();
+        IV3 Orifice12 = new IV3();
+        IV3 Orifice21 = new IV3();
+        IV3 Orifice22 = new IV3();
 
         int E1, E2;
         public bool inicializacionExitosa = true;
         public InspeccionCL2()
         {
+            InitializeComponent();
             Inicializar();
         }
 
@@ -73,22 +75,18 @@ namespace Final_Inspection_Machine_v3._0
 
 
             // Configuración común que siempre debe ejecutarse
-            etiquetadora = new Etiquetadora();
+            etiquetadora2 = new Etiquetadora2(true);
             Segundero.Interval = TimeSpan.FromSeconds(1);
             Segundero.Tick += Segundero_Tick;
             Segundero.Start();
             CargarContadores();
             OcultarPilotBracket(true);
             OcultarResorte(false);
-            this.IsVisibleChanged += InspeccionCL2_IsVisibleChanged;
             E1 = DM.Estacion(1);
             E2 = DM.Estacion(2);
         }
 
-        private void InspeccionCL2_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-
-        }
+        
 
         private bool InicializarCamaras()
         {
@@ -104,7 +102,7 @@ namespace Final_Inspection_Machine_v3._0
             try
             {
                 IPAddress C2IP = IPAddress.Parse("192.168.1.3");
-                Corrugado1.connect(C2IP, 8500);
+                Corrugado2.connect(C2IP, 8500);
             }
             catch (Exception)
             {
@@ -246,11 +244,20 @@ namespace Final_Inspection_Machine_v3._0
                 ///Orifice12.disconect();
                 Orifice21.disconect();
                 ///Orifice22.disconect();
+                Segundero.Stop();
             }
             catch (Exception)
             {
             }
-            this.Close();
+            // Obtener el nombre del ejecutable de la aplicación actual
+            string applicationPath = Process.GetCurrentProcess().MainModule.FileName;
+
+            // Iniciar un nuevo proceso para la misma aplicación
+            Process.Start(applicationPath);
+
+            // Cerrar la aplicación actual
+            Application.Current.Shutdown();
+            //this.Close();
         }
 
     }

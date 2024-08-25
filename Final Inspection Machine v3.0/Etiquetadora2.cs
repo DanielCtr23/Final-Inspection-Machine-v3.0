@@ -11,7 +11,7 @@ namespace Final_Inspection_Machine_v3._0
     public class Etiquetadora2
     {
         bool ConnectionType = true;
-        object ZebraLock;
+        object ZebraLock = new object();
 
         public Etiquetadora2(bool op)
         {
@@ -90,7 +90,7 @@ namespace Final_Inspection_Machine_v3._0
 
         public void GenerarEtiqueta(string Serial)
         {
-            lock(ZebraLock)
+            lock (ZebraLock)
             {
                 Connection printerConnection = null;
                 try
