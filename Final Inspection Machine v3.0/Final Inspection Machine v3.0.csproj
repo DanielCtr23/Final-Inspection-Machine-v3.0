@@ -90,9 +90,8 @@
     <ApplicationIcon>Logo %281%29.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IV3-Keyence, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\danie\source\Repos\IV3-Keyence\bin\Release\IV3-Keyence.dll</HintPath>
+    <Reference Include="K-IV3">
+      <HintPath>E:\danie\source\Repos\K-IV3\K-IV3\bin\Debug\K-IV3.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
