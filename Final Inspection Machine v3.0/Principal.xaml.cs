@@ -70,14 +70,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 try
                 {
-                    if (inspeccion_CL2.inicializacionExitosa == false)
-                    {
-                        inspeccion_CL2.Inicializar();
-                        inspeccion_CL2.IsVisibleChanged += Inspeccion_CL2_IsVisibleChanged;
-                        inspeccion_CL2.Closed += Inspeccion_CL2_Closed;
-                    }
-                    inspeccion_CL2.Show();
-                    this.Hide();
+                    inspeccion_CL2 = new InspeccionCL2();
                 }
                 catch (Exception)
                 {
