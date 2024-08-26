@@ -153,7 +153,7 @@ namespace Final_Inspection_Machine_v3._0.UC
             line.LinePattern = LinePattern.Dashed;
 
 
-            ProduccionPlot.Plot.Axes.SetLimits(-0.5, Horas-.5, 0, 330);
+            ProduccionPlot.Plot.Axes.SetLimits(-0.5, Horas-.5, 0, 370);
 
             ProduccionPlot.Refresh();
 
@@ -176,7 +176,7 @@ namespace Final_Inspection_Machine_v3._0.UC
                 SinI = SinI - 9.6;
                 SinF = SinF - 8.9;
             }
-            if (Agregado <= -36)
+            if (Agregado <= -168)
             {
                 AnteriorBtn.IsEnabled = false;
             }
@@ -206,7 +206,7 @@ namespace Final_Inspection_Machine_v3._0.UC
             {
                 SiguienteBtn.IsEnabled = false;
             }
-            if (Agregado >= -24)
+            if (Agregado >= -156)
             {
                 AnteriorBtn.IsEnabled = true;
             }
