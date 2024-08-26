@@ -47,14 +47,11 @@ namespace Final_Inspection_Machine_v3._0
             // Inicializar Res y estados
             ResE1 = new IV3.Resultado[10];
             ResE2 = new IV3.Resultado[10];
-            
             Fail[0] = false;
             Pass[0] = false;
             Fail[1] = false;
             Pass[1] = false;
             Dispatcher.InvokeAsync(() => HabilitarBotones(false));
-
-
 
             // Inicializar ManualResetEvents
             EsperarEtiquetaE1 = new ManualResetEvent(false);

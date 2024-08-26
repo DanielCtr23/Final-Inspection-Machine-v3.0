@@ -22,7 +22,7 @@ namespace Final_Inspection_Machine_v3._0
     public partial class Principal : Window
     {
         //InspeccionCL2 inspeccion_CL2;
-        InspeccionMicro800 inspeccion_Micro800;
+        //InspeccionMicro800 inspeccion_Micro800;
         DashboardTab DashboardTab;
         int plc;
         DataManager DM = new DataManager();
@@ -61,7 +61,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 try
                 {
-                    inspeccion_Micro800 = new InspeccionMicro800();
+                    InspeccionMicro800 inspeccion_Micro800 = new InspeccionMicro800();
                     inspeccion_Micro800.Show();
                     inspeccion_Micro800.Closed += Inspeccion_Micro800_Closed;
                     this.Close();

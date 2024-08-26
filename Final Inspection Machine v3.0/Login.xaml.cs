@@ -30,7 +30,7 @@ namespace Final_Inspection_Machine_v3._0
             string password = PasswordBox.Password;
 
             // Verifica las credenciales (esto es solo un ejemplo básico)
-            if (username == "admin" && password == "password")
+            if (username == "admin" && password == "admin")
             {
                 MessageBox.Show("Login successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 // Aquí podrías abrir la ventana principal de la aplicación

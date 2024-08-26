@@ -86,8 +86,6 @@ namespace Final_Inspection_Machine_v3._0
             E2 = DM.Estacion(2);
         }
 
-        
-
         private bool InicializarCamaras()
         {
             try
@@ -244,7 +242,7 @@ namespace Final_Inspection_Machine_v3._0
                 ///Orifice12.disconect();
                 Orifice21.disconect();
                 ///Orifice22.disconect();
-                Segundero.Stop();
+                //Segundero.Stop();
             }
             catch (Exception)
             {

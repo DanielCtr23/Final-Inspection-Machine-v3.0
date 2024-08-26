@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Net;
 using K_IV3;
+using System.Diagnostics;
 
 namespace Final_Inspection_Machine_v3._0
 {
@@ -70,7 +71,7 @@ namespace Final_Inspection_Machine_v3._0
 
 
             // Configuración común que siempre debe ejecutarse
-            etiquetadora = new Etiquetadora();
+            etiquetadora2 = new Etiquetadora2(true);
             Segundero.Interval = TimeSpan.FromSeconds(1);
             Segundero.Tick += Segundero_Tick;
             Segundero.Start();
@@ -81,10 +82,6 @@ namespace Final_Inspection_Machine_v3._0
             E2 = DM.Estacion(2);
         }
 
-        private void InspeccionMicro800_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            
-        }
 
         private bool InicializarCamaras()
         {
@@ -240,7 +237,15 @@ namespace Final_Inspection_Machine_v3._0
             catch (Exception)
             {
             }
-            this.Close();
+            // Obtener el nombre del ejecutable de la aplicación actual
+            string applicationPath = Process.GetCurrentProcess().MainModule.FileName;
+
+            // Iniciar un nuevo proceso para la misma aplicación
+            Process.Start(applicationPath);
+
+            // Cerrar la aplicación actual
+            Application.Current.Shutdown();
+            //this.Close();
         }
     }
 }
