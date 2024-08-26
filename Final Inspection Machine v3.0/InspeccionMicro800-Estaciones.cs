@@ -24,7 +24,7 @@ namespace Final_Inspection_Machine_v3._0
         DataManager DM = new DataManager();
         //Etiquetadora etiquetadora;
         Etiquetadora2 etiquetadora2;
-        bool nutrojo, sinsentido, pilotbracket, resorte;
+        bool nutrojo, sinsentido, pilotbracket, resorte, PBPermisivo;
         string serial1, serial2;
         string modelo;
         int Contador1, Contador2;
@@ -67,6 +67,7 @@ namespace Final_Inspection_Machine_v3._0
             pilotbracket = Com.PilotBracket();
             sinsentido = Com.SinSentido();
             resorte = Com.Resorte();
+            PBPermisivo = DM.PBPermisivo();
 
             // Actualizar UI
             Dispatcher.Invoke(() =>
@@ -249,7 +250,7 @@ namespace Final_Inspection_Machine_v3._0
                 #region
 
                 ResE1[4].Programa = Com.PilotBracketN1();
-            ResE1[4].Tipo = ResE1[4].Programa;
+                ResE1[4].Tipo = ResE1[4].Programa;
 
 
             if (Com.PilotBracket1())
@@ -261,8 +262,8 @@ namespace Final_Inspection_Machine_v3._0
             {
                 Dispatcher.InvokeAsync(() => PilotBracketBI1.OK(false));
                 ResE1[4].OKNG = false;
-                //Fail[0] = true;
-                Error1 = Error1 + " PB " + DM.PilotBracketNombre(ResE1[4].Tipo) + " ";
+                    Fail[0] = (PBPermisivo && (ResE1[4].OKNG = false)) ? true : Fail[0];
+                    Error1 = Error1 + " PB " + DM.PilotBracketNombre(ResE1[4].Tipo) + " ";
                 Dispatcher.InvokeAsync(() => EstadoE1(0));
             }
             #endregion
@@ -582,7 +583,7 @@ namespace Final_Inspection_Machine_v3._0
                 {
                     Dispatcher.InvokeAsync(() => PilotBracketBI2.OK(false));
                     ResE2[4].OKNG = false;
-                    //Fail[1] = true;
+                    Fail[1] = (PBPermisivo && (ResE2[4].OKNG = false)) ? true : Fail[1];
                     Error2 = Error2 + " PB " + DM.PilotBracketNombre(ResE2[4].Programa) + " ";
                     Dispatcher.InvokeAsync(() => EstadoE2(0));
                 }

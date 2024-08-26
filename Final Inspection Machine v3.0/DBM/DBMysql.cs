@@ -129,6 +129,28 @@ namespace Final_Inspection_Machine_v3._0.DBM
 
             return PLC;
         }
+        public bool PBPermisivo()
+        {
+            bool PP;
+            try
+            {
+                con.Open();
+
+                using (cmd = new MySqlCommand("PBPermisivo", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    PP = bool.Parse(cmd.ExecuteScalar().ToString());
+                }
+
+                con.Close();
+            }
+            catch (Exception)
+            {
+                PP = true;
+            }
+
+            return PP;
+        }
 
 
         public int Estacion(int n)

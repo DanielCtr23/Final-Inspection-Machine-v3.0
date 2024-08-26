@@ -70,6 +70,22 @@ namespace Final_Inspection_Machine_v3._0
             return PLC;
         }
 
+        public bool PBPermisivo()
+        {
+            bool PP;
+
+            try
+            {
+                PP = dBMysql.PBPermisivo();
+                return PP;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public int Estacion(int n)
         {
             try
