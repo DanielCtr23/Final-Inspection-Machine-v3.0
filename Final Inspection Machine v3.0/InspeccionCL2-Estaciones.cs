@@ -22,7 +22,7 @@ namespace Final_Inspection_Machine_v3._0
         bool[] Pass = new bool[2];
         ManualResetEvent EsperarTaponE1, EsperarTaponE2, EsperarEtiquetaE1, EsperarEtiquetaE2;
         DataManager DM = new DataManager();
-        Etiquetadora etiquetadora;
+        //Etiquetadora etiquetadora;
         Etiquetadora2 etiquetadora2;
         bool nutrojo, sinsentido, pilotbracket, Resorte;
         string serial1, serial2;
@@ -31,7 +31,8 @@ namespace Final_Inspection_Machine_v3._0
         private Thread HiloPrincipal;
         private Thread Estacion1;
         private Thread Estacion2;
-        int TiempoFinal = 1750;
+
+        int[] TriggerControl = new int[] {0,0, 0,0 ,0,0};
 
         private void Ejecucion()
         {
@@ -43,7 +44,6 @@ namespace Final_Inspection_Machine_v3._0
             }
 
             Abortar = false;
-            TiempoFinal = 1750;
             // Inicializar Res y estados
             ResE1 = new IV3.Resultado[10];
             ResE2 = new IV3.Resultado[10];
@@ -120,8 +120,6 @@ namespace Final_Inspection_Machine_v3._0
                 serial1 = E1.ToString();
                 Task Orifice1 = TaskO1();
 
-
-
                 //Largo de Corrugado
                 #region
                 ResE1[5] = await Corrugado1.Trigger();
@@ -138,7 +136,15 @@ namespace Final_Inspection_Machine_v3._0
                 }
                 #endregion
 
-                MessageBox.Show(ResE1[5].TriggerNo.ToString());
+                if (ResE1[5].TriggerNo > TriggerControl[2])
+                {
+                    TriggerControl[2] = ResE1[5].TriggerNo;
+                }
+                else
+                {
+                    MessageBox.Show("No se realizo Triggger en Camara de Corrugado 1: Contactar a Ingeniería o Mantenimiento");
+                    return;
+                }
 
                 await Corrugado1.Program(1);
 
@@ -177,9 +183,17 @@ namespace Final_Inspection_Machine_v3._0
                 }
                 #endregion
 
-                await Corrugado1.Program(2);
+                if (ResE1[6].TriggerNo > TriggerControl[2])
+                {
+                    TriggerControl[2] = ResE1[6].TriggerNo;
+                }
+                else
+                {
+                    MessageBox.Show("No se realizo Triggger en Camara de Corrugado 1: Contactar a Ingeniería o Mantenimiento");
+                    return;
+                }
 
-                MessageBox.Show(ResE1[6].TriggerNo.ToString());
+                await Corrugado1.Program(2);
 
                 //Nut
                 #region
@@ -224,9 +238,15 @@ namespace Final_Inspection_Machine_v3._0
                     Dispatcher.InvokeAsync(() => EstadoE1(0));
                 }
                 #endregion
-
-
-                MessageBox.Show(ResE1[7].TriggerNo.ToString());
+                if (ResE1[7].TriggerNo > TriggerControl[2])
+                {
+                    TriggerControl[2] = ResE1[7].TriggerNo;
+                }
+                else
+                {
+                    MessageBox.Show("No se realizo Triggger en Camara de Corrugado 1: Contactar a Ingeniería o Mantenimiento");
+                    return;
+                }
 
                 //PilotBracket
                 #region
@@ -315,6 +335,16 @@ namespace Final_Inspection_Machine_v3._0
                 DM.Guardar(serial1, DateTime.Now, false, Fail[0], ResE1[8].OKNG, ResE1[8].Calificacion, false, -1);
                 #endregion
 
+                if (ResE1[8].TriggerNo > TriggerControl[2])
+                {
+                    TriggerControl[2] = ResE1[8].TriggerNo;
+                }
+                else
+                {
+                    MessageBox.Show("No se realizo Triggger en Camara de Corrugado 1: Contactar a Ingeniería o Mantenimiento");
+                    return;
+                }
+
                 if (Abortar)
                 {
                     return;
@@ -354,6 +384,15 @@ namespace Final_Inspection_Machine_v3._0
                 }
                 Com.E1_TAPON_COLOCADO(false);
                 #endregion
+                if (ResE1[9].TriggerNo > TriggerControl[2])
+                {
+                    TriggerControl[2] = ResE1[9].TriggerNo;
+                }
+                else
+                {
+                    MessageBox.Show("No se realizo Triggger en Camara de Corrugado 1: Contactar a Ingeniería o Mantenimiento");
+                    return;
+                }
                 try
                 {
                     DM.Guardar(serial1, DateTime.Now, Pass[0], !Pass[0], ResE1[3].OKNG, ResE1[9].Calificacion, ResE1[9].OKNG, ResE1[9].Calificacion);
@@ -384,6 +423,16 @@ namespace Final_Inspection_Machine_v3._0
                     await Dispatcher.InvokeAsync(() => OrificeBI1.OK(false));
                     Fail[0] = true;
                     Error1 = Error1 + " Rosca ";
+                }
+
+                if (ResE1[0].TriggerNo > TriggerControl[0])
+                {
+                    TriggerControl[0] = ResE1[0].TriggerNo;
+                }
+                else
+                {
+                    MessageBox.Show("No se realizo Triggger en Camara Trasera de Orifice 1: Contactar a Ingeniería o Mantenimiento");
+                    return;
                 }
             }
             catch(Exception e)
@@ -417,6 +466,15 @@ namespace Final_Inspection_Machine_v3._0
                     Dispatcher.InvokeAsync(() => EstadoE2(0));
                 }
                 #endregion
+                if (ResE2[5].TriggerNo > TriggerControl[5])
+                {
+                    TriggerControl[5] = ResE2[5].TriggerNo;
+                }
+                else
+                {
+                    MessageBox.Show("No se realizo Triggger en Camara de Corrugado 2: Contactar a Ingeniería o Mantenimiento");
+                    return;
+                }
 
                 await Corrugado2.Program(1);
 
@@ -454,6 +512,15 @@ namespace Final_Inspection_Machine_v3._0
                     Dispatcher.InvokeAsync(() => EstadoE2(0));
                 }
                 #endregion
+                if (ResE2[6].TriggerNo > TriggerControl[5])
+                {
+                    TriggerControl[5] = ResE2[6].TriggerNo;
+                }
+                else
+                {
+                    MessageBox.Show("No se realizo Triggger en Camara de Corrugado 2: Contactar a Ingeniería o Mantenimiento");
+                    return;
+                }
 
                 await Corrugado2.Program(2);
 
@@ -499,7 +566,15 @@ namespace Final_Inspection_Machine_v3._0
                     Dispatcher.InvokeAsync(() => EstadoE2(0));
                 }
                 #endregion
-
+                if (ResE2[7].TriggerNo > TriggerControl[5])
+                {
+                    TriggerControl[5] = ResE2[7].TriggerNo;
+                }
+                else
+                {
+                    MessageBox.Show("No se realizo Triggger en Camara de Corrugado 2: Contactar a Ingeniería o Mantenimiento");
+                    return;
+                }
 
                 //PilotBracket
                 #region
@@ -584,6 +659,15 @@ namespace Final_Inspection_Machine_v3._0
 
                 DM.Guardar(serial2, DateTime.Now, false, Fail[1], ResE2[8].OKNG, ResE2[8].Calificacion, false, -1);
                 #endregion
+                if (ResE2[8].TriggerNo > TriggerControl[5])
+                {
+                    TriggerControl[5] = ResE2[8].TriggerNo;
+                }
+                else
+                {
+                    MessageBox.Show("No se realizo Triggger en Camara de Corrugado 2: Contactar a Ingeniería o Mantenimiento");
+                    return;
+                }
 
                 if (Abortar)
                 {
@@ -625,6 +709,15 @@ namespace Final_Inspection_Machine_v3._0
                 }
                 Com.E2_TAPON_COLOCADO(false);
                 #endregion
+                if (ResE2[9].TriggerNo > TriggerControl[5])
+                {
+                    TriggerControl[5] = ResE2[9].TriggerNo;
+                }
+                else
+                {
+                    MessageBox.Show("No se realizo Triggger en Camara de Corrugado 2: Contactar a Ingeniería o Mantenimiento");
+                    return;
+                }
                 DM.Guardar(serial2, DateTime.Now, Pass[1], !Pass[1], ResE2[8].OKNG, ResE2[8].Calificacion, ResE2[9].OKNG, ResE2[9].Calificacion);
 
 
@@ -650,6 +743,15 @@ namespace Final_Inspection_Machine_v3._0
                     await Dispatcher.InvokeAsync(() => OrificeBI2.OK(false));
                     Fail[1] = true;
                     Error2 = Error2 + " Rosca ";
+                }
+                if (ResE2[0].TriggerNo > TriggerControl[3])
+                {
+                    TriggerControl[3] = ResE2[0].TriggerNo;
+                }
+                else
+                {
+                    MessageBox.Show("No se realizo Triggger en Camara Trasera de Orifice 2: Contactar a Ingeniería o Mantenimiento");
+                    return;
                 }
             }
             catch (Exception e)

@@ -55,7 +55,6 @@ namespace Final_Inspection_Machine_v3._0
                 catch (Exception)
                 {
 
-                    throw;
                 }
             }
             else if(plc ==1)
