@@ -248,14 +248,15 @@ namespace Final_Inspection_Machine_v3._0
             {
             }
             // Obtener el nombre del ejecutable de la aplicación actual
-            string applicationPath = Process.GetCurrentProcess().MainModule.FileName;
+            //string applicationPath = Process.GetCurrentProcess().MainModule.FileName;
 
             // Iniciar un nuevo proceso para la misma aplicación
-            Process.Start(applicationPath);
+            //Process.Start(applicationPath);
 
             // Cerrar la aplicación actual
-            Application.Current.Shutdown();
-            //this.Close();
+            //Application.Current.Shutdown();
+            this.Close();
+            
         }
 
     }
