@@ -21,7 +21,7 @@ namespace Final_Inspection_Machine_v3._0
     /// </summary>
     public partial class Principal : Window
     {
-        InspeccionCL2 inspeccion_CL2;
+        //InspeccionCL2 inspeccion_CL2;
         //InspeccionMicro800 inspeccion_Micro800;
         DashboardTab DashboardTab;
         int plc;
@@ -47,7 +47,7 @@ namespace Final_Inspection_Machine_v3._0
             {
                 try
                 {
-                    inspeccion_CL2 = new InspeccionCL2();
+                    InspeccionCL2 inspeccion_CL2 = new InspeccionCL2();
                     inspeccion_CL2.Closed += Inspeccion_CL2_Closed;
                     inspeccion_CL2.Show();
                     this.Close();
