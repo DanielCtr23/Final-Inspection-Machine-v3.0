@@ -243,19 +243,24 @@ namespace Final_Inspection_Machine_v3._0
                 Orifice21.disconect();
                 ///Orifice22.disconect();
                 //Segundero.Stop();
+                Thread.Sleep(500);
             }
             catch (Exception)
             {
             }
             // Obtener el nombre del ejecutable de la aplicación actual
-            string applicationPath = Process.GetCurrentProcess().MainModule.FileName;
+            //string applicationPath = Process.GetCurrentProcess().MainModule.FileName;
 
-            // Iniciar un nuevo proceso para la misma aplicación
-            Process.Start(applicationPath);
+            //// Iniciar un nuevo proceso para la misma aplicación
+            //Process.Start(applicationPath);
 
-            // Cerrar la aplicación actual
-            Application.Current.Shutdown();
+            //// Cerrar la aplicación actual
+            //Application.Current.Shutdown();
             //this.Close();
+
+            Principal p = new Principal();
+            p.Show();
+            this.Close();
         }
 
     }

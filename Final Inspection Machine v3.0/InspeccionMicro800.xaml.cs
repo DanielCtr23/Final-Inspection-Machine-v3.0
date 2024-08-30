@@ -70,8 +70,7 @@ namespace Final_Inspection_Machine_v3._0
             }
 
 
-            // Configuración común que siempre debe ejecutarse
-            etiquetadora2 = new Etiquetadora2(true);
+            // Configuración común que siempre debe ejecutarse\
             Segundero.Interval = TimeSpan.FromSeconds(1);
             Segundero.Tick += Segundero_Tick;
             Segundero.Start();
@@ -114,7 +113,7 @@ namespace Final_Inspection_Machine_v3._0
             }
             try
             {
-                IPAddress O21IP = IPAddress.Parse("192.168.1.7");
+                IPAddress O21IP = IPAddress.Parse("192.168.1.6");
                 Orifice21.connect(O21IP, 8500);
             }
             catch (Exception)
@@ -233,19 +232,24 @@ namespace Final_Inspection_Machine_v3._0
                 ///Orifice12.disconect();
                 Orifice21.disconect();
                 ///Orifice22.disconect();
+                Thread.Sleep(500);
             }
             catch (Exception)
             {
             }
             // Obtener el nombre del ejecutable de la aplicación actual
-            string applicationPath = Process.GetCurrentProcess().MainModule.FileName;
+            //string applicationPath = Process.GetCurrentProcess().MainModule.FileName;
 
-            // Iniciar un nuevo proceso para la misma aplicación
-            Process.Start(applicationPath);
+            //// Iniciar un nuevo proceso para la misma aplicación
+            //Process.Start(applicationPath);
 
-            // Cerrar la aplicación actual
-            Application.Current.Shutdown();
+            //// Cerrar la aplicación actual
+            //Application.Current.Shutdown();
             //this.Close();
+
+            Principal p = new Principal();
+            p.Show();
+            this.Close();
         }
     }
 }

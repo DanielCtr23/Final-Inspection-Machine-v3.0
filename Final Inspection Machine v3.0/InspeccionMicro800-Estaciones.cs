@@ -36,12 +36,6 @@ namespace Final_Inspection_Machine_v3._0
 
         private void Ejecucion()
         {
-            string etiquetadoraStatus = etiquetadora2.Status();
-            if (etiquetadoraStatus != "Ready To Print")
-            {
-                MessageBox.Show(etiquetadoraStatus);
-                return;
-            }
 
             Abortar = false;
             // Inicializar resultados y estados
@@ -67,7 +61,6 @@ namespace Final_Inspection_Machine_v3._0
             pilotbracket = Com.PilotBracket();
             sinsentido = Com.SinSentido();
             resorte = Com.Resorte();
-            PBPermisivo = DM.PBPermisivo();
 
             // Actualizar UI
             Dispatcher.Invoke(() =>
@@ -111,26 +104,26 @@ namespace Final_Inspection_Machine_v3._0
         }
         private async void TaskE1()
         {
-            try { 
-            Dispatcher.InvokeAsync(() => EstadoE1(0));
-            await Corrugado1.Program(0);
-            serial1 = E1.ToString();
-            Task Orifice1 = TaskO1();
-
-            //Largo de Corrugado
-            #region
-            ResE1[5] = await Corrugado1.Trigger();
-            if (ResE1[5].OKNG && (ResE1[5].Programa == 0))
-            {
-                Dispatcher.InvokeAsync(() => LargoBI1.OK(true));
-            }
-            else
-            {
-                Dispatcher.InvokeAsync(() => LargoBI1.OK(false));
-                Fail[0] = true;
-                Error1 = Error1 + " Largo ";
+            try{ 
                 Dispatcher.InvokeAsync(() => EstadoE1(0));
-            }
+                await Corrugado1.Program(0);
+                serial1 = E1.ToString();
+                Task Orifice1 = TaskO1();
+
+                //Largo de Corrugado
+                #region
+                ResE1[5] = await Corrugado1.Trigger();
+                if (ResE1[5].OKNG && (ResE1[5].Programa == 0))
+                {
+                    Dispatcher.InvokeAsync(() => LargoBI1.OK(true));
+                }
+                else
+                {
+                    Dispatcher.InvokeAsync(() => LargoBI1.OK(false));
+                    Fail[0] = true;
+                    Error1 = Error1 + " Largo ";
+                    Dispatcher.InvokeAsync(() => EstadoE1(0));
+                }
                 #endregion
 
                 if (ResE1[5].TriggerNo > TriggerControl[2])
@@ -145,8 +138,8 @@ namespace Final_Inspection_Machine_v3._0
 
                 await Corrugado1.Program(1);
 
-            //Sentido de Corrugado
-            #region
+                 //Sentido de Corrugado
+                #region
             ResE1[6] = await Corrugado1.Trigger();
             if (ResE1[6].OKNG && (ResE1[6].Programa == 1))
             {
@@ -192,8 +185,8 @@ namespace Final_Inspection_Machine_v3._0
 
                 await Corrugado1.Program(2);
 
-            //Nut
-            #region
+                //Nut
+                #region
             ResE1[7] = await Corrugado1.Trigger();
             string n = "";
             if (ResE1[7].OKNG)
@@ -253,82 +246,81 @@ namespace Final_Inspection_Machine_v3._0
                 ResE1[4].Tipo = ResE1[4].Programa;
 
 
-            if (Com.PilotBracket1())
-            {
-                Dispatcher.InvokeAsync(() => PilotBracketBI1.OK(true));
-                ResE1[4].OKNG = true;
-            }
-            else
-            {
-                Dispatcher.InvokeAsync(() => PilotBracketBI1.OK(false));
-                ResE1[4].OKNG = false;
-                    Fail[0] = (PBPermisivo && (ResE1[4].OKNG = false)) ? true : Fail[0];
-                    Error1 = Error1 + " PB " + DM.PilotBracketNombre(ResE1[4].Tipo) + " ";
-                Dispatcher.InvokeAsync(() => EstadoE1(0));
-            }
-            #endregion
+                if (Com.PilotBracket1())
+                {
+                    Dispatcher.InvokeAsync(() => PilotBracketBI1.OK(true));
+                    ResE1[4].OKNG = true;
+                }
+                else
+                {
+                    Dispatcher.InvokeAsync(() => PilotBracketBI1.OK(false));
+                    ResE1[4].OKNG = false;
+                        //Error1 = Error1 + " PB " + DM.PilotBracketNombre(ResE1[4].Tipo) + " ";
+                    Dispatcher.InvokeAsync(() => EstadoE1(0));
+                }
+                #endregion
 
-            await Orifice1;
+                await Orifice1;
 
-            serial1 = GenerarSerial(modelo, E1, Contador1);
-            try
-            {
-                DM.Guardar(serial1, modelo, DateTime.Now, false, Fail[0],
-                   /*Rosca*/ ResE1[0].OKNG, ResE1[0].Calificacion, /*Crack*/ false, -1, -1,
-                   /*Resorte*/ false,
-                   /*PilotBracket*/ ResE1[4].OKNG, ResE1[4].Programa,
-                   /*Largo*/  ResE1[5].OKNG, ResE1[5].Calificacion,
-                   /*Sentido*/ ResE1[6].OKNG, ResE1[6].Calificacion, ResE1[6].Tipo,
-                   /*NUT*/ ResE1[7].OKNG, ResE1[7].Calificacion, ResE1[7].Tipo);
+                serial1 = GenerarSerial(modelo, E1, Contador1);
+                try
+                {
+                    DM.Guardar(serial1, modelo, DateTime.Now, false, Fail[0],
+                       /*Rosca*/ ResE1[0].OKNG, ResE1[0].Calificacion, /*Crack*/ false, -1, -1,
+                       /*Resorte*/ false,
+                       /*PilotBracket*/ ResE1[4].OKNG, ResE1[4].Programa,
+                       /*Largo*/  ResE1[5].OKNG, ResE1[5].Calificacion,
+                       /*Sentido*/ ResE1[6].OKNG, ResE1[6].Calificacion, ResE1[6].Tipo,
+                       /*NUT*/ ResE1[7].OKNG, ResE1[7].Calificacion, ResE1[7].Tipo);
 
-            }
-            catch (Exception)
-            {
+                }
+                catch (Exception)
+                {
 
-            }
+                }
 
-            if (Abortar)
-            {
-                return;
-            }
+                if (Abortar)
+                {
+                    return;
+                }
 
-            if (Fail[0])
-            {
-                Dispatcher.InvokeAsync(() => EstadoE1(2));
-                return;
-            }
-            else
-            {
-                Com.E1_3Pass(true);
-                EsperarTaponE1.WaitOne();
-            }
+                if (Fail[0])
+                {
+                    Dispatcher.InvokeAsync(() => EstadoE1(2));
+                    return;
+                }
+                else
+                {
+                    Com.E1_3Pass(true);
+                    EsperarTaponE1.WaitOne();
+                }
 
-            if (Abortar)
-            {
-                return;
-            }
+                if (Abortar)
+                {
+                    return;
+                }
 
-            await Corrugado1.Program(3);
+                await Corrugado1.Program(3);
 
-            //Tapon
-            #region
-            ResE1[8] = await Corrugado1.Trigger();
-            if (ResE1[8].OKNG && ResE1[8].Programa == 3)
-            {
-                etiquetadora2.GenerarEtiqueta(serial1);
-                Dispatcher.InvokeAsync(() => TaponBI1.OK(true));
-                Com.E1_TAPON_COLOCADO(true);
-            }
-            else
-            {
-                Dispatcher.InvokeAsync(() => TaponBI1.OK(false));
-                Fail[0] = true;
-                //ResE1[3].Calificacion = 0;
-                Error1 = Error1 + "Tapon ";
-                Dispatcher.InvokeAsync(() => EstadoE1(0));
-            }
+                //Tapon
+                #region
+                ResE1[8] = await Corrugado1.Trigger();
+                if (ResE1[8].OKNG && ResE1[8].Programa == 3)
+                {
+                    //etiquetadora2.GenerarEtiqueta(serial1);
+                    Dispatcher.InvokeAsync(() => TaponBI1.OK(true));
+                    Com.E1_TAPON_COLOCADO(true);
+                }
+                else
+                {
+                    Dispatcher.InvokeAsync(() => TaponBI1.OK(false));
+                    Fail[0] = true;
+                    //ResE1[3].Calificacion = 0;
+                    Error1 = Error1 + "Tapon ";
+                    Dispatcher.InvokeAsync(() => EstadoE1(0));
+                }
 
-            DM.Guardar(serial1, DateTime.Now, false, Fail[0], ResE1[8].OKNG, ResE1[8].Calificacion, false, -1);
+                DM.Guardar(serial1, DateTime.Now, false, Fail[0], ResE1[8].OKNG, ResE1[8].Calificacion, false, -1);
                 #endregion
 
                 if (ResE1[8].TriggerNo > TriggerControl[2])
@@ -342,46 +334,47 @@ namespace Final_Inspection_Machine_v3._0
                 }
 
                 if (Abortar)
-            {
-                return;
-            }
+                {
+                    return;
+                }
 
-            if (Fail[0])
-            {
-                Dispatcher.InvokeAsync(() => EstadoE1(2));
-                return;
-            }
-            else
-            {
-                EsperarEtiquetaE1.WaitOne();
-            }
+                if (Fail[0])
+                {
+                    Dispatcher.InvokeAsync(() => EstadoE1(2));
+                    return;
+                }
+                else
+                {
+                    Pass[0] = true;
+                    EsperarEtiquetaE1.WaitOne();
+                }
 
-            if (Abortar)
-            {
-                return;
-            }
+                if (Abortar)
+                {
+                    return;
+                }
 
-            await Corrugado1.Program(4);
+                await Corrugado1.Program(4);
 
 
-            //Etiqueta
-            #region
-            ResE1[9] = await Corrugado1.Trigger();
-            if (ResE1[9].OKNG && ResE1[9].Programa == 4)
-            {
-                Dispatcher.InvokeAsync(() => EtiquetaBI1.OK(true));
-                Pass[0] = true;
-                Dispatcher.InvokeAsync(() => EstadoE1(1));
-            }
-            else
-            {
-                Dispatcher.InvokeAsync(() => EtiquetaBI1.OK(false));
-                Fail[0] = true;
-                Pass[0] = false;
-                Error1 = Error1 + "Etiqueta ";
-                Dispatcher.InvokeAsync(() => EstadoE1(2));
-            }
-            Com.E1_TAPON_COLOCADO(false);
+                //Etiqueta
+                #region
+                ResE1[9] = await Corrugado1.Trigger();
+                if (ResE1[9].OKNG && ResE1[9].Programa == 4)
+                {
+                    Dispatcher.InvokeAsync(() => EtiquetaBI1.OK(true));
+                    Pass[0] = true;
+                    Dispatcher.InvokeAsync(() => EstadoE1(1));
+                }
+                else
+                {
+                    Dispatcher.InvokeAsync(() => EtiquetaBI1.OK(false));
+                    //Fail[0] = true;
+                    //Pass[0] = false;
+                    Error1 = Error1 + "Etiqueta ";
+                    Dispatcher.InvokeAsync(() => EstadoE1(2));
+                }
+                Com.E1_TAPON_COLOCADO(false);
                 #endregion
                 if (ResE1[9].TriggerNo > TriggerControl[2])
                 {
@@ -583,8 +576,7 @@ namespace Final_Inspection_Machine_v3._0
                 {
                     Dispatcher.InvokeAsync(() => PilotBracketBI2.OK(false));
                     ResE2[4].OKNG = false;
-                    Fail[1] = (PBPermisivo && (ResE2[4].OKNG = false)) ? true : Fail[1];
-                    Error2 = Error2 + " PB " + DM.PilotBracketNombre(ResE2[4].Programa) + " ";
+                    //Error2 = Error2 + " PB " + DM.PilotBracketNombre(ResE2[4].Programa) + " ";
                     Dispatcher.InvokeAsync(() => EstadoE2(0));
                 }
                 #endregion
@@ -635,7 +627,7 @@ namespace Final_Inspection_Machine_v3._0
                 ResE2[8] = await Corrugado2.Trigger();
                 if (ResE2[8].OKNG && ResE2[8].Programa == 3)
                 {
-                    etiquetadora2.GenerarEtiqueta(serial2);
+                    //etiquetadora2.GenerarEtiqueta(serial2);
                     Dispatcher.InvokeAsync(() => TaponBI2.OK(true));
                     Com.E2_TAPON_COLOCADO(true);
                 }
@@ -672,6 +664,7 @@ namespace Final_Inspection_Machine_v3._0
                 }
                 else
                 {
+                    Pass[1] = true;
                     EsperarEtiquetaE2.WaitOne();
                 }
 
@@ -695,8 +688,8 @@ namespace Final_Inspection_Machine_v3._0
                 else
                 {
                     Dispatcher.InvokeAsync(() => EtiquetaBI2.OK(false));
-                    Fail[1] = true;
-                    Pass[1] = false;
+                    //Fail[1] = true;
+                    //Pass[1] = false;
                     Error2 = Error2 + "Etiqueta ";
                     Dispatcher.InvokeAsync(() => EstadoE2(2));
                 }
