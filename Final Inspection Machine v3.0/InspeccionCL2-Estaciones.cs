@@ -104,6 +104,7 @@ namespace Final_Inspection_Machine_v3._0
         }
         private async void TaskE1()
         {
+            Corrugado1.Detail();
             Dispatcher.InvokeAsync(() => EstadoE1(0));
             await Corrugado1.Program(0);
             serial1 = E1.ToString();
@@ -395,6 +396,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
+                Orifice11.Detail();
                 await Orifice11.Program(0);
                 ResE1[0] = await Orifice11.Trigger();
                 if (ResE1[0].OKNG)
@@ -428,6 +430,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
+                Corrugado2.Detail();
                 Dispatcher.InvokeAsync(() => EstadoE2(0));
                 await Corrugado2.Program(0);
                 serial2 = E2.ToString();
@@ -714,6 +717,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
+                Orifice21.Detail();
                 await Orifice21.Program(0);
                 ResE2[0] = await Orifice21.Trigger();
                 if (ResE2[0].OKNG)
