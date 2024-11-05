@@ -23,7 +23,7 @@ namespace Final_Inspection_Machine_v3._0
         ManualResetEvent EsperarTaponE1, EsperarTaponE2, EsperarEtiquetaE1, EsperarEtiquetaE2;
         DataManager DM = new DataManager();
         //Etiquetadora etiquetadora;
-        Etiquetadora2 etiquetadora2;
+        Etiquetadora2 etiquetadora2 = new Etiquetadora2(true);
         bool nutrojo, sinsentido, pilotbracket, resorte, PBPermisivo;
         string serial1, serial2;
         string modelo;
@@ -104,7 +104,8 @@ namespace Final_Inspection_Machine_v3._0
         }
         private async void TaskE1()
         {
-            try{ 
+            try{
+                Corrugado1.Detail();
                 Dispatcher.InvokeAsync(() => EstadoE1(0));
                 await Corrugado1.Program(0);
                 serial1 = E1.ToString();
@@ -257,6 +258,7 @@ namespace Final_Inspection_Machine_v3._0
                     ResE1[4].OKNG = false;
                         //Error1 = Error1 + " PB " + DM.PilotBracketNombre(ResE1[4].Tipo) + " ";
                     Dispatcher.InvokeAsync(() => EstadoE1(0));
+                    Fail[0] = true;
                 }
                 #endregion
 
@@ -307,7 +309,7 @@ namespace Final_Inspection_Machine_v3._0
                 ResE1[8] = await Corrugado1.Trigger();
                 if (ResE1[8].OKNG && ResE1[8].Programa == 3)
                 {
-                    //etiquetadora2.GenerarEtiqueta(serial1);
+                    etiquetadora2.GenerarEtiqueta(serial1);
                     Dispatcher.InvokeAsync(() => TaponBI1.OK(true));
                     Com.E1_TAPON_COLOCADO(true);
                 }
@@ -396,6 +398,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
+                Orifice11.Detail();
                 await Orifice11.Program(0);
                 ResE1[0] = await Orifice11.Trigger();
                 if (ResE1[0].OKNG)
@@ -429,6 +432,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
+                Corrugado2.Detail();
                 Dispatcher.InvokeAsync(() => EstadoE2(0));
                 await Corrugado2.Program(0);
                 serial2 = E2.ToString();
@@ -578,6 +582,7 @@ namespace Final_Inspection_Machine_v3._0
                     ResE2[4].OKNG = false;
                     //Error2 = Error2 + " PB " + DM.PilotBracketNombre(ResE2[4].Programa) + " ";
                     Dispatcher.InvokeAsync(() => EstadoE2(0));
+                    Fail[1] = true;
                 }
                 #endregion
 
@@ -627,7 +632,7 @@ namespace Final_Inspection_Machine_v3._0
                 ResE2[8] = await Corrugado2.Trigger();
                 if (ResE2[8].OKNG && ResE2[8].Programa == 3)
                 {
-                    //etiquetadora2.GenerarEtiqueta(serial2);
+                    etiquetadora2.GenerarEtiqueta(serial2);
                     Dispatcher.InvokeAsync(() => TaponBI2.OK(true));
                     Com.E2_TAPON_COLOCADO(true);
                 }
@@ -718,6 +723,7 @@ namespace Final_Inspection_Machine_v3._0
         {
             try
             {
+                Orifice21.Detail();
                 await Orifice21.Program(0);
                 ResE2[0] = await Orifice21.Trigger();
                 if (ResE2[0].OKNG)

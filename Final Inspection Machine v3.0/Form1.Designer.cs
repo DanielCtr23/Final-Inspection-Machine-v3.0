@@ -36,6 +36,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.BI_CORRUGADOF_V = new AdvancedHMIControls.BasicIndicator();
+            this.ethernetIPforCLXCom1 = new AdvancedHMIDrivers.EthernetIPforCLXCom(this.components);
             this.BI_CORRUGADOE_V = new AdvancedHMIControls.BasicIndicator();
             this.BI_CORRUGADOD_V = new AdvancedHMIControls.BasicIndicator();
             this.BI_CORRUGADOC_V = new AdvancedHMIControls.BasicIndicator();
@@ -57,14 +58,13 @@
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.timer4 = new System.Windows.Forms.Timer(this.components);
-            this.ethernetIPforCLXCom1 = new AdvancedHMIDrivers.EthernetIPforCLXCom(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ethernetIPforCLXCom1)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ethernetIPforCLXCom1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -186,6 +186,20 @@
             this.BI_CORRUGADOF_V.Size = new System.Drawing.Size(69, 69);
             this.BI_CORRUGADOF_V.TabIndex = 4;
             this.BI_CORRUGADOF_V.Text = "F";
+            // 
+            // ethernetIPforCLXCom1
+            // 
+            this.ethernetIPforCLXCom1.CIPConnectionSize = 508;
+            this.ethernetIPforCLXCom1.DisableMultiServiceRequest = false;
+            this.ethernetIPforCLXCom1.DisableSubscriptions = false;
+            this.ethernetIPforCLXCom1.IniFileName = "";
+            this.ethernetIPforCLXCom1.IniFileSection = null;
+            this.ethernetIPforCLXCom1.IPAddress = "192.168.0.10";
+            this.ethernetIPforCLXCom1.PollRateOverride = 500;
+            this.ethernetIPforCLXCom1.Port = 44818;
+            this.ethernetIPforCLXCom1.ProcessorSlot = 0;
+            this.ethernetIPforCLXCom1.RoutePath = null;
+            this.ethernetIPforCLXCom1.Timeout = 4000;
             // 
             // BI_CORRUGADOE_V
             // 
@@ -406,7 +420,6 @@
             this.BI_RIGIDOB_V.OutlineColor = System.Drawing.Color.Transparent;
             this.BI_RIGIDOB_V.OutlineWidth = 1;
             this.BI_RIGIDOB_V.OutputType = MfgControl.AdvancedHMI.Controls.OutputType.MomentarySet;
-            this.BI_RIGIDOB_V.PLCAddressSelectColor2 = "\"_IO_EM_DI_04\"";
             this.BI_RIGIDOB_V.SelectColor2 = false;
             this.BI_RIGIDOB_V.SelectColor3 = false;
             this.BI_RIGIDOB_V.Shape = MfgControl.AdvancedHMI.Controls.Indicator.ShapeTypes.Round;
@@ -532,20 +545,6 @@
             this.timer4.Interval = 500;
             this.timer4.Tick += new System.EventHandler(this.timer4_Tick);
             // 
-            // ethernetIPforCLXCom1
-            // 
-            this.ethernetIPforCLXCom1.CIPConnectionSize = 508;
-            this.ethernetIPforCLXCom1.DisableMultiServiceRequest = false;
-            this.ethernetIPforCLXCom1.DisableSubscriptions = false;
-            this.ethernetIPforCLXCom1.IniFileName = "";
-            this.ethernetIPforCLXCom1.IniFileSection = null;
-            this.ethernetIPforCLXCom1.IPAddress = "192.168.0.10";
-            this.ethernetIPforCLXCom1.PollRateOverride = 500;
-            this.ethernetIPforCLXCom1.Port = 44818;
-            this.ethernetIPforCLXCom1.ProcessorSlot = 0;
-            this.ethernetIPforCLXCom1.RoutePath = null;
-            this.ethernetIPforCLXCom1.Timeout = 4000;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -562,10 +561,10 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ethernetIPforCLXCom1)).EndInit();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ethernetIPforCLXCom1)).EndInit();
             this.ResumeLayout(false);
 
         }

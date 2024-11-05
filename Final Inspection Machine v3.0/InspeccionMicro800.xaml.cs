@@ -87,7 +87,7 @@ namespace Final_Inspection_Machine_v3._0
             try
             {
                 IPAddress C1IP = IPAddress.Parse("192.168.1.2");
-                Corrugado1.connect(C1IP, 8500);
+                Corrugado1.connect(C1IP, 1024);
             }
             catch (Exception)
             {
