@@ -256,6 +256,7 @@ namespace Final_Inspection_Machine_v3._0
                 ResE1[4].OKNG = false;
                 Error1 = Error1 + " PB " + ResE1[5].Tipo + " ";
                 Dispatcher.InvokeAsync(() => EstadoE1(0));
+                Fail[0] = true;
             }
             #endregion
 
@@ -580,6 +581,7 @@ namespace Final_Inspection_Machine_v3._0
                     ResE2[4].OKNG = false;
                     Error2 = Error2 + " PB " + DM.PilotBracketNombre(ResE2[4].Tipo) + " ";
                     Dispatcher.InvokeAsync(() => EstadoE2(0));
+                    Fail[1] = true;
                 }
                 #endregion
 
